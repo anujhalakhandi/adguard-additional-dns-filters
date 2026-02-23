@@ -8,24 +8,20 @@ from concurrent.futures import ThreadPoolExecutor
 # ==========================================================
 
 SOURCES = {
-    # AdGuard base filters (avoid duplicating them)
     "base": [
         "https://filters.adtidy.org/dns/filter_1.txt",
         "https://filters.adtidy.org/android/filters/15_optimized.txt",
     ],
 
-    # MAIN BLOCK LIST (Pro++ replaces Pro)
     "main": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
     ],
 
-    # TIF (Threat Intelligence Feed)
     "tif": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
     ],
 
-    # ALL NRD LISTS (treated same as TIF → removal set)
     "nrd": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-7.txt",
@@ -34,7 +30,6 @@ SOURCES = {
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-90.txt",
     ],
 
-    # Allow lists
     "allow": [
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
@@ -111,12 +106,12 @@ def main():
 
     base_domains = set()
     allow_domains = set()
-    intelligence_domains = set()  # TIF + NRD
+    intelligence_domains = set()
     main_blocked_domains = set()
     block_rules = []
     seen = set()
 
-    # ---------------- BASE FILTER DOMAINS ----------------
+    # ---------------- BASE DOMAINS ----------------
     for rule in fetch_all(SOURCES["base"]):
         c = clean_rule(rule)
         if not c:
@@ -147,7 +142,7 @@ def main():
         if d:
             allow_domains.add(d)
 
-    # ---------------- MAIN BLOCK LIST (Pro++) ----------------
+    # ---------------- MAIN BLOCK BUILD ----------------
     for rule in fetch_all(SOURCES["main"]):
         c = clean_rule(rule)
         if not c:
@@ -155,11 +150,9 @@ def main():
 
         d = extract_domain(c)
 
-        # Remove anything in base filters
         if d and d in base_domains:
             continue
 
-        # Remove anything in TIF or NRD
         if d and d in intelligence_domains:
             continue
 
@@ -174,10 +167,9 @@ def main():
 
     block_rules = sorted(block_rules)
 
-    # ---------------- SMART ALLOW RULES ----------------
+    # ---------------- SMART ALLOW ----------------
     all_blocked = base_domains | main_blocked_domains
     needed_allow = allow_domains.intersection(all_blocked)
-
     allow_rules = sorted([f"@@||{d}^" for d in needed_allow])
 
     # ---------------- VERSION ----------------
@@ -201,6 +193,19 @@ def main():
 
         for r in block_rules:
             f.write(r + "\n")
+
+    # ---------------- UPDATE README ----------------
+    readme = f"""# AdGuard Additional DNS Filter
+
+Block rules: {len(block_rules)}  
+Allow rules: {len(allow_rules)}
+
+## Filter URL
+{RAW_LINK}
+"""
+
+    with open("README.md", "w", encoding="utf-8") as f:
+        f.write(readme)
 
     print("Build successful")
 

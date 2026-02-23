@@ -11,11 +11,10 @@ BASE_URLS = [
     "https://filters.adtidy.org/android/filters/15_optimized.txt"
 ]
 
-# MAIN SOURCE LISTS
+# MAIN SOURCE LISTS (FAKE REMOVED)
 MAIN_LISTS = [
     "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
     "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
-    "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/fake.txt",
 ]
 
 TIF_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
@@ -109,7 +108,7 @@ def main():
             if c:
                 exclusion_rules.add(c)
 
-    # BUILD FINAL FROM ALL MAIN LISTS
+    # BUILD FINAL FROM MAIN LISTS
     final_rules = []
     seen = set()
 

@@ -14,7 +14,6 @@ BASE_URLS = [
 ]
 
 PRO_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
-TIF_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
 
 ALLOWLIST_URLS = [
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
@@ -44,9 +43,10 @@ ALLOWLIST_URLS = [
     "https://raw.githubusercontent.com/mawenjian/china-cdn-domain-whitelist/master/china-cdn-domain-whitelist.txt",
 ]
 
-OUTPUT_FILE = "output/adguard-additional-dns.txt"
+# NEW FILE NAME
+OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
 
-RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns.txt"
+RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
 
 
 # ======================================
@@ -61,44 +61,27 @@ def fetch(url):
 
 
 def normalize_rule(rule):
-    """
-    SAFE NORMALIZATION (comparison only)
-    Implements optimization methods 1–6.
-    """
 
     rule = rule.strip().lower()
 
-    # remove empty / comments
     if not rule or rule.startswith("!"):
         return None
 
-    # remove whitelist marker
     rule = rule.replace("@@", "")
-
-    # remove protocol
     rule = re.sub(r"^https?://", "", rule)
 
-    # hosts format
     if rule.startswith(("0.0.0.0", "127.0.0.1")):
         parts = rule.split()
         if len(parts) >= 2:
             rule = parts[1]
 
-    # adblock syntax cleanup
     rule = rule.replace("||", "")
     rule = rule.replace("|", "")
-
-    # remove modifiers (DNS safe)
     rule = rule.split("^")[0]
     rule = rule.split("$")[0]
-
-    # remove wildcard prefix
     rule = rule.replace("*.", "")
-
-    # remove paths
     rule = rule.split("/")[0]
 
-    # invalid domain check
     if "." not in rule:
         return None
 
@@ -113,49 +96,66 @@ def main():
 
     os.makedirs("output", exist_ok=True)
 
+    # stats counters
+    stats = {
+        "pro_total": 0,
+        "base_removed": 0,
+        "allow_removed": 0,
+        "duplicates_removed": 0
+    }
+
     exclusion_domains = set()
 
     # ===============================
-    # Build exclusion set
+    # BASE FILTERS
     # ===============================
-
     for url in BASE_URLS:
         for r in fetch(url):
             d = normalize_rule(r)
             if d:
                 exclusion_domains.add(d)
 
-    for r in fetch(TIF_URL):
-        d = normalize_rule(r)
-        if d:
-            exclusion_domains.add(d)
+    # ===============================
+    # ALLOWLISTS
+    # ===============================
+    allow_domains = set()
 
     for url in ALLOWLIST_URLS:
         for r in fetch(url):
             d = normalize_rule(r)
             if d:
+                allow_domains.add(d)
                 exclusion_domains.add(d)
 
     # ===============================
-    # Build final rules
+    # MAIN LIST BUILD
     # ===============================
 
     final_rules = []
     seen_domains = set()
 
-    for rule in fetch(PRO_URL):
+    pro_lines = fetch(PRO_URL)
+
+    for rule in pro_lines:
 
         d = normalize_rule(rule)
 
         if not d:
             continue
 
-        # remove base/tif/allowlist overlap
+        stats["pro_total"] += 1
+
         if d in exclusion_domains:
+
+            if d in allow_domains:
+                stats["allow_removed"] += 1
+            else:
+                stats["base_removed"] += 1
+
             continue
 
-        # remove duplicates (safe)
         if d in seen_domains:
+            stats["duplicates_removed"] += 1
             continue
 
         seen_domains.add(d)
@@ -166,13 +166,13 @@ def main():
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
     # ===============================
-    # Write filter (professional header)
+    # WRITE FILTER
     # ===============================
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
-        f.write("! Title: AdGuard Additional DNS Filters\n")
-        f.write("! Description: Additional DNS filters not included in the default list.\n")
+        f.write("! Title: AdGuard Additional DNS filter\n")
+        f.write("! Description: Additional DNS filter not included in the default list.\n")
         f.write("! Homepage: https://github.com/anujhalakhandi/adguard-additional-dns-filters\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
@@ -183,17 +183,27 @@ def main():
             f.write(r + "\n")
 
     # ===============================
-    # README + BADGE
+    # BUILD STATS
     # ===============================
 
     badge_value = quote(f"{len(final_rules)} rules")
     badge = f"https://img.shields.io/badge/Rules-{badge_value}-brightgreen"
 
-    readme = f"""# AdGuard Additional DNS Filters
+    readme = f"""# AdGuard Additional DNS filter
 
 ![Rule Count]({badge})
 
-Additional DNS filters not included in the default list.
+Additional DNS filter not included in the default list.
+
+## 📊 Build Statistics
+
+| Stage | Rules |
+|---|---|
+| Main list (PRO) | {stats['pro_total']} |
+| Removed by Base filters | {stats['base_removed']} |
+| Removed by Allowlists | {stats['allow_removed']} |
+| Duplicate domains removed | {stats['duplicates_removed']} |
+| **Final rules** | **{len(final_rules)}** |
 
 ## 🔗 Filter URL
 

@@ -4,26 +4,27 @@ import re
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
 from collections import defaultdict
+import tldextract
 
 # ==========================================================
-# SOURCE REGISTRY
+# CONFIG
 # ==========================================================
+
+MAX_WORKERS = 6
+OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
 
 SOURCES = {
     "base": [
         "https://filters.adtidy.org/dns/filter_1.txt",
         "https://filters.adtidy.org/android/filters/15_optimized.txt",
     ],
-
     "main": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
     ],
-
     "tif": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
     ],
-
     "nrd": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-7.txt",
@@ -31,7 +32,6 @@ SOURCES = {
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-30.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-90.txt",
     ],
-
     "allow": [
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
@@ -40,48 +40,39 @@ SOURCES = {
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-apple.txt",
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-google.txt",
         "https://local.oisd.nl/extract/commonly_whitelisted.php",
-        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/firefox.txt",
-        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/mac.txt",
-        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/banks.txt",
-        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/windows.txt",
-        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/issues.txt",
-        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/android.txt",
-        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/sensitive.txt",
-        "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt",
     ],
 }
 
-# ==========================================================
-# CUSTOM OEM ALLOW DOMAINS (OnePlus Ecosystem Safe)
-# ==========================================================
-
+# Minimal OEM-safe global allow (no region suffixes)
 CUSTOM_ALLOW_DOMAINS = {
-
-    # OnePlus / OxygenOS APIs
-    "calculator-api-in.allawnos.com",
-    "weather-api-in.allawnos.com",
-    "config-in.allawnos.com",
-    "push-in.allawnos.com",
-    "cloud-in.allawnos.com",
-
-    # HeyTap core services (NOT ads/analytics)
     "account.heytap.com",
     "id.heytap.com",
     "cloud.heytap.com",
-    "push.heytap.com",
-
-    # OTA / Firmware
     "ota.oneplus.com",
     "oxygenos.oneplus.com",
-
-    # ColorOS configuration
-    "config.coloros.com",
-    "weather.coloros.com",
+    "coloros.com",
 }
 
-OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
+TELEMETRY_PATTERNS = [
+    re.compile(r"(^|[-.])(analytics|tracking|telemetry|metrics|stats|log)([-.]|$)")
+]
 
-RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
+DOMAIN_PATTERN = re.compile(r"\|\|([a-zA-Z0-9.-]+)\^")
+
+# PSL extractor (offline, cached)
+extractor = tldextract.TLDExtract(suffix_list_urls=None)
+root_cache = {}
+
+def get_root(domain):
+    if domain in root_cache:
+        return root_cache[domain]
+    ext = extractor(domain)
+    if ext.domain and ext.suffix:
+        root = f"{ext.domain}.{ext.suffix}"
+    else:
+        root = domain
+    root_cache[domain] = root
+    return root
 
 # ==========================================================
 # NETWORK
@@ -91,22 +82,21 @@ session = requests.Session()
 
 def fetch(url):
     try:
-        r = session.get(url, timeout=40)
+        r = session.get(url, timeout=30)
         r.raise_for_status()
         return r.text.splitlines()
     except Exception:
+        print(f"Failed: {url}")
         return []
 
 def fetch_all(urls):
-    with ThreadPoolExecutor(max_workers=6) as pool:
+    with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
         results = list(pool.map(fetch, set(urls)))
     return [line for result in results for line in result]
 
 # ==========================================================
-# DOMAIN PARSING
+# PARSING
 # ==========================================================
-
-DOMAIN_PATTERN = re.compile(r"^\|\|([a-zA-Z0-9.-]+)\^")
 
 def clean_rule(rule):
     rule = rule.strip()
@@ -115,43 +105,46 @@ def clean_rule(rule):
     return rule
 
 def extract_domain(rule):
-    r = rule.strip()
+    r = rule
     if r.startswith("@@"):
         r = r[2:]
-    match = DOMAIN_PATTERN.match(r)
+    match = DOMAIN_PATTERN.search(r)
     if match:
         return match.group(1).lower()
     return None
 
 # ==========================================================
-# SUBDOMAIN COLLAPSE
+# COLLAPSE (FAST DEPTH-BASED)
 # ==========================================================
 
-def collapse_domains(domain_dict):
-    sorted_domains = sorted(domain_dict.keys())
-    collapsed = {}
-    previous = None
+def collapse_domains(domains):
+    domains = sorted(domains, key=lambda x: x.count("."))
+    collapsed = set()
 
-    for domain in sorted_domains:
-        if previous and domain.endswith("." + previous):
-            continue
-        collapsed[domain] = domain_dict[domain]
-        previous = domain
+    for domain in domains:
+        parts = domain.split(".")
+        skip = False
+        for i in range(1, len(parts)):
+            parent = ".".join(parts[i:])
+            if parent in collapsed:
+                skip = True
+                break
+        if not skip:
+            collapsed.add(domain)
 
     return collapsed
 
 # ==========================================================
-# MAIN BUILD
+# MAIN
 # ==========================================================
 
 def main():
-
     os.makedirs("output", exist_ok=True)
 
     base_domains = set()
     intelligence_domains = set()
     allow_domains = set()
-    main_domains = {}
+    main_domains = set()
 
     # BASE
     for rule in fetch_all(SOURCES["base"]):
@@ -162,7 +155,7 @@ def main():
         if d:
             base_domains.add(d)
 
-    # INTELLIGENCE (TIF + NRD)
+    # INTELLIGENCE
     for category in ["tif", "nrd"]:
         for rule in fetch_all(SOURCES[category]):
             c = clean_rule(rule)
@@ -172,7 +165,9 @@ def main():
             if d:
                 intelligence_domains.add(d)
 
-    # ALLOW (Upstream)
+    intel_roots = set(get_root(d) for d in intelligence_domains)
+
+    # ALLOW
     for rule in fetch_all(SOURCES["allow"]):
         c = clean_rule(rule)
         if not c:
@@ -181,7 +176,6 @@ def main():
         if d:
             allow_domains.add(d)
 
-    # ADD OEM custom allow domains
     allow_domains.update(CUSTOM_ALLOW_DOMAINS)
 
     # MAIN BLOCK BUILD
@@ -197,45 +191,31 @@ def main():
         if d in base_domains:
             continue
 
-        if d in intelligence_domains:
+        if get_root(d) in intel_roots:
             continue
 
-        main_domains[d] = c
+        main_domains.add(d)
 
-    # Collapse subdomains
-    main_domains = collapse_domains(main_domains)
-    block_rules = sorted(main_domains.values())
+    # Telemetry tagging (optional future expansion)
+    telemetry_domains = {
+        d for d in main_domains
+        if any(p.search(d) for p in TELEMETRY_PATTERNS)
+    }
 
-    # SMART BIDIRECTIONAL ALLOW
-    blocked_domains = set(main_domains.keys()) | base_domains
+    collapsed = collapse_domains(main_domains)
+    block_rules = sorted(f"||{d}^" for d in collapsed)
 
-    tld_index = defaultdict(set)
-    for domain in blocked_domains:
-        tld_index[domain.split(".")[-1]].add(domain)
+    blocked_set = set(collapsed) | base_domains
 
     allow_rules = []
-
     for allow in allow_domains:
-
-        parts = allow.split(".")
-        tld = parts[-1]
-
-        # Parent chain check
-        matched = False
-        for i in range(len(parts)):
-            parent = ".".join(parts[i:])
-            if parent in blocked_domains:
-                allow_rules.append(f"@@||{allow}^")
-                matched = True
-                break
-
-        if matched:
+        if allow in blocked_set:
             continue
 
-        # Child check
-        prefix = allow + "."
-        for blocked in tld_index[tld]:
-            if blocked.startswith(prefix):
+        parts = allow.split(".")
+        for i in range(len(parts)):
+            parent = ".".join(parts[i:])
+            if parent in blocked_set:
                 allow_rules.append(f"@@||{allow}^")
                 break
 
@@ -244,11 +224,10 @@ def main():
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-
-        f.write("! Title: AdGuard Additional DNS filter\n")
-        f.write("! Description: Hagezi Pro++ + DynDNS minus TIF & NRD (OEM safe).\n")
+        f.write("! Title: AdGuard Additional DNS filter (v2)\n")
+        f.write("! Description: Hagezi Pro++ minus TIF/NRD + OEM safe + PSL aware.\n")
         f.write(f"! Version: {version}\n")
-        f.write("! Expires: 2 hours\n")
+        f.write("! Expires: 6 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
         f.write(f"! Allow rules: {len(allow_rules)}\n")
         f.write("!\n")

@@ -1,11 +1,9 @@
 import requests
-import re
 import os
 from datetime import datetime
-from urllib.parse import quote
 
 # ======================================
-# SOURCES (BACKEND ONLY)
+# CONFIG
 # ======================================
 
 BASE_URLS = [
@@ -51,54 +49,55 @@ ALLOWLIST_URLS = [
     "https://raw.githubusercontent.com/mawenjian/china-cdn-domain-whitelist/master/china-cdn-domain-whitelist.txt",
 ]
 
-# OUTPUT FILE NAME (renamed)
 OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
 
 RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
+
+# ======================================
+# SANITY LIMITS (important)
+# ======================================
+
+MIN_RULES = {
+    "PRO": 100000,
+    "TIF": 20000,
+    "BASE": 20000,
+    "ALLOWLIST": 50
+}
+
+MIN_FINAL_RULES = 20000
 
 
 # ======================================
 # HELPERS
 # ======================================
 
-def fetch(url):
-    try:
-        return requests.get(url, timeout=40).text.splitlines()
-    except:
-        return []
-
-
-def normalize_rule(rule):
-
-    rule = rule.strip().lower()
-
+def clean_rule(rule):
+    rule = rule.strip()
     if not rule or rule.startswith("!"):
         return None
-
-    # remove whitelist marker
-    rule = rule.replace("@@", "")
-
-    # remove protocol
-    rule = re.sub(r"^https?://", "", rule)
-
-    # hosts format
-    if rule.startswith(("0.0.0.0", "127.0.0.1")):
-        parts = rule.split()
-        if len(parts) >= 2:
-            rule = parts[1]
-
-    # adblock syntax cleanup
-    rule = rule.replace("||", "")
-    rule = rule.replace("|", "")
-    rule = rule.split("^")[0]
-    rule = rule.split("$")[0]
-    rule = rule.replace("*.", "")
-    rule = rule.split("/")[0]
-
-    if "." not in rule:
-        return None
-
     return rule
+
+
+def fetch(url, label=None):
+
+    print("Downloading:", url)
+
+    try:
+        r = requests.get(url, timeout=40)
+        lines = r.text.splitlines()
+
+        clean_count = sum(1 for x in lines if clean_rule(x))
+
+        # sanity check per list type
+        if label and clean_count < MIN_RULES[label]:
+            raise Exception(
+                f"{label} sanity check failed ({clean_count} rules)"
+            )
+
+        return lines
+
+    except Exception as e:
+        raise Exception(f"Failed fetching {url} -> {e}")
 
 
 # ======================================
@@ -109,81 +108,66 @@ def main():
 
     os.makedirs("output", exist_ok=True)
 
-    stats = {
-        "pro_total": 0,
-        "base_removed": 0,
-        "tif_removed": 0,
-        "allow_removed": 0,
-        "duplicates_removed": 0
-    }
+    exclusion_rules = set()
 
-    exclusion_domains = set()
-
-    # BASE FILTERS
+    # ---------- BASE ----------
     for url in BASE_URLS:
-        for r in fetch(url):
-            d = normalize_rule(r)
-            if d:
-                exclusion_domains.add(d)
+        for r in fetch(url, "BASE"):
+            c = clean_rule(r)
+            if c:
+                exclusion_rules.add(c)
 
-    # TIF
-    tif_domains = set()
-    for r in fetch(TIF_URL):
-        d = normalize_rule(r)
-        if d:
-            tif_domains.add(d)
-            exclusion_domains.add(d)
+    # ---------- TIF ----------
+    for r in fetch(TIF_URL, "TIF"):
+        c = clean_rule(r)
+        if c:
+            exclusion_rules.add(c)
 
-    # ALLOWLISTS
-    allow_domains = set()
+    # ---------- ALLOWLISTS ----------
     for url in ALLOWLIST_URLS:
-        for r in fetch(url):
-            d = normalize_rule(r)
-            if d:
-                allow_domains.add(d)
-                exclusion_domains.add(d)
+        for r in fetch(url, "ALLOWLIST"):
+            c = clean_rule(r)
+            if c:
+                exclusion_rules.add(c)
 
-    # BUILD FINAL LIST
+    # ---------- PRO ----------
+    pro_lines = fetch(PRO_URL, "PRO")
+
+    # ---------- BUILD FINAL ----------
     final_rules = []
-    seen_domains = set()
+    seen = set()
 
-    for rule in fetch(PRO_URL):
+    for rule in pro_lines:
 
-        d = normalize_rule(rule)
+        c = clean_rule(rule)
 
-        if not d:
+        if not c:
             continue
 
-        stats["pro_total"] += 1
-
-        if d in exclusion_domains:
-
-            if d in tif_domains:
-                stats["tif_removed"] += 1
-            elif d in allow_domains:
-                stats["allow_removed"] += 1
-            else:
-                stats["base_removed"] += 1
-
+        if c in exclusion_rules:
             continue
 
-        if d in seen_domains:
-            stats["duplicates_removed"] += 1
+        if c in seen:
             continue
 
-        seen_domains.add(d)
-        final_rules.append(rule)
+        seen.add(c)
+        final_rules.append(c)
 
     final_rules = sorted(final_rules)
 
+    # ---------- FINAL SANITY ----------
+    if len(final_rules) < MIN_FINAL_RULES:
+        raise Exception(
+            f"Final sanity failed ({len(final_rules)} rules)"
+        )
+
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # WRITE FILTER
+    # ---------- WRITE FILTER ----------
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
         f.write("! Title: AdGuard Additional DNS filter\n")
         f.write("! Description: Additional DNS filter not included in the default list.\n")
-        f.write("! Homepage: https://github.com/anujhalakhandi/adguard-additional-dns-filters\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
         f.write(f"! Total rules: {len(final_rules)}\n")
@@ -192,38 +176,19 @@ def main():
         for r in final_rules:
             f.write(r + "\n")
 
-    # README + BADGE
-    badge_value = quote(f"{len(final_rules)} rules")
-    badge = f"https://img.shields.io/badge/Rules-{badge_value}-brightgreen"
-
+    # ---------- README ----------
     readme = f"""# AdGuard Additional DNS filter
 
-![Rule Count]({badge})
+Rules: {len(final_rules)}
 
-Additional DNS filter not included in the default list.
-
-## 📊 Build Statistics
-
-| Stage | Rules |
-|---|---|
-| Main list (PRO) | {stats['pro_total']} |
-| Removed by Base filters | {stats['base_removed']} |
-| Removed by TIF | {stats['tif_removed']} |
-| Removed by Allowlists | {stats['allow_removed']} |
-| Duplicate domains removed | {stats['duplicates_removed']} |
-| **Final rules** | **{len(final_rules)}** |
-
-## 🔗 Filter URL
-
+Filter URL:
 {RAW_LINK}
-
-## ⏱ Update Frequency
-
-Every 2 hours.
 """
 
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(readme)
+
+    print("Build successful:", len(final_rules))
 
 
 if __name__ == "__main__":

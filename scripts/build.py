@@ -16,7 +16,6 @@ SOURCES = {
     ],
 
     "main": [
-        # *** Use Pro++ now ***
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
     ],
@@ -52,6 +51,34 @@ SOURCES = {
     ],
 }
 
+# ==========================================================
+# CUSTOM OEM ALLOW DOMAINS (OnePlus Ecosystem Safe)
+# ==========================================================
+
+CUSTOM_ALLOW_DOMAINS = {
+
+    # OnePlus / OxygenOS APIs
+    "calculator-api-in.allawnos.com",
+    "weather-api-in.allawnos.com",
+    "config-in.allawnos.com",
+    "push-in.allawnos.com",
+    "cloud-in.allawnos.com",
+
+    # HeyTap core services (NOT ads/analytics)
+    "account.heytap.com",
+    "id.heytap.com",
+    "cloud.heytap.com",
+    "push.heytap.com",
+
+    # OTA / Firmware
+    "ota.oneplus.com",
+    "oxygenos.oneplus.com",
+
+    # ColorOS configuration
+    "config.coloros.com",
+    "weather.coloros.com",
+}
+
 OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
 
 RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
@@ -76,7 +103,7 @@ def fetch_all(urls):
     return [line for result in results for line in result]
 
 # ==========================================================
-# DOMAIN PARSING (Strict DNS rules only)
+# DOMAIN PARSING
 # ==========================================================
 
 DOMAIN_PATTERN = re.compile(r"^\|\|([a-zA-Z0-9.-]+)\^")
@@ -97,7 +124,7 @@ def extract_domain(rule):
     return None
 
 # ==========================================================
-# SUBDOMAIN COLLAPSE (O(n log n))
+# SUBDOMAIN COLLAPSE
 # ==========================================================
 
 def collapse_domains(domain_dict):
@@ -126,7 +153,7 @@ def main():
     allow_domains = set()
     main_domains = {}
 
-    # ---------------- BASE ----------------
+    # BASE
     for rule in fetch_all(SOURCES["base"]):
         c = clean_rule(rule)
         if not c:
@@ -135,7 +162,7 @@ def main():
         if d:
             base_domains.add(d)
 
-    # ---------------- INTELLIGENCE (TIF + NRD) ----------------
+    # INTELLIGENCE (TIF + NRD)
     for category in ["tif", "nrd"]:
         for rule in fetch_all(SOURCES[category]):
             c = clean_rule(rule)
@@ -145,7 +172,7 @@ def main():
             if d:
                 intelligence_domains.add(d)
 
-    # ---------------- ALLOW ----------------
+    # ALLOW (Upstream)
     for rule in fetch_all(SOURCES["allow"]):
         c = clean_rule(rule)
         if not c:
@@ -154,7 +181,10 @@ def main():
         if d:
             allow_domains.add(d)
 
-    # ---------------- MAIN BLOCK BUILD ----------------
+    # ADD OEM custom allow domains
+    allow_domains.update(CUSTOM_ALLOW_DOMAINS)
+
+    # MAIN BLOCK BUILD
     for rule in fetch_all(SOURCES["main"]):
         c = clean_rule(rule)
         if not c:
@@ -172,16 +202,16 @@ def main():
 
         main_domains[d] = c
 
+    # Collapse subdomains
     main_domains = collapse_domains(main_domains)
     block_rules = sorted(main_domains.values())
 
-    # ---------------- SMART BIDIRECTIONAL ALLOW ----------------
+    # SMART BIDIRECTIONAL ALLOW
     blocked_domains = set(main_domains.keys()) | base_domains
 
     tld_index = defaultdict(set)
     for domain in blocked_domains:
-        parts = domain.split(".")
-        tld_index[parts[-1]].add(domain)
+        tld_index[domain.split(".")[-1]].add(domain)
 
     allow_rules = []
 
@@ -190,7 +220,7 @@ def main():
         parts = allow.split(".")
         tld = parts[-1]
 
-        # Check parent chain
+        # Parent chain check
         matched = False
         for i in range(len(parts)):
             parent = ".".join(parts[i:])
@@ -202,7 +232,7 @@ def main():
         if matched:
             continue
 
-        # Check child-in-blocked
+        # Child check
         prefix = allow + "."
         for blocked in tld_index[tld]:
             if blocked.startswith(prefix):
@@ -211,14 +241,12 @@ def main():
 
     allow_rules = sorted(set(allow_rules))
 
-    # ---------------- VERSION ----------------
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # ---------------- WRITE FILTER ----------------
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
         f.write("! Title: AdGuard Additional DNS filter\n")
-        f.write("! Description: Hagezi Pro++ + DynDNS minus TIF & NRD (collapsed + full allow logic).\n")
+        f.write("! Description: Hagezi Pro++ + DynDNS minus TIF & NRD (OEM safe).\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
@@ -233,21 +261,7 @@ def main():
         for r in block_rules:
             f.write(r + "\n")
 
-    # ---------------- UPDATE README ----------------
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(f"""# AdGuard Additional DNS Filter
-
-Optimized for personal AdGuard Android & macOS usage.
-
-Block rules: {len(block_rules)}  
-Allow rules: {len(allow_rules)}
-
-## Filter URL
-{RAW_LINK}
-""")
-
     print("Build successful")
-
 
 if __name__ == "__main__":
     main()

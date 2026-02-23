@@ -168,31 +168,30 @@ def main():
 
     block_rules = sorted(block_rules)
 
-    # ---------------- SMART ALLOW ----------------
+    # ---------------- SMART ALLOW (OPTIMIZED) ----------------
     all_blocked = base_domains | main_blocked_domains
-    needed_allow = set()
+    
+    # Pre-compute parent variations of blocked domains for instant lookups
+    blocked_parents = set()
+    for b in all_blocked:
+        parts = b.split('.')
+        if len(parts) > 2:
+            for i in range(1, len(parts) - 1):
+                blocked_parents.add('.'.join(parts[i:]))
 
+    needed_allow = set()
     for d in allow_domains:
-        # Check if the exact domain is in the blocklist
-        if d in all_blocked:
+        # Check if exact domain is blocked OR if the allow domain is a parent of a blocked domain
+        if d in all_blocked or d in blocked_parents:
             needed_allow.add(d)
         else:
-            # 1. Check if any parent of the allow domain is blocked
+            # Check if any parent of the allow domain is explicitly blocked
             parts = d.split('.')
-            is_needed = False
             for i in range(1, len(parts)):
                 parent_domain = '.'.join(parts[i:])
                 if parent_domain in all_blocked:
                     needed_allow.add(d)
-                    is_needed = True
                     break
-            
-            # 2. Check if the allow domain is a parent of any blocked domain
-            if not is_needed:
-                for b in all_blocked:
-                    if b.endswith('.' + d):
-                        needed_allow.add(d)
-                        break
 
     allow_rules = sorted([f"@@||{d}^" for d in needed_allow])
 
@@ -204,35 +203,4 @@ def main():
 
         f.write("! Title: AdGuard Additional DNS filter\n")
         f.write("! Description: Pro++ minus TIF and NRD intelligence feeds.\n")
-        f.write(f"! Version: {version}\n")
-        f.write("! Expires: 2 hours\n")
-        f.write(f"! Block rules: {len(block_rules)}\n")
-        f.write(f"! Allow rules: {len(allow_rules)}\n")
-        f.write("!\n")
-
-        for r in allow_rules:
-            f.write(r + "\n")
-
-        f.write("!\n")
-
-        for r in block_rules:
-            f.write(r + "\n")
-
-    # ---------------- UPDATE README ----------------
-    readme = f"""# AdGuard Additional DNS Filter
-
-Block rules: {len(block_rules)}  
-Allow rules: {len(allow_rules)}
-
-## Filter URL
-{RAW_LINK}
-"""
-
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(readme)
-
-    print("Build successful")
-
-
-if __name__ == "__main__":
-    main()
+        f.write(

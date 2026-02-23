@@ -53,7 +53,10 @@ CUSTOM_ALLOW_DOMAINS = {
 
 DOMAIN_PATTERN = re.compile(r"\|\|([a-zA-Z0-9.-]+)\^")
 
-# PSL extractor (offline)
+# ==========================================================
+# PSL ROOT CACHE
+# ==========================================================
+
 extractor = tldextract.TLDExtract(suffix_list_urls=None)
 root_cache = {}
 
@@ -66,7 +69,7 @@ def get_root(domain):
     return root
 
 # ==========================================================
-# NETWORK (tuned session)
+# NETWORK
 # ==========================================================
 
 session = requests.Session()
@@ -106,18 +109,34 @@ def extract_domains(lines):
     return domains
 
 # ==========================================================
-# FAST COLLAPSE
+# TRIE COLLAPSE
 # ==========================================================
 
+class TrieNode:
+    __slots__ = ("children", "blocked")
+    def __init__(self):
+        self.children = {}
+        self.blocked = False
+
 def collapse_domains(domains):
-    domains = sorted(domains, key=lambda x: x.count("."))
+    root = TrieNode()
     collapsed = set()
 
-    for domain in domains:
-        parts = domain.split(".")
-        if any(".".join(parts[i:]) in collapsed for i in range(1, len(parts))):
-            continue
-        collapsed.add(domain)
+    for domain in sorted(domains):
+        parts = domain.split(".")[::-1]  # reverse
+        node = root
+        skip = False
+
+        for part in parts:
+            if node.blocked:
+                skip = True
+                break
+            node = node.children.setdefault(part, TrieNode())
+
+        if not skip:
+            node.blocked = True
+            node.children.clear()  # prune children
+            collapsed.add(domain)
 
     return collapsed
 
@@ -128,16 +147,15 @@ def collapse_domains(domains):
 def main():
     os.makedirs("output", exist_ok=True)
 
-    # Fetch once per group
     base_lines = fetch_group(SOURCES["base"])
     tif_lines = fetch_group(SOURCES["tif"])
     nrd_lines = fetch_group(SOURCES["nrd"])
     allow_lines = fetch_group(SOURCES["allow"])
     main_lines = fetch_group(SOURCES["main"])
 
-    # Safety: prevent empty main list push
+    # Safety: avoid pushing broken build
     if len(main_lines) < 1000:
-        print("Main sources look incomplete. Aborting.")
+        print("Main source incomplete. Aborting.")
         return
 
     base_domains = extract_domains(base_lines)
@@ -157,11 +175,9 @@ def main():
 
     collapsed = collapse_domains(main_domains)
 
-    block_rules = sorted(f"||{d}^" for d in collapsed)
-
     blocked_set = collapsed | base_domains
-    allow_rules = []
 
+    allow_rules = []
     for allow in sorted(allow_domains):
         if allow in blocked_set:
             continue
@@ -173,16 +189,22 @@ def main():
 
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
+    # STREAM WRITE (no large block_rules list stored)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("! Title: AdGuard Additional DNS filter (v3)\n")
+        f.write("! Title: AdGuard Additional DNS filter (v4)\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 6 hours\n")
-        f.write(f"! Block rules: {len(block_rules)}\n")
+        f.write(f"! Block rules: {len(collapsed)}\n")
         f.write(f"! Allow rules: {len(allow_rules)}\n")
         f.write("!\n")
-        f.write("\n".join(allow_rules))
-        f.write("\n!\n")
-        f.write("\n".join(block_rules))
+
+        for rule in allow_rules:
+            f.write(rule + "\n")
+
+        f.write("!\n")
+
+        for domain in sorted(collapsed):
+            f.write(f"||{domain}^\n")
 
     print("Build successful")
 

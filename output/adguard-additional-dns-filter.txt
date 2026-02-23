@@ -1,9 +1,9 @@
 ! Title: AdGuard Additional DNS filter
-! Description: Hagezi Pro++ + DynDNS minus TIF & NRD (collapsed + full allow logic).
-! Version: 2026.02.23.1923
+! Description: Hagezi Pro++ + DynDNS minus TIF & NRD (OEM safe).
+! Version: 2026.02.23.1936
 ! Expires: 2 hours
 ! Block rules: 93572
-! Allow rules: 288
+! Allow rules: 289
 !
 @@||24smi.info^
 @@||2performant.com^
@@ -65,6 +65,7 @@
 @@||c.nexinsight.com.ua^
 @@||c.office.com^
 @@||c.webengage.com^
+@@||calculator-api-in.allawnos.com^
 @@||cc-dt.com^
 @@||cdn-magiclinks.trackonomics.net^
 @@||cdn.rollbar.com^

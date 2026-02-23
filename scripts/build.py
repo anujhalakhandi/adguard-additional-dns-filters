@@ -4,7 +4,7 @@ import re
 from datetime import datetime
 
 # ==========================================================
-# SOURCE REGISTRY (Optimized for AdGuard Apps Personal Use)
+# SOURCE REGISTRY (Personal AdGuard App Optimized)
 # ==========================================================
 
 SOURCES = {
@@ -13,14 +13,13 @@ SOURCES = {
         "https://filters.adtidy.org/android/filters/15_optimized.txt",
     ],
 
-    # Switched to Hagezi Pro (NOT Pro++)
+    # Hagezi Pro + DynDNS (NOT Pro++)
     "main": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
-        # Uncomment below if you really want DynDNS blocked
-        # "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
     ],
 
-    # Intelligence feeds (we REMOVE these from output)
+    # Intelligence feeds (explicitly removed from final output)
     "tif": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
     ],
@@ -57,7 +56,7 @@ OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
 RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
 
 # ==========================================================
-# NETWORK
+# NETWORK (Connection reuse)
 # ==========================================================
 
 session = requests.Session()
@@ -79,7 +78,7 @@ def fetch_all(urls):
     return lines
 
 # ==========================================================
-# DOMAIN PARSING (Strict DNS Style Only)
+# DOMAIN PARSING (Strict DNS-Only)
 # ==========================================================
 
 DOMAIN_PATTERN = re.compile(r"^\|\|([a-zA-Z0-9.-]+)\^")
@@ -117,7 +116,6 @@ def main():
     intelligence_domains = set()
     allow_domains = set()
     main_domains = {}
-    final_rules = []
 
     # ---------------- BASE ----------------
     for rule in fetch_all(SOURCES["base"]):
@@ -157,7 +155,7 @@ def main():
         if not d:
             continue
 
-        # Skip if covered by base
+        # Skip if already covered by base
         if any(is_subdomain(d, b) for b in base_domains):
             continue
 
@@ -165,22 +163,29 @@ def main():
         if any(is_subdomain(d, i) for i in intelligence_domains):
             continue
 
-        # Skip if parent already added (collapse subdomains)
+        # Collapse subdomains (avoid redundancy)
         if any(is_subdomain(d, existing) for existing in main_domains):
             continue
 
         main_domains[d] = c
 
-    # Convert to sorted block rules
     block_rules = sorted(main_domains.values())
 
-    # ---------------- SMART ALLOW (Parent-aware) ----------------
-    all_blocked = set(main_domains.keys()) | base_domains
+    # ---------------- SMART ALLOW (Optimized O(n)) ----------------
+    blocked_domains = set(main_domains.keys()) | base_domains
     allow_rules = []
 
     for allow in allow_domains:
-        for blocked in all_blocked:
-            if is_subdomain(blocked, allow) or is_subdomain(allow, blocked):
+
+        if allow in blocked_domains:
+            allow_rules.append(f"@@||{allow}^")
+            continue
+
+        # Walk parent chain only (fast)
+        parts = allow.split(".")
+        for i in range(1, len(parts)):
+            parent = ".".join(parts[i:])
+            if parent in blocked_domains:
                 allow_rules.append(f"@@||{allow}^")
                 break
 
@@ -191,8 +196,9 @@ def main():
 
     # ---------------- WRITE FILTER FILE ----------------
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+
         f.write("! Title: AdGuard Additional DNS filter\n")
-        f.write("! Description: Hagezi Pro minus TIF & NRD. Optimized for AdGuard apps.\n")
+        f.write("! Description: Hagezi Pro + DynDNS minus TIF & NRD. Optimized for personal AdGuard apps.\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
@@ -223,6 +229,7 @@ Allow rules: {len(allow_rules)}
         f.write(readme)
 
     print("Build successful")
+
 
 if __name__ == "__main__":
     main()

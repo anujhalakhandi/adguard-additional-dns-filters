@@ -3,7 +3,6 @@ import os
 import re
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
-from collections import defaultdict
 import tldextract
 
 # ==========================================================
@@ -43,7 +42,7 @@ SOURCES = {
     ],
 }
 
-# Minimal OEM-safe global allow (no region suffixes)
+# OEM-safe minimal allow
 CUSTOM_ALLOW_DOMAINS = {
     "account.heytap.com",
     "id.heytap.com",
@@ -59,7 +58,7 @@ TELEMETRY_PATTERNS = [
 
 DOMAIN_PATTERN = re.compile(r"\|\|([a-zA-Z0-9.-]+)\^")
 
-# PSL extractor (offline, cached)
+# PSL extractor (offline)
 extractor = tldextract.TLDExtract(suffix_list_urls=None)
 root_cache = {}
 
@@ -114,7 +113,7 @@ def extract_domain(rule):
     return None
 
 # ==========================================================
-# COLLAPSE (FAST DEPTH-BASED)
+# FAST COLLAPSE
 # ==========================================================
 
 def collapse_domains(domains):
@@ -135,7 +134,7 @@ def collapse_domains(domains):
     return collapsed
 
 # ==========================================================
-# MAIN
+# MAIN BUILD
 # ==========================================================
 
 def main():
@@ -178,12 +177,11 @@ def main():
 
     allow_domains.update(CUSTOM_ALLOW_DOMAINS)
 
-    # MAIN BLOCK BUILD
+    # MAIN
     for rule in fetch_all(SOURCES["main"]):
         c = clean_rule(rule)
         if not c:
             continue
-
         d = extract_domain(c)
         if not d:
             continue
@@ -196,22 +194,15 @@ def main():
 
         main_domains.add(d)
 
-    # Telemetry tagging (optional future expansion)
-    telemetry_domains = {
-        d for d in main_domains
-        if any(p.search(d) for p in TELEMETRY_PATTERNS)
-    }
-
     collapsed = collapse_domains(main_domains)
     block_rules = sorted(f"||{d}^" for d in collapsed)
 
     blocked_set = set(collapsed) | base_domains
-
     allow_rules = []
+
     for allow in allow_domains:
         if allow in blocked_set:
             continue
-
         parts = allow.split(".")
         for i in range(len(parts)):
             parent = ".".join(parts[i:])
@@ -225,8 +216,7 @@ def main():
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write("! Title: AdGuard Additional DNS filter (v2)\n")
-        f.write("! Description: Hagezi Pro++ minus TIF/NRD + OEM safe + PSL aware.\n")
-        f.write(f"! Version: {version}\n")
+        f.write("! Version: " + version + "\n")
         f.write("! Expires: 6 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
         f.write(f"! Allow rules: {len(allow_rules)}\n")

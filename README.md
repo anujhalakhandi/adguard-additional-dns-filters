@@ -1,7 +1,7 @@
-# AdGuard Additional DNS filter
+# AdGuard Additional DNS Filter
 
-Block rules: 69765  
-Allow rules: 2
+Block rules: 93583  
+Allow rules: 237
 
-Filter URL:
+## Filter URL
 https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt

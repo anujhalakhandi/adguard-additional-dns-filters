@@ -42,7 +42,6 @@ SOURCES = {
     ],
 }
 
-# OEM-safe minimal allow
 CUSTOM_ALLOW_DOMAINS = {
     "account.heytap.com",
     "id.heytap.com",
@@ -51,10 +50,6 @@ CUSTOM_ALLOW_DOMAINS = {
     "oxygenos.oneplus.com",
     "coloros.com",
 }
-
-TELEMETRY_PATTERNS = [
-    re.compile(r"(^|[-.])(analytics|tracking|telemetry|metrics|stats|log)([-.]|$)")
-]
 
 DOMAIN_PATTERN = re.compile(r"\|\|([a-zA-Z0-9.-]+)\^")
 
@@ -66,18 +61,18 @@ def get_root(domain):
     if domain in root_cache:
         return root_cache[domain]
     ext = extractor(domain)
-    if ext.domain and ext.suffix:
-        root = f"{ext.domain}.{ext.suffix}"
-    else:
-        root = domain
+    root = f"{ext.domain}.{ext.suffix}" if ext.domain and ext.suffix else domain
     root_cache[domain] = root
     return root
 
 # ==========================================================
-# NETWORK
+# NETWORK (tuned session)
 # ==========================================================
 
 session = requests.Session()
+adapter = requests.adapters.HTTPAdapter(pool_connections=10, pool_maxsize=10)
+session.mount("http://", adapter)
+session.mount("https://", adapter)
 
 def fetch(url):
     try:
@@ -88,29 +83,27 @@ def fetch(url):
         print(f"Failed: {url}")
         return []
 
-def fetch_all(urls):
+def fetch_group(group):
     with ThreadPoolExecutor(max_workers=MAX_WORKERS) as pool:
-        results = list(pool.map(fetch, set(urls)))
+        results = list(pool.map(fetch, group))
     return [line for result in results for line in result]
 
 # ==========================================================
 # PARSING
 # ==========================================================
 
-def clean_rule(rule):
-    rule = rule.strip()
-    if not rule or rule.startswith("!"):
-        return None
-    return rule
-
-def extract_domain(rule):
-    r = rule
-    if r.startswith("@@"):
-        r = r[2:]
-    match = DOMAIN_PATTERN.search(r)
-    if match:
-        return match.group(1).lower()
-    return None
+def extract_domains(lines):
+    domains = set()
+    for rule in lines:
+        rule = rule.strip()
+        if not rule or rule.startswith("!"):
+            continue
+        if rule.startswith("@@"):
+            rule = rule[2:]
+        m = DOMAIN_PATTERN.search(rule)
+        if m:
+            domains.add(m.group(1).lower())
+    return domains
 
 # ==========================================================
 # FAST COLLAPSE
@@ -122,113 +115,74 @@ def collapse_domains(domains):
 
     for domain in domains:
         parts = domain.split(".")
-        skip = False
-        for i in range(1, len(parts)):
-            parent = ".".join(parts[i:])
-            if parent in collapsed:
-                skip = True
-                break
-        if not skip:
-            collapsed.add(domain)
+        if any(".".join(parts[i:]) in collapsed for i in range(1, len(parts))):
+            continue
+        collapsed.add(domain)
 
     return collapsed
 
 # ==========================================================
-# MAIN BUILD
+# MAIN
 # ==========================================================
 
 def main():
     os.makedirs("output", exist_ok=True)
 
-    base_domains = set()
-    intelligence_domains = set()
-    allow_domains = set()
-    main_domains = set()
+    # Fetch once per group
+    base_lines = fetch_group(SOURCES["base"])
+    tif_lines = fetch_group(SOURCES["tif"])
+    nrd_lines = fetch_group(SOURCES["nrd"])
+    allow_lines = fetch_group(SOURCES["allow"])
+    main_lines = fetch_group(SOURCES["main"])
 
-    # BASE
-    for rule in fetch_all(SOURCES["base"]):
-        c = clean_rule(rule)
-        if not c:
-            continue
-        d = extract_domain(c)
-        if d:
-            base_domains.add(d)
+    # Safety: prevent empty main list push
+    if len(main_lines) < 1000:
+        print("Main sources look incomplete. Aborting.")
+        return
 
-    # INTELLIGENCE
-    for category in ["tif", "nrd"]:
-        for rule in fetch_all(SOURCES[category]):
-            c = clean_rule(rule)
-            if not c:
-                continue
-            d = extract_domain(c)
-            if d:
-                intelligence_domains.add(d)
-
-    intel_roots = set(get_root(d) for d in intelligence_domains)
-
-    # ALLOW
-    for rule in fetch_all(SOURCES["allow"]):
-        c = clean_rule(rule)
-        if not c:
-            continue
-        d = extract_domain(c)
-        if d:
-            allow_domains.add(d)
-
+    base_domains = extract_domains(base_lines)
+    intelligence_domains = extract_domains(tif_lines + nrd_lines)
+    allow_domains = extract_domains(allow_lines)
     allow_domains.update(CUSTOM_ALLOW_DOMAINS)
 
-    # MAIN
-    for rule in fetch_all(SOURCES["main"]):
-        c = clean_rule(rule)
-        if not c:
-            continue
-        d = extract_domain(c)
-        if not d:
-            continue
+    intel_roots = {get_root(d) for d in intelligence_domains}
 
+    main_domains = set()
+    for d in extract_domains(main_lines):
         if d in base_domains:
             continue
-
         if get_root(d) in intel_roots:
             continue
-
         main_domains.add(d)
 
     collapsed = collapse_domains(main_domains)
+
     block_rules = sorted(f"||{d}^" for d in collapsed)
 
-    blocked_set = set(collapsed) | base_domains
+    blocked_set = collapsed | base_domains
     allow_rules = []
 
-    for allow in allow_domains:
+    for allow in sorted(allow_domains):
         if allow in blocked_set:
             continue
         parts = allow.split(".")
-        for i in range(len(parts)):
-            parent = ".".join(parts[i:])
-            if parent in blocked_set:
-                allow_rules.append(f"@@||{allow}^")
-                break
+        if any(".".join(parts[i:]) in blocked_set for i in range(len(parts))):
+            allow_rules.append(f"@@||{allow}^")
 
     allow_rules = sorted(set(allow_rules))
 
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
-        f.write("! Title: AdGuard Additional DNS filter (v2)\n")
-        f.write("! Version: " + version + "\n")
+        f.write("! Title: AdGuard Additional DNS filter (v3)\n")
+        f.write(f"! Version: {version}\n")
         f.write("! Expires: 6 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
         f.write(f"! Allow rules: {len(allow_rules)}\n")
         f.write("!\n")
-
-        for r in allow_rules:
-            f.write(r + "\n")
-
-        f.write("!\n")
-
-        for r in block_rules:
-            f.write(r + "\n")
+        f.write("\n".join(allow_rules))
+        f.write("\n!\n")
+        f.write("\n".join(block_rules))
 
     print("Build successful")
 

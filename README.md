@@ -2,7 +2,7 @@
 
 Optimized for personal AdGuard Android & macOS usage.
 
-Block rules: 69716  
+Block rules: 69793  
 Allow rules: 261
 
 ## Filter URL

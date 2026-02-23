@@ -1,58 +1,82 @@
 import requests
 import os
 from datetime import datetime
+from concurrent.futures import ThreadPoolExecutor
 
-# ======================================
-# SOURCES
-# ======================================
+# ==========================================================
+# SOURCE REGISTRY
+# ==========================================================
 
-BASE_URLS = [
-    "https://filters.adtidy.org/dns/filter_1.txt",
-    "https://filters.adtidy.org/android/filters/15_optimized.txt"
-]
+SOURCES = {
+    # AdGuard base filters (avoid duplicating them)
+    "base": [
+        "https://filters.adtidy.org/dns/filter_1.txt",
+        "https://filters.adtidy.org/android/filters/15_optimized.txt",
+    ],
 
-MAIN_LISTS = [
-    "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
-    "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
-]
+    # MAIN BLOCK LIST (Pro++ replaces Pro)
+    "main": [
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
+    ],
 
-TIF_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
+    # TIF (Threat Intelligence Feed)
+    "tif": [
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
+    ],
 
-ALLOWLIST_URLS = [
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-native.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-connectivity.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-apple.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-google.txt",
+    # ALL NRD LISTS (treated same as TIF → removal set)
+    "nrd": [
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd.txt",
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-7.txt",
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-14.txt",
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-30.txt",
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-90.txt",
+    ],
 
-    "https://local.oisd.nl/extract/commonly_whitelisted.php",
-
-    "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/firefox.txt",
-    "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/mac.txt",
-    "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/banks.txt",
-    "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/windows.txt",
-    "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/issues.txt",
-    "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/android.txt",
-    "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/sensitive.txt",
-    "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt",
-]
+    # Allow lists
+    "allow": [
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-native.txt",
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-connectivity.txt",
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-apple.txt",
+        "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-google.txt",
+        "https://local.oisd.nl/extract/commonly_whitelisted.php",
+        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/firefox.txt",
+        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/mac.txt",
+        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/banks.txt",
+        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/windows.txt",
+        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/issues.txt",
+        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/android.txt",
+        "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/sensitive.txt",
+        "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt",
+    ],
+}
 
 OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
 
 RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
 
-
-# ======================================
+# ==========================================================
 # HELPERS
-# ======================================
+# ==========================================================
 
 def fetch(url):
     print("Downloading:", url)
     try:
-        return requests.get(url, timeout=40).text.splitlines()
-    except:
+        r = requests.get(url, timeout=40)
+        r.raise_for_status()
+        return r.text.splitlines()
+    except Exception as e:
+        print("Failed:", url, "|", e)
         return []
+
+
+def fetch_all(urls):
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        results = list(pool.map(fetch, urls))
+    return [line for result in results for line in result]
 
 
 def clean_rule(rule):
@@ -65,95 +89,105 @@ def clean_rule(rule):
 def extract_domain(rule):
     r = rule.strip()
 
+    if r.startswith("@@"):
+        r = r[2:]
+
     if r.startswith("||"):
         return r[2:].split("^")[0]
 
-    if " " not in r and "." in r and not r.startswith("@@"):
+    if " " not in r and "." in r:
         return r
 
     return None
 
 
-# ======================================
+# ==========================================================
 # MAIN BUILD
-# ======================================
+# ==========================================================
 
 def main():
 
     os.makedirs("output", exist_ok=True)
 
-    exclusion_rules = set()
-    base_blocked_domains = set()
+    base_domains = set()
     allow_domains = set()
-
-    # ---------- BASE FILTERS ----------
-    for url in BASE_URLS:
-        for r in fetch(url):
-            c = clean_rule(r)
-            if not c:
-                continue
-
-            exclusion_rules.add(c)
-
-            d = extract_domain(c)
-            if d:
-                base_blocked_domains.add(d)
-
-    # ---------- TIF ----------
-    for r in fetch(TIF_URL):
-        c = clean_rule(r)
-        if c:
-            exclusion_rules.add(c)
-
-    # ---------- ALLOWLISTS ----------
-    for url in ALLOWLIST_URLS:
-        for r in fetch(url):
-            c = clean_rule(r)
-            if not c:
-                continue
-
-            exclusion_rules.add(c)
-
-            d = extract_domain(c)
-            if d:
-                allow_domains.add(d)
-
-    # ---------- BUILD BLOCK RULES ----------
+    intelligence_domains = set()  # TIF + NRD
+    main_blocked_domains = set()
     block_rules = []
     seen = set()
 
-    for main_url in MAIN_LISTS:
+    # ---------------- BASE FILTER DOMAINS ----------------
+    for rule in fetch_all(SOURCES["base"]):
+        c = clean_rule(rule)
+        if not c:
+            continue
 
-        for rule in fetch(main_url):
+        d = extract_domain(c)
+        if d:
+            base_domains.add(d)
 
+    # ---------------- TIF + NRD DOMAINS ----------------
+    for category in ["tif", "nrd"]:
+        for rule in fetch_all(SOURCES[category]):
             c = clean_rule(rule)
-
             if not c:
                 continue
 
-            if c in exclusion_rules:
-                continue
+            d = extract_domain(c)
+            if d:
+                intelligence_domains.add(d)
 
-            if c in seen:
-                continue
+    # ---------------- ALLOW DOMAINS ----------------
+    for rule in fetch_all(SOURCES["allow"]):
+        c = clean_rule(rule)
+        if not c:
+            continue
 
-            seen.add(c)
-            block_rules.append(c)
+        d = extract_domain(c)
+        if d:
+            allow_domains.add(d)
+
+    # ---------------- MAIN BLOCK LIST (Pro++) ----------------
+    for rule in fetch_all(SOURCES["main"]):
+        c = clean_rule(rule)
+        if not c:
+            continue
+
+        d = extract_domain(c)
+
+        # Remove anything in base filters
+        if d and d in base_domains:
+            continue
+
+        # Remove anything in TIF or NRD
+        if d and d in intelligence_domains:
+            continue
+
+        if c in seen:
+            continue
+
+        seen.add(c)
+        block_rules.append(c)
+
+        if d:
+            main_blocked_domains.add(d)
 
     block_rules = sorted(block_rules)
 
-    # ---------- BUILD SMART ALLOW RULES ----------
-    needed_allow = allow_domains.intersection(base_blocked_domains)
+    # ---------------- SMART ALLOW RULES ----------------
+    all_blocked = base_domains | main_blocked_domains
+    needed_allow = allow_domains.intersection(all_blocked)
 
     allow_rules = sorted([f"@@||{d}^" for d in needed_allow])
 
+    # ---------------- VERSION ----------------
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # ---------- WRITE FILTER ----------
+    # ---------------- WRITE FILTER FILE ----------------
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
         f.write("! Title: AdGuard Additional DNS filter\n")
-        f.write("! Description: Additional DNS filter not included in the default list.\n")
+        f.write("! Description: Pro++ minus TIF and NRD intelligence feeds.\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
@@ -167,19 +201,6 @@ def main():
 
         for r in block_rules:
             f.write(r + "\n")
-
-    # ---------- README ----------
-    readme = f"""# AdGuard Additional DNS filter
-
-Block rules: {len(block_rules)}  
-Allow rules: {len(allow_rules)}
-
-Filter URL:
-{RAW_LINK}
-"""
-
-    with open("README.md", "w", encoding="utf-8") as f:
-        f.write(readme)
 
     print("Build successful")
 

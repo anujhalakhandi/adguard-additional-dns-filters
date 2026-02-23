@@ -3,6 +3,7 @@ import os
 import re
 from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor
+from collections import defaultdict
 
 # ==========================================================
 # SOURCE REGISTRY
@@ -74,7 +75,7 @@ def fetch_all(urls):
     return [line for result in results for line in result]
 
 # ==========================================================
-# DOMAIN PARSING (Strict DNS-only rules)
+# DOMAIN PARSING (Strict DNS rules only)
 # ==========================================================
 
 DOMAIN_PATTERN = re.compile(r"^\|\|([a-zA-Z0-9.-]+)\^")
@@ -95,7 +96,7 @@ def extract_domain(rule):
     return None
 
 # ==========================================================
-# SUBDOMAIN COLLAPSE (Efficient O(n log n))
+# SUBDOMAIN COLLAPSE (O(n log n))
 # ==========================================================
 
 def collapse_domains(domain_dict):
@@ -124,7 +125,7 @@ def main():
     allow_domains = set()
     main_domains = {}
 
-    # ---------------- BASE ----------------
+    # BASE
     for rule in fetch_all(SOURCES["base"]):
         c = clean_rule(rule)
         if not c:
@@ -133,7 +134,7 @@ def main():
         if d:
             base_domains.add(d)
 
-    # ---------------- INTELLIGENCE (TIF + NRD) ----------------
+    # INTELLIGENCE
     for category in ["tif", "nrd"]:
         for rule in fetch_all(SOURCES[category]):
             c = clean_rule(rule)
@@ -143,7 +144,7 @@ def main():
             if d:
                 intelligence_domains.add(d)
 
-    # ---------------- ALLOW ----------------
+    # ALLOW
     for rule in fetch_all(SOURCES["allow"]):
         c = clean_rule(rule)
         if not c:
@@ -152,7 +153,7 @@ def main():
         if d:
             allow_domains.add(d)
 
-    # ---------------- MAIN BLOCK BUILD ----------------
+    # MAIN BUILD
     for rule in fetch_all(SOURCES["main"]):
         c = clean_rule(rule)
         if not c:
@@ -162,42 +163,67 @@ def main():
         if not d:
             continue
 
-        # Skip if already blocked by base
         if d in base_domains:
             continue
 
-        # Skip intelligence feeds
         if d in intelligence_domains:
             continue
 
         main_domains[d] = c
 
-    # Collapse subdomains efficiently
+    # Collapse redundant subdomains
     main_domains = collapse_domains(main_domains)
 
     block_rules = sorted(main_domains.values())
 
-    # ---------------- SMART ALLOW (Parent-Aware & Correct) ----------------
+    # ==========================================================
+    # CORRECT BIDIRECTIONAL SMART ALLOW
+    # ==========================================================
+
     blocked_domains = set(main_domains.keys()) | base_domains
+
+    # Build reverse index by TLD for faster child lookup
+    tld_index = defaultdict(set)
+    for domain in blocked_domains:
+        parts = domain.split(".")
+        tld = parts[-1]
+        tld_index[tld].add(domain)
+
     allow_rules = []
 
     for allow in allow_domains:
+
         parts = allow.split(".")
+        tld = parts[-1]
+
+        # 1️⃣ Parent chain check (parent blocked)
+        parent_match = False
         for i in range(len(parts)):
             parent = ".".join(parts[i:])
             if parent in blocked_domains:
+                allow_rules.append(f"@@||{allow}^")
+                parent_match = True
+                break
+
+        if parent_match:
+            continue
+
+        # 2️⃣ Child check (blocked subdomain exists)
+        prefix = allow + "."
+        for blocked in tld_index[tld]:
+            if blocked.startswith(prefix):
                 allow_rules.append(f"@@||{allow}^")
                 break
 
     allow_rules = sorted(set(allow_rules))
 
-    # ---------------- VERSION ----------------
+    # VERSION
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # ---------------- WRITE FILTER FILE ----------------
+    # WRITE FILTER FILE
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write("! Title: AdGuard Additional DNS filter\n")
-        f.write("! Description: Hagezi Pro + DynDNS minus TIF & NRD (collapsed + correct allow logic).\n")
+        f.write("! Description: Hagezi Pro + DynDNS minus TIF & NRD (collapsed + full allow logic).\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
@@ -212,7 +238,7 @@ def main():
         for r in block_rules:
             f.write(r + "\n")
 
-    # ---------------- UPDATE README ----------------
+    # UPDATE README
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(f"""# AdGuard Additional DNS Filter
 

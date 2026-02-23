@@ -1,6 +1,6 @@
 # AdGuard Additional DNS Filter
 
-Block rules: 93583  
+Block rules: 93576  
 Allow rules: 237
 
 ## Filter URL

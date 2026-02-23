@@ -2,7 +2,7 @@ name: Build DNS Filter
 
 on:
   schedule:
-    - cron: "0 3 * * *"
+    - cron: "0 */2 * * *"
   workflow_dispatch:
 
 jobs:
@@ -12,19 +12,14 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
-      - name: Install dependencies
-        run: pip install requests
+      - run: pip install requests
+      - run: python scripts/build.py
 
-      - name: Run build
-        run: python scripts/build.py
-
-      - name: Commit result
-        run: |
+      - run: |
           git config user.name "github-actions"
           git config user.email "actions@github.com"
           git add .

@@ -11,7 +11,6 @@ BASE_URLS = [
     "https://filters.adtidy.org/android/filters/15_optimized.txt"
 ]
 
-# MAIN SOURCE LISTS (FAKE REMOVED)
 MAIN_LISTS = [
     "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
     "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
@@ -20,15 +19,15 @@ MAIN_LISTS = [
 TIF_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
 
 ALLOWLIST_URLS = [
-
-    # HaGeZi
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-native.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-connectivity.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-apple.txt",
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-google.txt",
 
-    # OISD
     "https://local.oisd.nl/extract/commonly_whitelisted.php",
 
-    # AdGuard exclusions
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/firefox.txt",
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/mac.txt",
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/banks.txt",
@@ -37,21 +36,6 @@ ALLOWLIST_URLS = [
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/android.txt",
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/sensitive.txt",
     "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt",
-
-    # Community allowlists
-    "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.whitelist.txt",
-    "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt",
-    "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/referral-sites.txt",
-    "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt",
-    "https://raw.githubusercontent.com/freekers/whitelist/master/domains/whitelist.txt",
-    "https://raw.githubusercontent.com/ookangzheng/blahdns/master/hosts/whitelist.txt",
-    "https://raw.githubusercontent.com/DandelionSprout/AdGuard-Home-Whitelist/master/whitelist.txt",
-    "https://raw.githubusercontent.com/TogoFire-Home/AD-Settings/main/Filters/whitelist.txt",
-
-    # Extra
-    "https://raw.githubusercontent.com/Dogino/Discord-Phishing-URLs/main/official-domains.txt",
-    "https://raw.githubusercontent.com/boutetnico/url-shorteners/master/list.txt",
-    "https://raw.githubusercontent.com/mawenjian/china-cdn-domain-whitelist/master/china-cdn-domain-whitelist.txt",
 ]
 
 OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
@@ -78,6 +62,18 @@ def clean_rule(rule):
     return rule
 
 
+def extract_domain(rule):
+    r = rule.strip()
+
+    if r.startswith("||"):
+        return r[2:].split("^")[0]
+
+    if " " not in r and "." in r and not r.startswith("@@"):
+        return r
+
+    return None
+
+
 # ======================================
 # MAIN BUILD
 # ======================================
@@ -87,29 +83,43 @@ def main():
     os.makedirs("output", exist_ok=True)
 
     exclusion_rules = set()
+    base_blocked_domains = set()
+    allow_domains = set()
 
-    # BASE FILTERS
+    # ---------- BASE FILTERS ----------
     for url in BASE_URLS:
         for r in fetch(url):
             c = clean_rule(r)
-            if c:
-                exclusion_rules.add(c)
+            if not c:
+                continue
 
-    # TIF
+            exclusion_rules.add(c)
+
+            d = extract_domain(c)
+            if d:
+                base_blocked_domains.add(d)
+
+    # ---------- TIF ----------
     for r in fetch(TIF_URL):
         c = clean_rule(r)
         if c:
             exclusion_rules.add(c)
 
-    # ALLOWLISTS
+    # ---------- ALLOWLISTS ----------
     for url in ALLOWLIST_URLS:
         for r in fetch(url):
             c = clean_rule(r)
-            if c:
-                exclusion_rules.add(c)
+            if not c:
+                continue
 
-    # BUILD FINAL FROM MAIN LISTS
-    final_rules = []
+            exclusion_rules.add(c)
+
+            d = extract_domain(c)
+            if d:
+                allow_domains.add(d)
+
+    # ---------- BUILD BLOCK RULES ----------
+    block_rules = []
     seen = set()
 
     for main_url in MAIN_LISTS:
@@ -128,29 +138,41 @@ def main():
                 continue
 
             seen.add(c)
-            final_rules.append(c)
+            block_rules.append(c)
 
-    final_rules = sorted(final_rules)
+    block_rules = sorted(block_rules)
+
+    # ---------- BUILD SMART ALLOW RULES ----------
+    needed_allow = allow_domains.intersection(base_blocked_domains)
+
+    allow_rules = sorted([f"@@||{d}^" for d in needed_allow])
 
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # WRITE FILTER
+    # ---------- WRITE FILTER ----------
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
         f.write("! Title: AdGuard Additional DNS filter\n")
         f.write("! Description: Additional DNS filter not included in the default list.\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
-        f.write(f"! Total rules: {len(final_rules)}\n")
+        f.write(f"! Block rules: {len(block_rules)}\n")
+        f.write(f"! Allow rules: {len(allow_rules)}\n")
         f.write("!\n")
 
-        for r in final_rules:
+        for r in allow_rules:
             f.write(r + "\n")
 
-    # README
+        f.write("!\n")
+
+        for r in block_rules:
+            f.write(r + "\n")
+
+    # ---------- README ----------
     readme = f"""# AdGuard Additional DNS filter
 
-Rules: {len(final_rules)}
+Block rules: {len(block_rules)}  
+Allow rules: {len(allow_rules)}
 
 Filter URL:
 {RAW_LINK}
@@ -159,7 +181,7 @@ Filter URL:
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(readme)
 
-    print("Build successful:", len(final_rules))
+    print("Build successful")
 
 
 if __name__ == "__main__":

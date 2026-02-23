@@ -170,7 +170,30 @@ def main():
 
     # ---------------- SMART ALLOW ----------------
     all_blocked = base_domains | main_blocked_domains
-    needed_allow = allow_domains.intersection(all_blocked)
+    needed_allow = set()
+
+    for d in allow_domains:
+        # Check if the exact domain is in the blocklist
+        if d in all_blocked:
+            needed_allow.add(d)
+        else:
+            # 1. Check if any parent of the allow domain is blocked
+            parts = d.split('.')
+            is_needed = False
+            for i in range(1, len(parts)):
+                parent_domain = '.'.join(parts[i:])
+                if parent_domain in all_blocked:
+                    needed_allow.add(d)
+                    is_needed = True
+                    break
+            
+            # 2. Check if the allow domain is a parent of any blocked domain
+            if not is_needed:
+                for b in all_blocked:
+                    if b.endswith('.' + d):
+                        needed_allow.add(d)
+                        break
+
     allow_rules = sorted([f"@@||{d}^" for d in needed_allow])
 
     # ---------------- VERSION ----------------

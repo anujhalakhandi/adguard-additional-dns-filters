@@ -1,10 +1,10 @@
 import requests
 import os
-import time
+import re
 from datetime import datetime
 
 # ==========================================================
-# SOURCE REGISTRY
+# SOURCE REGISTRY (Optimized for AdGuard Apps Personal Use)
 # ==========================================================
 
 SOURCES = {
@@ -12,13 +12,19 @@ SOURCES = {
         "https://filters.adtidy.org/dns/filter_1.txt",
         "https://filters.adtidy.org/android/filters/15_optimized.txt",
     ],
+
+    # Switched to Hagezi Pro (NOT Pro++)
     "main": [
-        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
-        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
+        # Uncomment below if you really want DynDNS blocked
+        # "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
     ],
+
+    # Intelligence feeds (we REMOVE these from output)
     "tif": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
     ],
+
     "nrd": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-7.txt",
@@ -26,6 +32,7 @@ SOURCES = {
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-30.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/nrd-90.txt",
     ],
+
     "allow": [
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
         "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
@@ -42,165 +49,168 @@ SOURCES = {
         "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/android.txt",
         "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/sensitive.txt",
         "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt",
-        "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/whitelist-oneplus.txt",
     ],
 }
 
 OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
+
 RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
 
 # ==========================================================
-# HELPERS
+# NETWORK
 # ==========================================================
 
-def fetch_category(urls):
-    results = []
-    # Using a session with a standard User-Agent prevents CDN rate-limiting/tarpitting
-    session = requests.Session()
-    session.headers.update({
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
-    })
-    
-    for url in urls:
-        print(f"[{datetime.utcnow().strftime('%H:%M:%S')}] Fetching: {url}")
-        try:
-            r = session.get(url, timeout=30)
-            r.raise_for_status()
-            results.extend(r.text.splitlines())
-        except Exception as e:
-            print(f" -> Failed: {e}")
-    return results
+session = requests.Session()
+
+def fetch(url):
+    print("Downloading:", url)
+    try:
+        r = session.get(url, timeout=40)
+        r.raise_for_status()
+        return r.text.splitlines()
+    except Exception as e:
+        print("Failed:", url, "|", e)
+        return []
+
+def fetch_all(urls):
+    lines = []
+    for url in set(urls):  # dedupe URLs
+        lines.extend(fetch(url))
+    return lines
+
+# ==========================================================
+# DOMAIN PARSING (Strict DNS Style Only)
+# ==========================================================
+
+DOMAIN_PATTERN = re.compile(r"^\|\|([a-zA-Z0-9.-]+)\^")
 
 def clean_rule(rule):
     rule = rule.strip()
-    if not rule or rule.startswith("!") or rule.startswith("#"):
+    if not rule or rule.startswith("!"):
         return None
     return rule
 
 def extract_domain(rule):
     r = rule.strip()
-    
-    # Strip standard AdGuard/AdBlock wrappers
+
     if r.startswith("@@"):
         r = r[2:]
-    if r.startswith("||"):
-        r = r[2:]
-    
-    # Strip path or modifier artifacts
-    r = r.split('^')[0]
-    r = r.split('$')[0]
-    r = r.split('/')[0]
 
-    if " " not in r and "." in r:
-        return r
+    match = DOMAIN_PATTERN.match(r)
+    if match:
+        return match.group(1).lower()
+
     return None
+
+def is_subdomain(child, parent):
+    return child == parent or child.endswith("." + parent)
 
 # ==========================================================
 # MAIN BUILD
 # ==========================================================
 
 def main():
-    start_time = time.time()
+
     os.makedirs("output", exist_ok=True)
 
     base_domains = set()
-    allow_domains = set()
     intelligence_domains = set()
-    main_blocked_domains = set()
-    block_rules = []
-    seen = set()
+    allow_domains = set()
+    main_domains = {}
+    final_rules = []
 
-    # ---------------- BASE DOMAINS ----------------
-    print("\n--- Processing Base Sources ---")
-    for rule in fetch_category(SOURCES["base"]):
+    # ---------------- BASE ----------------
+    for rule in fetch_all(SOURCES["base"]):
         c = clean_rule(rule)
-        if c:
-            d = extract_domain(c)
-            if d: base_domains.add(d)
+        if not c:
+            continue
+        d = extract_domain(c)
+        if d:
+            base_domains.add(d)
 
-    # ---------------- INTELLIGENCE DOMAINS ----------------
-    print("\n--- Processing Intelligence Sources ---")
+    # ---------------- INTELLIGENCE (TIF + NRD) ----------------
     for category in ["tif", "nrd"]:
-        for rule in fetch_category(SOURCES[category]):
+        for rule in fetch_all(SOURCES[category]):
             c = clean_rule(rule)
-            if c:
-                d = extract_domain(c)
-                if d: intelligence_domains.add(d)
-
-    # ---------------- ALLOW DOMAINS ----------------
-    print("\n--- Processing Allow Sources ---")
-    for rule in fetch_category(SOURCES["allow"]):
-        c = clean_rule(rule)
-        if c:
+            if not c:
+                continue
             d = extract_domain(c)
-            if d: allow_domains.add(d)
+            if d:
+                intelligence_domains.add(d)
+
+    # ---------------- ALLOW ----------------
+    for rule in fetch_all(SOURCES["allow"]):
+        c = clean_rule(rule)
+        if not c:
+            continue
+        d = extract_domain(c)
+        if d:
+            allow_domains.add(d)
 
     # ---------------- MAIN BLOCK BUILD ----------------
-    print("\n--- Building Main Blocklist ---")
-    for rule in fetch_category(SOURCES["main"]):
+    for rule in fetch_all(SOURCES["main"]):
         c = clean_rule(rule)
         if not c:
             continue
 
         d = extract_domain(c)
-
-        if d and d in base_domains:
-            continue
-        if d and d in intelligence_domains:
-            continue
-        if c in seen:
+        if not d:
             continue
 
-        seen.add(c)
-        block_rules.append(c)
+        # Skip if covered by base
+        if any(is_subdomain(d, b) for b in base_domains):
+            continue
 
-        if d:
-            main_blocked_domains.add(d)
+        # Skip intelligence feeds
+        if any(is_subdomain(d, i) for i in intelligence_domains):
+            continue
 
-    block_rules = sorted(block_rules)
+        # Skip if parent already added (collapse subdomains)
+        if any(is_subdomain(d, existing) for existing in main_domains):
+            continue
 
-    # ---------------- SMART ALLOW (O(1) OPTIMIZED) ----------------
-    print(f"[{datetime.utcnow().strftime('%H:%M:%S')}] Calculating Smart Allow logic...")
-    all_blocked = base_domains | main_blocked_domains
-    
-    blocked_parents = set()
-    for b in all_blocked:
-        parts = b.split('.')
-        # Pre-compute every parent domain layer (e.g., a.b.com -> b.com, com)
-        for i in range(1, len(parts)):
-            blocked_parents.add('.'.join(parts[i:]))
+        main_domains[d] = c
 
-    needed_allow = set()
-    for d in allow_domains:
-        # 1. Exact match OR allow domain is a parent of a blocked subdomain
-        if d in all_blocked or d in blocked_parents:
-            needed_allow.add(d)
-        else:
-            # 2. A parent of the allow domain is explicitly blocked
-            parts = d.split('.')
-            for i in range(1, len(parts)):
-                if '.'.join(parts[i:]) in all_blocked:
-                    needed_allow.add(d)
-                    break
+    # Convert to sorted block rules
+    block_rules = sorted(main_domains.values())
 
-    allow_rules = sorted([f"@@||{d}^" for d in needed_allow])
+    # ---------------- SMART ALLOW (Parent-aware) ----------------
+    all_blocked = set(main_domains.keys()) | base_domains
+    allow_rules = []
 
-    # ---------------- OUTPUT ----------------
-    print(f"[{datetime.utcnow().strftime('%H:%M:%S')}] Writing output files...")
+    for allow in allow_domains:
+        for blocked in all_blocked:
+            if is_subdomain(blocked, allow) or is_subdomain(allow, blocked):
+                allow_rules.append(f"@@||{allow}^")
+                break
+
+    allow_rules = sorted(set(allow_rules))
+
+    # ---------------- VERSION ----------------
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
+    # ---------------- WRITE FILTER FILE ----------------
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write("! Title: AdGuard Additional DNS filter\n")
-        f.write("! Description: Pro++ minus TIF and NRD intelligence feeds.\n")
+        f.write("! Description: Hagezi Pro minus TIF & NRD. Optimized for AdGuard apps.\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
-        f.write(f"! Allow rules: {len(allow_rules)}\n!\n")
-        for r in allow_rules: f.write(r + "\n")
+        f.write(f"! Allow rules: {len(allow_rules)}\n")
         f.write("!\n")
-        for r in block_rules: f.write(r + "\n")
 
+        for r in allow_rules:
+            f.write(r + "\n")
+
+        f.write("!\n")
+
+        for r in block_rules:
+            f.write(r + "\n")
+
+    # ---------------- UPDATE README ----------------
     readme = f"""# AdGuard Additional DNS Filter
+
+Optimized for AdGuard Android & macOS apps.
 
 Block rules: {len(block_rules)}  
 Allow rules: {len(allow_rules)}
@@ -208,11 +218,11 @@ Allow rules: {len(allow_rules)}
 ## Filter URL
 {RAW_LINK}
 """
+
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(readme)
 
-    elapsed = round(time.time() - start_time, 2)
-    print(f"\n✅ Build successful in {elapsed} seconds.")
+    print("Build successful")
 
 if __name__ == "__main__":
     main()

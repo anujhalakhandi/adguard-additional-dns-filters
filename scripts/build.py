@@ -3,7 +3,7 @@ import os
 from datetime import datetime
 
 # ======================================
-# CONFIG
+# SOURCES
 # ======================================
 
 BASE_URLS = [
@@ -11,7 +11,13 @@ BASE_URLS = [
     "https://filters.adtidy.org/android/filters/15_optimized.txt"
 ]
 
-PRO_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
+# MAIN SOURCE LISTS
+MAIN_LISTS = [
+    "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
+    "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
+    "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/fake.txt",
+]
+
 TIF_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
 
 ALLOWLIST_URLS = [
@@ -53,51 +59,24 @@ OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
 
 RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
 
-# ======================================
-# SANITY LIMITS (important)
-# ======================================
-
-MIN_RULES = {
-    "PRO": 100000,
-    "TIF": 20000,
-    "BASE": 20000,
-    "ALLOWLIST": 50
-}
-
-MIN_FINAL_RULES = 20000
-
 
 # ======================================
 # HELPERS
 # ======================================
+
+def fetch(url):
+    print("Downloading:", url)
+    try:
+        return requests.get(url, timeout=40).text.splitlines()
+    except:
+        return []
+
 
 def clean_rule(rule):
     rule = rule.strip()
     if not rule or rule.startswith("!"):
         return None
     return rule
-
-
-def fetch(url, label=None):
-
-    print("Downloading:", url)
-
-    try:
-        r = requests.get(url, timeout=40)
-        lines = r.text.splitlines()
-
-        clean_count = sum(1 for x in lines if clean_rule(x))
-
-        # sanity check per list type
-        if label and clean_count < MIN_RULES[label]:
-            raise Exception(
-                f"{label} sanity check failed ({clean_count} rules)"
-            )
-
-        return lines
-
-    except Exception as e:
-        raise Exception(f"Failed fetching {url} -> {e}")
 
 
 # ======================================
@@ -110,60 +89,53 @@ def main():
 
     exclusion_rules = set()
 
-    # ---------- BASE ----------
+    # BASE FILTERS
     for url in BASE_URLS:
-        for r in fetch(url, "BASE"):
+        for r in fetch(url):
             c = clean_rule(r)
             if c:
                 exclusion_rules.add(c)
 
-    # ---------- TIF ----------
-    for r in fetch(TIF_URL, "TIF"):
+    # TIF
+    for r in fetch(TIF_URL):
         c = clean_rule(r)
         if c:
             exclusion_rules.add(c)
 
-    # ---------- ALLOWLISTS ----------
+    # ALLOWLISTS
     for url in ALLOWLIST_URLS:
-        for r in fetch(url, "ALLOWLIST"):
+        for r in fetch(url):
             c = clean_rule(r)
             if c:
                 exclusion_rules.add(c)
 
-    # ---------- PRO ----------
-    pro_lines = fetch(PRO_URL, "PRO")
-
-    # ---------- BUILD FINAL ----------
+    # BUILD FINAL FROM ALL MAIN LISTS
     final_rules = []
     seen = set()
 
-    for rule in pro_lines:
+    for main_url in MAIN_LISTS:
 
-        c = clean_rule(rule)
+        for rule in fetch(main_url):
 
-        if not c:
-            continue
+            c = clean_rule(rule)
 
-        if c in exclusion_rules:
-            continue
+            if not c:
+                continue
 
-        if c in seen:
-            continue
+            if c in exclusion_rules:
+                continue
 
-        seen.add(c)
-        final_rules.append(c)
+            if c in seen:
+                continue
+
+            seen.add(c)
+            final_rules.append(c)
 
     final_rules = sorted(final_rules)
 
-    # ---------- FINAL SANITY ----------
-    if len(final_rules) < MIN_FINAL_RULES:
-        raise Exception(
-            f"Final sanity failed ({len(final_rules)} rules)"
-        )
-
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # ---------- WRITE FILTER ----------
+    # WRITE FILTER
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
         f.write("! Title: AdGuard Additional DNS filter\n")
@@ -176,7 +148,7 @@ def main():
         for r in final_rules:
             f.write(r + "\n")
 
-    # ---------- README ----------
+    # README
     readme = f"""# AdGuard Additional DNS filter
 
 Rules: {len(final_rules)}

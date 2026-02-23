@@ -16,7 +16,8 @@ SOURCES = {
     ],
 
     "main": [
-        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt",
+        # *** Use Pro++ now ***
+        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
     ],
 
@@ -125,7 +126,7 @@ def main():
     allow_domains = set()
     main_domains = {}
 
-    # BASE
+    # ---------------- BASE ----------------
     for rule in fetch_all(SOURCES["base"]):
         c = clean_rule(rule)
         if not c:
@@ -134,7 +135,7 @@ def main():
         if d:
             base_domains.add(d)
 
-    # INTELLIGENCE
+    # ---------------- INTELLIGENCE (TIF + NRD) ----------------
     for category in ["tif", "nrd"]:
         for rule in fetch_all(SOURCES[category]):
             c = clean_rule(rule)
@@ -144,7 +145,7 @@ def main():
             if d:
                 intelligence_domains.add(d)
 
-    # ALLOW
+    # ---------------- ALLOW ----------------
     for rule in fetch_all(SOURCES["allow"]):
         c = clean_rule(rule)
         if not c:
@@ -153,7 +154,7 @@ def main():
         if d:
             allow_domains.add(d)
 
-    # MAIN BUILD
+    # ---------------- MAIN BLOCK BUILD ----------------
     for rule in fetch_all(SOURCES["main"]):
         c = clean_rule(rule)
         if not c:
@@ -171,23 +172,16 @@ def main():
 
         main_domains[d] = c
 
-    # Collapse redundant subdomains
     main_domains = collapse_domains(main_domains)
-
     block_rules = sorted(main_domains.values())
 
-    # ==========================================================
-    # CORRECT BIDIRECTIONAL SMART ALLOW
-    # ==========================================================
-
+    # ---------------- SMART BIDIRECTIONAL ALLOW ----------------
     blocked_domains = set(main_domains.keys()) | base_domains
 
-    # Build reverse index by TLD for faster child lookup
     tld_index = defaultdict(set)
     for domain in blocked_domains:
         parts = domain.split(".")
-        tld = parts[-1]
-        tld_index[tld].add(domain)
+        tld_index[parts[-1]].add(domain)
 
     allow_rules = []
 
@@ -196,19 +190,19 @@ def main():
         parts = allow.split(".")
         tld = parts[-1]
 
-        # 1️⃣ Parent chain check (parent blocked)
-        parent_match = False
+        # Check parent chain
+        matched = False
         for i in range(len(parts)):
             parent = ".".join(parts[i:])
             if parent in blocked_domains:
                 allow_rules.append(f"@@||{allow}^")
-                parent_match = True
+                matched = True
                 break
 
-        if parent_match:
+        if matched:
             continue
 
-        # 2️⃣ Child check (blocked subdomain exists)
+        # Check child-in-blocked
         prefix = allow + "."
         for blocked in tld_index[tld]:
             if blocked.startswith(prefix):
@@ -217,13 +211,14 @@ def main():
 
     allow_rules = sorted(set(allow_rules))
 
-    # VERSION
+    # ---------------- VERSION ----------------
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # WRITE FILTER FILE
+    # ---------------- WRITE FILTER ----------------
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+
         f.write("! Title: AdGuard Additional DNS filter\n")
-        f.write("! Description: Hagezi Pro + DynDNS minus TIF & NRD (collapsed + full allow logic).\n")
+        f.write("! Description: Hagezi Pro++ + DynDNS minus TIF & NRD (collapsed + full allow logic).\n")
         f.write(f"! Version: {version}\n")
         f.write("! Expires: 2 hours\n")
         f.write(f"! Block rules: {len(block_rules)}\n")
@@ -238,7 +233,7 @@ def main():
         for r in block_rules:
             f.write(r + "\n")
 
-    # UPDATE README
+    # ---------------- UPDATE README ----------------
     with open("README.md", "w", encoding="utf-8") as f:
         f.write(f"""# AdGuard Additional DNS Filter
 

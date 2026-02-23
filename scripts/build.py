@@ -14,12 +14,18 @@ BASE_URLS = [
 ]
 
 PRO_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.txt"
+TIF_URL = "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt"
 
 ALLOWLIST_URLS = [
+
+    # HaGeZi
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
+
+    # OISD
     "https://local.oisd.nl/extract/commonly_whitelisted.php",
 
+    # AdGuard exclusions
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/firefox.txt",
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/mac.txt",
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/banks.txt",
@@ -29,6 +35,7 @@ ALLOWLIST_URLS = [
     "https://raw.githubusercontent.com/AdguardTeam/HttpsExclusions/master/exclusions/sensitive.txt",
     "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt",
 
+    # Community allowlists
     "https://raw.githubusercontent.com/notracking/hosts-blocklists-scripts/master/hostnames.whitelist.txt",
     "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt",
     "https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/referral-sites.txt",
@@ -38,12 +45,13 @@ ALLOWLIST_URLS = [
     "https://raw.githubusercontent.com/DandelionSprout/AdGuard-Home-Whitelist/master/whitelist.txt",
     "https://raw.githubusercontent.com/TogoFire-Home/AD-Settings/main/Filters/whitelist.txt",
 
+    # Extra
     "https://raw.githubusercontent.com/Dogino/Discord-Phishing-URLs/main/official-domains.txt",
     "https://raw.githubusercontent.com/boutetnico/url-shorteners/master/list.txt",
     "https://raw.githubusercontent.com/mawenjian/china-cdn-domain-whitelist/master/china-cdn-domain-whitelist.txt",
 ]
 
-# NEW FILE NAME
+# OUTPUT FILE NAME (renamed)
 OUTPUT_FILE = "output/adguard-additional-dns-filter.txt"
 
 RAW_LINK = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns-filter.txt"
@@ -67,14 +75,19 @@ def normalize_rule(rule):
     if not rule or rule.startswith("!"):
         return None
 
+    # remove whitelist marker
     rule = rule.replace("@@", "")
+
+    # remove protocol
     rule = re.sub(r"^https?://", "", rule)
 
+    # hosts format
     if rule.startswith(("0.0.0.0", "127.0.0.1")):
         parts = rule.split()
         if len(parts) >= 2:
             rule = parts[1]
 
+    # adblock syntax cleanup
     rule = rule.replace("||", "")
     rule = rule.replace("|", "")
     rule = rule.split("^")[0]
@@ -96,30 +109,33 @@ def main():
 
     os.makedirs("output", exist_ok=True)
 
-    # stats counters
     stats = {
         "pro_total": 0,
         "base_removed": 0,
+        "tif_removed": 0,
         "allow_removed": 0,
         "duplicates_removed": 0
     }
 
     exclusion_domains = set()
 
-    # ===============================
     # BASE FILTERS
-    # ===============================
     for url in BASE_URLS:
         for r in fetch(url):
             d = normalize_rule(r)
             if d:
                 exclusion_domains.add(d)
 
-    # ===============================
-    # ALLOWLISTS
-    # ===============================
-    allow_domains = set()
+    # TIF
+    tif_domains = set()
+    for r in fetch(TIF_URL):
+        d = normalize_rule(r)
+        if d:
+            tif_domains.add(d)
+            exclusion_domains.add(d)
 
+    # ALLOWLISTS
+    allow_domains = set()
     for url in ALLOWLIST_URLS:
         for r in fetch(url):
             d = normalize_rule(r)
@@ -127,16 +143,11 @@ def main():
                 allow_domains.add(d)
                 exclusion_domains.add(d)
 
-    # ===============================
-    # MAIN LIST BUILD
-    # ===============================
-
+    # BUILD FINAL LIST
     final_rules = []
     seen_domains = set()
 
-    pro_lines = fetch(PRO_URL)
-
-    for rule in pro_lines:
+    for rule in fetch(PRO_URL):
 
         d = normalize_rule(rule)
 
@@ -147,7 +158,9 @@ def main():
 
         if d in exclusion_domains:
 
-            if d in allow_domains:
+            if d in tif_domains:
+                stats["tif_removed"] += 1
+            elif d in allow_domains:
                 stats["allow_removed"] += 1
             else:
                 stats["base_removed"] += 1
@@ -165,10 +178,7 @@ def main():
 
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # ===============================
     # WRITE FILTER
-    # ===============================
-
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
 
         f.write("! Title: AdGuard Additional DNS filter\n")
@@ -182,10 +192,7 @@ def main():
         for r in final_rules:
             f.write(r + "\n")
 
-    # ===============================
-    # BUILD STATS
-    # ===============================
-
+    # README + BADGE
     badge_value = quote(f"{len(final_rules)} rules")
     badge = f"https://img.shields.io/badge/Rules-{badge_value}-brightgreen"
 
@@ -201,6 +208,7 @@ Additional DNS filter not included in the default list.
 |---|---|
 | Main list (PRO) | {stats['pro_total']} |
 | Removed by Base filters | {stats['base_removed']} |
+| Removed by TIF | {stats['tif_removed']} |
 | Removed by Allowlists | {stats['allow_removed']} |
 | Duplicate domains removed | {stats['duplicates_removed']} |
 | **Final rules** | **{len(final_rules)}** |

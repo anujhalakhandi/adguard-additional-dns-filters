@@ -1,0 +1,1 @@
+# adguard-additional-dns-filters

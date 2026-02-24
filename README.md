@@ -1,7 +1,7 @@
 <!-- STATS-START -->
-**Version:** 2026.02.24.0707
+**Version:** 2026.02.24.0804
 
-- 🛑 Block rules: 242336
+- 🛑 Block rules: 242360
 - ✅ Allow rules: 76
 
 🔗 **Filter URL:**

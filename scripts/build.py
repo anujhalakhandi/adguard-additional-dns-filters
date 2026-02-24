@@ -167,6 +167,19 @@ def is_blocked_by_base(domain, base_index, base_depths, shadow_cache):
 
 
 # ============================================================
+# FORCE_ALLOW SHADOW CHECK (OPTIMIZED)
+# ============================================================
+
+def is_under_force_allow(domain, force_allow_set):
+    parts = domain.split(".")
+    for i in range(len(parts)):
+        parent = ".".join(parts[i:])
+        if parent in force_allow_set:
+            return True
+    return False
+
+
+# ============================================================
 # BUILD PROCESS
 # ============================================================
 
@@ -191,15 +204,15 @@ print("FORCE_ALLOW:", len(FORCE_ALLOW_SET))
 FINAL_BLOCK_SET = MAIN_SET - BASE_SET - TIF_SET
 FINAL_BLOCK_SET -= PERMANENT_EXCLUDE
 
-# Remove FORCE_ALLOW domains and their subdomains
+# Remove FORCE_ALLOW domains and their subdomains (FAST)
 if FORCE_ALLOW_SET:
     FINAL_BLOCK_SET = {
         d for d in FINAL_BLOCK_SET
-        if not any(d == allow or d.endswith("." + allow) for allow in FORCE_ALLOW_SET)
+        if not is_under_force_allow(d, FORCE_ALLOW_SET)
     }
 
 # ------------------------------------------------------------
-# ALLOW RULES (BASE SHADOW AWARE + OPTIMIZED)
+# ALLOW RULES (BASE SHADOW AWARE)
 # ------------------------------------------------------------
 
 base_index, base_depths, shadow_cache = build_base_index(BASE_SET)

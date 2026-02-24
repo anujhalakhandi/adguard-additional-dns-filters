@@ -19,7 +19,7 @@ jobs:
           python-version: "3.11"
 
       - name: Install dependencies
-        run: pip install requests publicsuffix2
+        run: pip install requests
 
       - name: Run build
         run: python scripts/build.py

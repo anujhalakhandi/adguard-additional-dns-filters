@@ -135,6 +135,38 @@ def file_hash(content):
     return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
 # ============================================================
+# OPTIMIZED BASE SHADOW CHECK
+# ============================================================
+
+def build_base_index(base_set):
+    base_index = set(base_set)
+    base_depths = {len(d.split(".")) for d in base_set}
+    shadow_cache = {}
+    return base_index, base_depths, shadow_cache
+
+
+def is_blocked_by_base(domain, base_index, base_depths, shadow_cache):
+    if domain in shadow_cache:
+        return shadow_cache[domain]
+
+    parts = domain.split(".")
+    depth = len(parts)
+
+    for parent_depth in base_depths:
+        if parent_depth > depth:
+            continue
+
+        parent = ".".join(parts[-parent_depth:])
+
+        if parent in base_index:
+            shadow_cache[domain] = True
+            return True
+
+    shadow_cache[domain] = False
+    return False
+
+
+# ============================================================
 # BUILD PROCESS
 # ============================================================
 
@@ -159,7 +191,7 @@ print("FORCE_ALLOW:", len(FORCE_ALLOW_SET))
 FINAL_BLOCK_SET = MAIN_SET - BASE_SET - TIF_SET
 FINAL_BLOCK_SET -= PERMANENT_EXCLUDE
 
-# Remove forced allow domains + their subdomains
+# Remove FORCE_ALLOW domains and their subdomains
 if FORCE_ALLOW_SET:
     FINAL_BLOCK_SET = {
         d for d in FINAL_BLOCK_SET
@@ -167,10 +199,18 @@ if FORCE_ALLOW_SET:
     }
 
 # ------------------------------------------------------------
-# ALLOW RULES (ONLY FOR BASE CONFLICTS)
+# ALLOW RULES (BASE SHADOW AWARE + OPTIMIZED)
 # ------------------------------------------------------------
 
-FINAL_ALLOW_SET = FORCE_ALLOW_SET & BASE_SET
+base_index, base_depths, shadow_cache = build_base_index(BASE_SET)
+
+FINAL_ALLOW_SET = {
+    d for d in FORCE_ALLOW_SET
+    if is_blocked_by_base(d, base_index, base_depths, shadow_cache)
+}
+
+# Sanity: ensure no overlap
+FINAL_BLOCK_SET -= FINAL_ALLOW_SET
 
 print("FINAL BLOCK:", len(FINAL_BLOCK_SET))
 print("FINAL ALLOW:", len(FINAL_ALLOW_SET))

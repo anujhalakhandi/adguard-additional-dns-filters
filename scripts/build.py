@@ -3,26 +3,29 @@
 import requests
 import re
 import os
+import hashlib
 from datetime import datetime
+from collections import defaultdict
+from publicsuffix2 import PublicSuffixList
 
-# -----------------------------
+# ============================================================
 # CONFIG
-# -----------------------------
+# ============================================================
 
-BASE = [
+BASE_URLS = [
     "https://filters.adtidy.org/dns/filter_1.txt",
     "https://filters.adtidy.org/android/filters/15_optimized.txt",
 ]
 
-MAIN = [
+MAIN_URLS = [
     "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
 ]
 
-TIF = [
+TIF_URLS = [
     "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
 ]
 
-ALLOWLIST = [
+ALLOWLIST_URLS = [
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-native.txt",
@@ -35,16 +38,42 @@ ALLOWLIST = [
 OUTPUT_FILE = "output/adguard-additional-dns.txt"
 README_FILE = "README.md"
 
+FILTER_NAME = "AdGuard Additional DNS filters"
+FILTER_DESCRIPTION = (
+    "Additional DNS filtering rules extending AdGuard Default filters "
+    "with enhanced protection while preserving compatibility."
+)
 
-# -----------------------------
+SUBSCRIPTION_URL = (
+    "https://raw.githubusercontent.com/anujhalakhandi/"
+    "adguard-additional-dns-filters/main/output/"
+    "adguard-additional-dns.txt"
+)
+
+# ============================================================
 # HELPERS
-# -----------------------------
+# ============================================================
+
+psl = PublicSuffixList()
+
 
 def fetch(url):
     print(f"Downloading: {url}")
-    r = requests.get(url, timeout=60)
+    r = requests.get(url, timeout=120)
     r.raise_for_status()
     return r.text
+
+
+def normalize(domain):
+    return domain.lower().strip().strip(".")
+
+
+def is_valid_domain(domain):
+    if "." not in domain:
+        return False
+    if psl.publicsuffix(domain) == domain:
+        return False
+    return True
 
 
 def extract_domains(text):
@@ -53,60 +82,93 @@ def extract_domains(text):
         line = line.strip()
         if not line or line.startswith("!"):
             continue
-
-        # Adblock format: ||domain^
-        match = re.search(r"\|\|([^\^/]+)\^?", line)
+        match = re.search(r"\|\|([^\^\/]+)", line)
         if match:
-            domain = match.group(1).lower().strip(".")
-            if domain.count(".") >= 1:
-                domains.add(domain)
-
+            d = normalize(match.group(1))
+            if is_valid_domain(d):
+                domains.add(d)
     return domains
 
 
 def build_set(urls):
     result = set()
     for url in urls:
-        text = fetch(url)
-        result |= extract_domains(text)
+        try:
+            result |= extract_domains(fetch(url))
+        except Exception as e:
+            print(f"Failed {url}: {e}")
     return result
 
 
-# -----------------------------
-# BUILD LOGIC
-# -----------------------------
+def build_tree(domains):
+    tree = defaultdict(set)
+    for d in domains:
+        parts = d.split(".")
+        for i in range(1, len(parts)):
+            parent = ".".join(parts[i:])
+            tree[parent].add(d)
+    return tree
 
-print("Building sets...")
 
-BASE_SET = build_set(BASE)
-MAIN_SET = build_set(MAIN)
-TIF_SET = build_set(TIF)
-ALLOW_SET = build_set(ALLOWLIST)
+def file_hash(content):
+    return hashlib.sha256(content.encode("utf-8")).hexdigest()
 
-# FINAL = MAIN − BASE − TIF
+
+# ============================================================
+# BUILD PROCESS
+# ============================================================
+
+print("Building filter sets...")
+
+BASE_SET = build_set(BASE_URLS)
+MAIN_SET = build_set(MAIN_URLS)
+TIF_SET = build_set(TIF_URLS)
+ALLOWLIST_SET = build_set(ALLOWLIST_URLS)
+
 FINAL_SET = (MAIN_SET - BASE_SET) - TIF_SET
-
-# BLOCKED_SET = FINAL ∪ BASE
 BLOCKED_SET = FINAL_SET | BASE_SET
 
-# ALLOW = allowlist ∩ BLOCKED_SET
-ALLOW_FINAL = ALLOW_SET & BLOCKED_SET
+# ============================================================
+# SHADOW-SAFE EXPANSION
+# ============================================================
 
-# -----------------------------
-# OUTPUT GENERATION
-# -----------------------------
+ALLOW_TARGET = ALLOWLIST_SET & BLOCKED_SET
+expanded_allow = set()
+
+for allow in ALLOW_TARGET:
+    for blocked in BLOCKED_SET:
+        if blocked == allow or blocked.endswith("." + allow):
+            expanded_allow.add(blocked)
+
+# ============================================================
+# SAFE DOMAIN COMPRESSION
+# ============================================================
+
+tree = build_tree(BLOCKED_SET)
+final_allow = set(expanded_allow)
+
+for parent, children in tree.items():
+    if children and children.issubset(final_allow):
+        final_allow -= children
+        final_allow.add(parent)
+
+# ============================================================
+# GENERATE OUTPUT
+# ============================================================
 
 os.makedirs("output", exist_ok=True)
 
-block_rules = sorted([f"||{d}^" for d in FINAL_SET])
-allow_rules = sorted([f"@@||{d}^" for d in ALLOW_FINAL])
+block_rules = sorted(f"||{d}^" for d in FINAL_SET)
+allow_rules = sorted(f"@@||{d}^" for d in final_allow)
 
-header = f"""! Title: AdGuard Additional DNS filters
-! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: {datetime.utcnow().strftime('%Y.%m.%d.%H%M')}
+version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
+last_modified = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+
+header = f"""! Title: {FILTER_NAME}
+! Description: {FILTER_DESCRIPTION}
+! Version: {version}
 ! Expires: 6 hours
-! Homepage: https://github.com/YOUR_USERNAME/YOUR_REPO
-! Last modified: {datetime.utcnow().isoformat()}Z
+! Last modified: {last_modified}
 ! License: MIT
 !
 ! Block rules: {len(block_rules)}
@@ -115,20 +177,34 @@ header = f"""! Title: AdGuard Additional DNS filters
 !
 """
 
-with open(OUTPUT_FILE, "w") as f:
-    f.write(header)
-    f.write("\n".join(block_rules))
-    f.write("\n\n")
-    f.write("\n".join(allow_rules))
+output_content = (
+    header
+    + "\n".join(block_rules)
+    + "\n\n"
+    + "\n".join(allow_rules)
+)
 
-# -----------------------------
+new_hash = file_hash(output_content)
+
+old_hash = None
+if os.path.exists(OUTPUT_FILE):
+    with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+        old_hash = file_hash(f.read())
+
+if new_hash != old_hash:
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        f.write(output_content)
+    print("Filter updated.")
+else:
+    print("No changes in filter output.")
+
+# ============================================================
 # UPDATE README
-# -----------------------------
+# ============================================================
 
-readme_content = f"""
-# AdGuard Additional DNS filters
+readme_content = f"""# {FILTER_NAME}
 
-Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
+{FILTER_DESCRIPTION}
 
 ## Filter Statistics
 

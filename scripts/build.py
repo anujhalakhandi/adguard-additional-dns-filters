@@ -4,7 +4,6 @@ import requests
 import os
 import hashlib
 from datetime import datetime
-from collections import defaultdict
 
 # ============================================================
 # CONFIGURATION
@@ -23,7 +22,6 @@ TIF_URLS = [
     "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
 ]
 
-# These will ALWAYS be converted into allow rules (even if block-style)
 FORCE_ALLOW_URLS = [
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
@@ -81,21 +79,6 @@ def is_valid_domain(domain):
 
 
 def extract_dns_domains(text):
-    """
-    Strict DNS-only parser.
-    Extracts pure domains from:
-      - ||domain^
-      - @@||domain^
-      - domain
-      - hosts format
-    Ignores:
-      - cosmetic rules (##, #@#)
-      - scriptlets
-      - path rules
-      - modifiers ($...)
-      - scoped allow rules
-    """
-
     domains = set()
 
     for line in text.splitlines():
@@ -104,18 +87,14 @@ def extract_dns_domains(text):
         if not line or line.startswith("!"):
             continue
 
-        # Ignore cosmetic filters explicitly
         if "##" in line or "#@#" in line:
             continue
 
-        # Strip inline comments
         line = line.split("#")[0].strip()
 
-        # Remove modifiers
         if "$" in line:
             line = line.split("$")[0]
 
-        # Handle hosts file format
         if line.startswith("0.0.0.0 ") or line.startswith("127.0.0.1 "):
             parts = line.split()
             if len(parts) >= 2:
@@ -123,18 +102,14 @@ def extract_dns_domains(text):
             else:
                 continue
 
-        # Remove allow prefix
         if line.startswith("@@"):
             line = line[2:]
 
-        # Remove block prefix
         if line.startswith("||"):
             line = line[2:]
 
-        # Remove rule suffix
         line = line.split("^")[0]
 
-        # Reject path rules
         if "/" in line:
             continue
 
@@ -163,65 +138,42 @@ def file_hash(content):
 # BUILD PROCESS
 # ============================================================
 
-print("Building DNS-strict filter sets...")
+print("Building DNS-strict additional filter...")
 
 BASE_SET = build_set(BASE_URLS)
 MAIN_SET = build_set(MAIN_URLS)
 TIF_SET = build_set(TIF_URLS)
-ALLOWLIST_SET = build_set(FORCE_ALLOW_URLS)
+FORCE_ALLOW_SET = build_set(FORCE_ALLOW_URLS)
 
 PERMANENT_EXCLUDE = {normalize(d) for d in PERMANENT_EXCLUDE}
-
-BASE_SET -= PERMANENT_EXCLUDE
-MAIN_SET -= PERMANENT_EXCLUDE
-TIF_SET -= PERMANENT_EXCLUDE
 
 print("BASE:", len(BASE_SET))
 print("MAIN:", len(MAIN_SET))
 print("TIF:", len(TIF_SET))
-print("FORCE_ALLOW:", len(ALLOWLIST_SET))
+print("FORCE_ALLOW:", len(FORCE_ALLOW_SET))
 
-# Only publish unique additions
-FINAL_SET = (MAIN_SET - BASE_SET) - TIF_SET
-BLOCKED_SET = FINAL_SET | BASE_SET
+# ------------------------------------------------------------
+# ADDITIONAL BLOCK RULES
+# ------------------------------------------------------------
 
-print("FINAL:", len(FINAL_SET))
+FINAL_BLOCK_SET = MAIN_SET - BASE_SET - TIF_SET
+FINAL_BLOCK_SET -= PERMANENT_EXCLUDE
 
-# ============================================================
-# BUILD DOMAIN TREE
-# ============================================================
+# Remove forced allow domains + their subdomains
+if FORCE_ALLOW_SET:
+    FINAL_BLOCK_SET = {
+        d for d in FINAL_BLOCK_SET
+        if not any(d == allow or d.endswith("." + allow) for allow in FORCE_ALLOW_SET)
+    }
 
-tree = defaultdict(set)
+# ------------------------------------------------------------
+# ALLOW RULES (ONLY FOR BASE CONFLICTS)
+# ------------------------------------------------------------
 
-for domain in BLOCKED_SET:
-    parts = domain.split(".")
-    for i in range(1, len(parts)):
-        parent = ".".join(parts[i:])
-        tree[parent].add(domain)
+FINAL_ALLOW_SET = FORCE_ALLOW_SET & BASE_SET
 
-# ============================================================
-# SHADOW-SAFE ALLOW EXPANSION
-# ============================================================
-
-ALLOW_TARGET = ALLOWLIST_SET & BLOCKED_SET
-final_allow = set()
-
-for allow in ALLOW_TARGET:
-    final_allow.add(allow)
-    children = tree.get(allow)
-    if children:
-        final_allow.update(children)
-
-# ============================================================
-# SAFE DOMAIN COMPRESSION
-# ============================================================
-
-for parent, children in tree.items():
-    if children and children.issubset(final_allow):
-        final_allow.difference_update(children)
-        final_allow.add(parent)
-
-print("ALLOW:", len(final_allow))
+print("FINAL BLOCK:", len(FINAL_BLOCK_SET))
+print("FINAL ALLOW:", len(FINAL_ALLOW_SET))
 
 # ============================================================
 # GENERATE OUTPUT
@@ -229,8 +181,8 @@ print("ALLOW:", len(final_allow))
 
 os.makedirs("output", exist_ok=True)
 
-block_rules = sorted(f"||{d}^" for d in FINAL_SET)
-allow_rules = sorted(f"@@||{d}^" for d in final_allow)
+block_rules = sorted(f"||{d}^" for d in FINAL_BLOCK_SET)
+allow_rules = sorted(f"@@||{d}^" for d in FINAL_ALLOW_SET)
 
 version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 last_modified = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")

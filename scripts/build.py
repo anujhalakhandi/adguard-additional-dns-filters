@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
 import requests
-import re
 import os
 import hashlib
 from datetime import datetime
@@ -46,11 +45,11 @@ FILTER_DESCRIPTION = (
 
 SUBSCRIPTION_URL = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns.txt"
 
+psl = PublicSuffixList()
+
 # ============================================================
 # HELPERS
 # ============================================================
-
-psl = PublicSuffixList()
 
 def fetch(url):
     print(f"Downloading: {url}")
@@ -58,8 +57,10 @@ def fetch(url):
     r.raise_for_status()
     return r.text
 
+
 def normalize(domain):
     return domain.lower().strip().strip(".")
+
 
 def is_valid_domain(domain):
     if "." not in domain:
@@ -68,18 +69,43 @@ def is_valid_domain(domain):
         return False
     return True
 
+
 def extract_domains(text):
     domains = set()
+
     for line in text.splitlines():
         line = line.strip()
         if not line or line.startswith("!"):
             continue
-        match = re.search(r"\|\|([^\^\/]+)", line)
-        if match:
-            d = normalize(match.group(1))
-            if is_valid_domain(d):
-                domains.add(d)
+
+        line = line.split("#")[0].strip()
+
+        # Adblock format
+        if line.startswith("||"):
+            domain = line[2:]
+            domain = domain.split("^")[0]
+            domain = domain.split("$")[0]
+            domain = normalize(domain)
+            if is_valid_domain(domain):
+                domains.add(domain)
+            continue
+
+        # Hosts format
+        parts = line.split()
+        if len(parts) >= 2:
+            candidate = normalize(parts[-1])
+            if is_valid_domain(candidate):
+                domains.add(candidate)
+            continue
+
+        # Plain domain
+        if "." in line and " " not in line and "/" not in line:
+            candidate = normalize(line)
+            if is_valid_domain(candidate):
+                domains.add(candidate)
+
     return domains
+
 
 def build_set(urls):
     result = set()
@@ -90,23 +116,16 @@ def build_set(urls):
             print(f"Failed {url}: {e}")
     return result
 
-def build_tree(domains):
-    tree = defaultdict(set)
-    for d in domains:
-        parts = d.split(".")
-        for i in range(1, len(parts)):
-            parent = ".".join(parts[i:])
-            tree[parent].add(d)
-    return tree
 
 def file_hash(content):
     return hashlib.sha256(content.encode("utf-8")).hexdigest()
+
 
 # ============================================================
 # BUILD PROCESS
 # ============================================================
 
-print("Building filter sets...")
+print("Building sets...")
 
 BASE_SET = build_set(BASE_URLS)
 MAIN_SET = build_set(MAIN_URLS)
@@ -117,27 +136,41 @@ FINAL_SET = (MAIN_SET - BASE_SET) - TIF_SET
 BLOCKED_SET = FINAL_SET | BASE_SET
 
 # ============================================================
-# SHADOW-SAFE EXPANSION
+# BUILD DOMAIN TREE (ONCE)
+# ============================================================
+
+tree = defaultdict(set)
+
+for domain in BLOCKED_SET:
+    parts = domain.split(".")
+    for i in range(1, len(parts)):
+        parent = ".".join(parts[i:])
+        tree[parent].add(domain)
+
+# ============================================================
+# SHADOW-SAFE EXPANSION (Optimized)
 # ============================================================
 
 ALLOW_TARGET = ALLOWLIST_SET & BLOCKED_SET
-expanded_allow = set()
+final_allow = set()
 
 for allow in ALLOW_TARGET:
-    for blocked in BLOCKED_SET:
-        if blocked == allow or blocked.endswith("." + allow):
-            expanded_allow.add(blocked)
+    # Allow exact match
+    if allow in BLOCKED_SET:
+        final_allow.add(allow)
+
+    # Allow blocked descendants
+    children = tree.get(allow)
+    if children:
+        final_allow.update(children)
 
 # ============================================================
 # SAFE DOMAIN COMPRESSION
 # ============================================================
 
-tree = build_tree(BLOCKED_SET)
-final_allow = set(expanded_allow)
-
 for parent, children in tree.items():
     if children and children.issubset(final_allow):
-        final_allow -= children
+        final_allow.difference_update(children)
         final_allow.add(parent)
 
 # ============================================================
@@ -166,9 +199,10 @@ header = f"""! Title: {FILTER_NAME}
 """
 
 output_content = header + "\n".join(block_rules) + "\n\n" + "\n".join(allow_rules)
-new_hash = file_hash(output_content)
 
+new_hash = file_hash(output_content)
 old_hash = None
+
 if os.path.exists(OUTPUT_FILE):
     with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
         old_hash = file_hash(f.read())
@@ -178,7 +212,7 @@ if new_hash != old_hash:
         f.write(output_content)
     print("Filter updated.")
 else:
-    print("No changes in filter output.")
+    print("No changes detected.")
 
 # ============================================================
 # UPDATE README
@@ -204,4 +238,4 @@ Auto-updated every 6 hours via GitHub Actions.
 with open(README_FILE, "w", encoding="utf-8") as f:
     f.write(readme_content)
 
-print("Build completed successfully.")
+print("Build complete.")

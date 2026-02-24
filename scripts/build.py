@@ -32,6 +32,7 @@ FORCE_ALLOW_URLS = [
 ]
 
 PERMANENT_EXCLUDE = {
+    "promos.makemytrip.com",
     "calculator-api-in.allawnos.com",
 }
 

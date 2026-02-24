@@ -5,7 +5,6 @@ import os
 import hashlib
 from datetime import datetime
 from collections import defaultdict
-from publicsuffix2 import PublicSuffixList
 
 # ============================================================
 # CONFIGURATION
@@ -45,8 +44,6 @@ FILTER_DESCRIPTION = (
 
 SUBSCRIPTION_URL = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns.txt"
 
-psl = PublicSuffixList()
-
 # ============================================================
 # HELPERS
 # ============================================================
@@ -65,7 +62,9 @@ def normalize(domain):
 def is_valid_domain(domain):
     if "." not in domain:
         return False
-    if psl.publicsuffix(domain) == domain:
+    if domain.count(".") < 1:
+        return False
+    if len(domain) < 4:
         return False
     return True
 
@@ -75,6 +74,7 @@ def extract_domains(text):
 
     for line in text.splitlines():
         line = line.strip()
+
         if not line or line.startswith("!"):
             continue
 
@@ -125,15 +125,22 @@ def file_hash(content):
 # BUILD PROCESS
 # ============================================================
 
-print("Building sets...")
+print("Building filter sets...")
 
 BASE_SET = build_set(BASE_URLS)
 MAIN_SET = build_set(MAIN_URLS)
 TIF_SET = build_set(TIF_URLS)
 ALLOWLIST_SET = build_set(ALLOWLIST_URLS)
 
+print("BASE:", len(BASE_SET))
+print("MAIN:", len(MAIN_SET))
+print("TIF:", len(TIF_SET))
+print("ALLOWLIST:", len(ALLOWLIST_SET))
+
 FINAL_SET = (MAIN_SET - BASE_SET) - TIF_SET
 BLOCKED_SET = FINAL_SET | BASE_SET
+
+print("FINAL:", len(FINAL_SET))
 
 # ============================================================
 # BUILD DOMAIN TREE (ONCE)
@@ -155,11 +162,9 @@ ALLOW_TARGET = ALLOWLIST_SET & BLOCKED_SET
 final_allow = set()
 
 for allow in ALLOW_TARGET:
-    # Allow exact match
     if allow in BLOCKED_SET:
         final_allow.add(allow)
 
-    # Allow blocked descendants
     children = tree.get(allow)
     if children:
         final_allow.update(children)
@@ -172,6 +177,8 @@ for parent, children in tree.items():
     if children and children.issubset(final_allow):
         final_allow.difference_update(children)
         final_allow.add(parent)
+
+print("ALLOW:", len(final_allow))
 
 # ============================================================
 # GENERATE OUTPUT

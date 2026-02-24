@@ -80,7 +80,17 @@ def extract_domains(text):
 
         line = line.split("#")[0].strip()
 
-        # Adblock format
+        # Allow rule format @@||domain^
+        if line.startswith("@@||"):
+            domain = line[4:]
+            domain = domain.split("^")[0]
+            domain = domain.split("$")[0]
+            domain = normalize(domain)
+            if is_valid_domain(domain):
+                domains.add(domain)
+            continue
+
+        # Block rule format ||domain^
         if line.startswith("||"):
             domain = line[2:]
             domain = domain.split("^")[0]
@@ -90,7 +100,7 @@ def extract_domains(text):
                 domains.add(domain)
             continue
 
-        # Hosts format
+        # Hosts format (0.0.0.0 domain.com)
         parts = line.split()
         if len(parts) >= 2:
             candidate = normalize(parts[-1])
@@ -98,7 +108,7 @@ def extract_domains(text):
                 domains.add(candidate)
             continue
 
-        # Plain domain
+        # Plain domain format
         if "." in line and " " not in line and "/" not in line:
             candidate = normalize(line)
             if is_valid_domain(candidate):
@@ -119,7 +129,6 @@ def build_set(urls):
 
 def file_hash(content):
     return hashlib.sha256(content.encode("utf-8")).hexdigest()
-
 
 # ============================================================
 # BUILD PROCESS

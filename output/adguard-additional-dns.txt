@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filters
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.02.24.1251
+! Version: 2026.02.24.1358
 ! Expires: 6 hours
-! Last modified: 2026-02-24T12:51:09Z
+! Last modified: 2026-02-24T13:58:58Z
 ! License: MIT
 !
 ! Block rules: 133186
-! Allow rules: 299
-! Total rules: 133485
+! Allow rules: 290
+! Total rules: 133476
 !
 ||0--0.info^
 ||0--4.com^
@@ -133226,9 +133226,7 @@
 @@||alitems.co^
 @@||alitems.site^
 @@||amplitude.com^
-@@||analytics.amplitude.com^
 @@||analytics.pinterest.com^
-@@||api*.amplitude.com^
 @@||apmebf.com^
 @@||app.appsflyer.com^
 @@||applicationinsights.io^
@@ -133255,7 +133253,6 @@
 @@||c.office.com^
 @@||c.webengage.com^
 @@||cc-dt.com^
-@@||cdn.amplitude.com^
 @@||cdn.ngenix.net^
 @@||cdn.opecloud.com^
 @@||ch0p.darty.com^
@@ -133354,8 +133351,6 @@
 @@||jakuli.com^
 @@||jdoqocy.com^
 @@||js.datadome.co^
-@@||lab.amplitude.com^
-@@||lab.eu.amplitude.com^
 @@||lafamo.com^
 @@||linkconnector.com^
 @@||linkr.it^
@@ -133400,7 +133395,6 @@
 @@||popin.cc^
 @@||postaffiliatepro.com^
 @@||ppcprotect.com^
-@@||profile-api.amplitude.com^
 @@||profitshare.ro^
 @@||propelbon.com^
 @@||pulsar.ebay.com^
@@ -133414,7 +133408,6 @@
 @@||redir.wargaming.net^
 @@||redirectingat.com^
 @@||referrer.disqus.com^
-@@||regionconfig.amplitude.com^
 @@||release.narrativ.com^
 @@||rollbar.com^
 @@||rotf.lol^
@@ -133443,8 +133436,6 @@
 @@||socketlabs.com^
 @@||sonar.viously.com^
 @@||sp-trk.com^
-@@||sr-client-cfg.amplitude.com^
-@@||sr-client-cfg.eu.amplitude.com^
 @@||stats.appsflyer.com^
 @@||stvkr.com^
 @@||sumologic.com^

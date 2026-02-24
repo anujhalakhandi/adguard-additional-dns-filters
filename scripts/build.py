@@ -18,8 +18,8 @@ SOURCES = {
         "https://filters.adtidy.org/android/filters/15_optimized.txt",
     ],
     "main": [
+        # DynDNS removed
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
-        "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/dyndns.txt",
     ],
     "tif": [
         "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
@@ -54,7 +54,7 @@ CUSTOM_ALLOW_DOMAINS = {
 DOMAIN_PATTERN = re.compile(r"\|\|([a-zA-Z0-9.-]+)\^")
 
 # ==========================================================
-# PSL ROOT CACHE
+# ROOT EXTRACTION
 # ==========================================================
 
 extractor = tldextract.TLDExtract(suffix_list_urls=None)
@@ -114,6 +114,7 @@ def extract_domains(lines):
 
 class TrieNode:
     __slots__ = ("children", "blocked")
+
     def __init__(self):
         self.children = {}
         self.blocked = False
@@ -122,8 +123,8 @@ def collapse_domains(domains):
     root = TrieNode()
     collapsed = set()
 
-    for domain in sorted(domains):
-        parts = domain.split(".")[::-1]  # reverse
+    for domain in domains:
+        parts = domain.split(".")[::-1]
         node = root
         skip = False
 
@@ -135,10 +136,49 @@ def collapse_domains(domains):
 
         if not skip:
             node.blocked = True
-            node.children.clear()  # prune children
+            node.children.clear()
             collapsed.add(domain)
 
     return collapsed
+
+# ==========================================================
+# README UPDATE
+# ==========================================================
+
+def update_readme(version, block_count, allow_count):
+    readme_path = "README.md"
+
+    if not os.path.exists(readme_path):
+        return
+
+    repo = os.getenv("GITHUB_REPOSITORY")
+    if repo:
+        filter_url = f"https://raw.githubusercontent.com/{repo}/main/{OUTPUT_FILE}"
+    else:
+        filter_url = OUTPUT_FILE  # local fallback
+
+    stats_section = (
+        "<!-- STATS-START -->\n"
+        f"**Version:** {version}\n\n"
+        f"- 🛑 Block rules: {block_count}\n"
+        f"- ✅ Allow rules: {allow_count}\n\n"
+        f"🔗 **Filter URL:**\n"
+        f"{filter_url}\n"
+        "<!-- STATS-END -->"
+    )
+
+    with open(readme_path, "r", encoding="utf-8") as f:
+        content = f.read()
+
+    new_content = re.sub(
+        r"<!-- STATS-START -->.*?<!-- STATS-END -->",
+        stats_section,
+        content,
+        flags=re.DOTALL,
+    )
+
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write(new_content)
 
 # ==========================================================
 # MAIN
@@ -153,43 +193,62 @@ def main():
     allow_lines = fetch_group(SOURCES["allow"])
     main_lines = fetch_group(SOURCES["main"])
 
-    # Safety: avoid pushing broken build
-    if len(main_lines) < 1000:
-        print("Main source incomplete. Aborting.")
+    # Safety guard
+    if not base_lines or not main_lines or len(main_lines) < 1000:
+        print("Critical source incomplete. Aborting.")
         return
 
     base_domains = extract_domains(base_lines)
     intelligence_domains = extract_domains(tif_lines + nrd_lines)
     allow_domains = extract_domains(allow_lines)
     allow_domains.update(CUSTOM_ALLOW_DOMAINS)
+    main_domains_raw = extract_domains(main_lines)
 
+    # Root-based intelligence filtering
     intel_roots = {get_root(d) for d in intelligence_domains}
 
     main_domains = set()
-    for d in extract_domains(main_lines):
+    for d in main_domains_raw:
         if d in base_domains:
             continue
         if get_root(d) in intel_roots:
             continue
         main_domains.add(d)
 
+    # Collapse redundant subdomains
     collapsed = collapse_domains(main_domains)
 
-    blocked_set = collapsed | base_domains
+    # Merge base domains into final blocked set
+    collapsed.update(base_domains)
+    blocked_set = collapsed
+
+    # ======================================================
+    # CONDITIONAL ALLOW REPAIR
+    # ======================================================
 
     allow_rules = []
-    for allow in sorted(allow_domains):
+
+    for allow in allow_domains:
         if allow in blocked_set:
             continue
-        parts = allow.split(".")
-        if any(".".join(parts[i:]) in blocked_set for i in range(len(parts))):
-            allow_rules.append(f"@@||{allow}^")
+
+        domain = allow
+        while True:
+            if domain in blocked_set:
+                allow_rules.append(f"@@||{allow}^")
+                break
+            if "." not in domain:
+                break
+            domain = domain.split(".", 1)[1]
 
     allow_rules = sorted(set(allow_rules))
 
+    # ======================================================
+    # WRITE OUTPUT
+    # ======================================================
+
     version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
 
-    # STREAM WRITE (no large block_rules list stored)
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write("! Title: AdGuard Additional DNS filter (v4)\n")
         f.write(f"! Version: {version}\n")
@@ -205,6 +264,8 @@ def main():
 
         for domain in sorted(collapsed):
             f.write(f"||{domain}^\n")
+
+    update_readme(version, len(collapsed), len(allow_rules))
 
     print("Build successful")
 

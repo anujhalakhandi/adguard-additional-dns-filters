@@ -9,7 +9,7 @@ from collections import defaultdict
 from publicsuffix2 import PublicSuffixList
 
 # ============================================================
-# CONFIG
+# CONFIGURATION
 # ============================================================
 
 BASE_URLS = [
@@ -44,11 +44,7 @@ FILTER_DESCRIPTION = (
     "with enhanced protection while preserving compatibility."
 )
 
-SUBSCRIPTION_URL = (
-    "https://raw.githubusercontent.com/anujhalakhandi/"
-    "adguard-additional-dns-filters/main/output/"
-    "adguard-additional-dns.txt"
-)
+SUBSCRIPTION_URL = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns.txt"
 
 # ============================================================
 # HELPERS
@@ -56,17 +52,14 @@ SUBSCRIPTION_URL = (
 
 psl = PublicSuffixList()
 
-
 def fetch(url):
     print(f"Downloading: {url}")
     r = requests.get(url, timeout=120)
     r.raise_for_status()
     return r.text
 
-
 def normalize(domain):
     return domain.lower().strip().strip(".")
-
 
 def is_valid_domain(domain):
     if "." not in domain:
@@ -74,7 +67,6 @@ def is_valid_domain(domain):
     if psl.publicsuffix(domain) == domain:
         return False
     return True
-
 
 def extract_domains(text):
     domains = set()
@@ -89,7 +81,6 @@ def extract_domains(text):
                 domains.add(d)
     return domains
 
-
 def build_set(urls):
     result = set()
     for url in urls:
@@ -98,7 +89,6 @@ def build_set(urls):
         except Exception as e:
             print(f"Failed {url}: {e}")
     return result
-
 
 def build_tree(domains):
     tree = defaultdict(set)
@@ -109,10 +99,8 @@ def build_tree(domains):
             tree[parent].add(d)
     return tree
 
-
 def file_hash(content):
     return hashlib.sha256(content.encode("utf-8")).hexdigest()
-
 
 # ============================================================
 # BUILD PROCESS
@@ -177,13 +165,7 @@ header = f"""! Title: {FILTER_NAME}
 !
 """
 
-output_content = (
-    header
-    + "\n".join(block_rules)
-    + "\n\n"
-    + "\n".join(allow_rules)
-)
-
+output_content = header + "\n".join(block_rules) + "\n\n" + "\n".join(allow_rules)
 new_hash = file_hash(output_content)
 
 old_hash = None
@@ -213,3 +195,13 @@ readme_content = f"""# {FILTER_NAME}
 - Total rules: **{len(block_rules) + len(allow_rules)}**
 
 ## Subscription URL
+
+{SUBSCRIPTION_URL}
+
+Auto-updated every 6 hours via GitHub Actions.
+"""
+
+with open(README_FILE, "w", encoding="utf-8") as f:
+    f.write(readme_content)
+
+print("Build completed successfully.")

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filters
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.02.24.1417
+! Version: 2026.02.24.1511
 ! Expires: 6 hours
-! Last modified: 2026-02-24T14:17:06Z
+! Last modified: 2026-02-24T15:11:15Z
 ! License: MIT
 !
-! Block rules: 132215
+! Block rules: 132212
 ! Allow rules: 238
-! Total rules: 132453
+! Total rules: 132450
 !
 ||0--0.info^
 ||0--4.com^
@@ -37459,7 +37459,6 @@
 ||britishdriver.com^
 ||brittany.nekeran.xyz^
 ||brittanyalexismartin92-dot-yamm-track.appspot.com^
-||brittlesnag.com^
 ||brittrobertson.com^
 ||brkmarketing.com^
 ||brn-ads.sa.cz^
@@ -46734,7 +46733,6 @@
 ||dork.fail^
 ||dormtodoor.com^
 ||dornpush.com^
-||dornrusky.com^
 ||dornut.com^
 ||dorogokupimnoutbuk.online^
 ||doroncreations.com^
@@ -63315,7 +63313,6 @@
 ||legendlifes.com^
 ||legendsbios.com^
 ||legendsbioworld.com^
-||legistfetus.com^
 ||legisway.com^
 ||legitfilehost4datas.ddns.net^
 ||legitimatecurrency.com^

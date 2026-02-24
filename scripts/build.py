@@ -29,7 +29,7 @@ ALLOWLIST_URLS = [
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/share/facebook.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/share/microsoft.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/share/ultimate-known-issues.txt",    
-    "https://local.oisd.nl/extract/commonly_whitelisted.php",
+    "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt",
 ]
 
 # ============================================================

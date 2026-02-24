@@ -33,6 +33,14 @@ ALLOWLIST_URLS = [
     "https://local.oisd.nl/extract/commonly_whitelisted.php",
 ]
 
+# ============================================================
+# PERMANENT EXCLUSIONS (FAIL-SAFE)
+# ============================================================
+
+PERMANENT_EXCLUDE = {
+    "calculator-api-in.allawnos.com",
+}
+
 OUTPUT_FILE = "output/adguard-additional-dns.txt"
 README_FILE = "README.md"
 
@@ -60,13 +68,7 @@ def normalize(domain):
 
 
 def is_valid_domain(domain):
-    if "." not in domain:
-        return False
-    if domain.count(".") < 1:
-        return False
-    if len(domain) < 4:
-        return False
-    return True
+    return "." in domain and len(domain) >= 4
 
 
 def extract_domains(text):
@@ -80,39 +82,26 @@ def extract_domains(text):
 
         line = line.split("#")[0].strip()
 
-        # Allow rule format @@||domain^
+        # Allow rule
         if line.startswith("@@||"):
             domain = line[4:]
-            domain = domain.split("^")[0]
-            domain = domain.split("$")[0]
-            domain = normalize(domain)
-            if is_valid_domain(domain):
-                domains.add(domain)
-            continue
-
-        # Block rule format ||domain^
-        if line.startswith("||"):
+        # Block rule
+        elif line.startswith("||"):
             domain = line[2:]
-            domain = domain.split("^")[0]
-            domain = domain.split("$")[0]
-            domain = normalize(domain)
-            if is_valid_domain(domain):
-                domains.add(domain)
-            continue
+        else:
+            parts = line.split()
+            if len(parts) >= 2:
+                domain = parts[-1]
+            elif "." in line and " " not in line and "/" not in line:
+                domain = line
+            else:
+                continue
 
-        # Hosts format (0.0.0.0 domain.com)
-        parts = line.split()
-        if len(parts) >= 2:
-            candidate = normalize(parts[-1])
-            if is_valid_domain(candidate):
-                domains.add(candidate)
-            continue
+        domain = domain.split("^")[0].split("$")[0]
+        domain = normalize(domain)
 
-        # Plain domain format
-        if "." in line and " " not in line and "/" not in line:
-            candidate = normalize(line)
-            if is_valid_domain(candidate):
-                domains.add(candidate)
+        if is_valid_domain(domain):
+            domains.add(domain)
 
     return domains
 
@@ -141,6 +130,14 @@ MAIN_SET = build_set(MAIN_URLS)
 TIF_SET = build_set(TIF_URLS)
 ALLOWLIST_SET = build_set(ALLOWLIST_URLS)
 
+# Normalize permanent exclusions once
+PERMANENT_EXCLUDE = {normalize(d) for d in PERMANENT_EXCLUDE}
+
+# Remove excluded domains from all block sources
+BASE_SET -= PERMANENT_EXCLUDE
+MAIN_SET -= PERMANENT_EXCLUDE
+TIF_SET -= PERMANENT_EXCLUDE
+
 print("BASE:", len(BASE_SET))
 print("MAIN:", len(MAIN_SET))
 print("TIF:", len(TIF_SET))
@@ -152,7 +149,7 @@ BLOCKED_SET = FINAL_SET | BASE_SET
 print("FINAL:", len(FINAL_SET))
 
 # ============================================================
-# BUILD DOMAIN TREE (ONCE)
+# BUILD DOMAIN TREE
 # ============================================================
 
 tree = defaultdict(set)
@@ -164,16 +161,14 @@ for domain in BLOCKED_SET:
         tree[parent].add(domain)
 
 # ============================================================
-# SHADOW-SAFE EXPANSION (Optimized)
+# SHADOW-SAFE EXPANSION
 # ============================================================
 
 ALLOW_TARGET = ALLOWLIST_SET & BLOCKED_SET
 final_allow = set()
 
 for allow in ALLOW_TARGET:
-    if allow in BLOCKED_SET:
-        final_allow.add(allow)
-
+    final_allow.add(allow)
     children = tree.get(allow)
     if children:
         final_allow.update(children)

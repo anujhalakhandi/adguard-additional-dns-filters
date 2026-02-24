@@ -23,18 +23,15 @@ TIF_URLS = [
     "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/tif.txt",
 ]
 
-ALLOWLIST_URLS = [
+# These will ALWAYS be converted into allow rules (even if block-style)
+FORCE_ALLOW_URLS = [
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-urlshortener.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/main/adblock/whitelist-referral.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/share/facebook.txt",
     "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/share/microsoft.txt",
-    "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/share/ultimate-known-issues.txt",    
+    "https://raw.githubusercontent.com/hagezi/dns-blocklists/refs/heads/main/share/ultimate-known-issues.txt",
     "https://raw.githubusercontent.com/AdguardTeam/AdGuardSDNSFilter/master/Filters/exclusions.txt",
 ]
-
-# ============================================================
-# PERMANENT EXCLUSIONS (FAIL-SAFE)
-# ============================================================
 
 PERMANENT_EXCLUDE = {
     "calculator-api-in.allawnos.com",
@@ -52,7 +49,7 @@ FILTER_DESCRIPTION = (
 SUBSCRIPTION_URL = "https://raw.githubusercontent.com/anujhalakhandi/adguard-additional-dns-filters/main/output/adguard-additional-dns.txt"
 
 # ============================================================
-# HELPERS
+# NETWORK
 # ============================================================
 
 def fetch(url):
@@ -61,16 +58,44 @@ def fetch(url):
     r.raise_for_status()
     return r.text
 
+# ============================================================
+# STRICT DNS PARSER
+# ============================================================
 
 def normalize(domain):
     return domain.lower().strip().strip(".")
 
 
 def is_valid_domain(domain):
-    return "." in domain and len(domain) >= 4
+    if "." not in domain:
+        return False
+    if " " in domain:
+        return False
+    if "/" in domain:
+        return False
+    if domain.startswith("-") or domain.endswith("-"):
+        return False
+    if len(domain) < 4:
+        return False
+    return True
 
 
-def extract_domains(text):
+def extract_dns_domains(text):
+    """
+    Strict DNS-only parser.
+    Extracts pure domains from:
+      - ||domain^
+      - @@||domain^
+      - domain
+      - hosts format
+    Ignores:
+      - cosmetic rules (##, #@#)
+      - scriptlets
+      - path rules
+      - modifiers ($...)
+      - scoped allow rules
+    """
+
     domains = set()
 
     for line in text.splitlines():
@@ -79,25 +104,41 @@ def extract_domains(text):
         if not line or line.startswith("!"):
             continue
 
+        # Ignore cosmetic filters explicitly
+        if "##" in line or "#@#" in line:
+            continue
+
+        # Strip inline comments
         line = line.split("#")[0].strip()
 
-        # Allow rule
-        if line.startswith("@@||"):
-            domain = line[4:]
-        # Block rule
-        elif line.startswith("||"):
-            domain = line[2:]
-        else:
+        # Remove modifiers
+        if "$" in line:
+            line = line.split("$")[0]
+
+        # Handle hosts file format
+        if line.startswith("0.0.0.0 ") or line.startswith("127.0.0.1 "):
             parts = line.split()
             if len(parts) >= 2:
-                domain = parts[-1]
-            elif "." in line and " " not in line and "/" not in line:
-                domain = line
+                line = parts[1]
             else:
                 continue
 
-        domain = domain.split("^")[0].split("$")[0]
-        domain = normalize(domain)
+        # Remove allow prefix
+        if line.startswith("@@"):
+            line = line[2:]
+
+        # Remove block prefix
+        if line.startswith("||"):
+            line = line[2:]
+
+        # Remove rule suffix
+        line = line.split("^")[0]
+
+        # Reject path rules
+        if "/" in line:
+            continue
+
+        domain = normalize(line)
 
         if is_valid_domain(domain):
             domains.add(domain)
@@ -109,7 +150,7 @@ def build_set(urls):
     result = set()
     for url in urls:
         try:
-            result |= extract_domains(fetch(url))
+            result |= extract_dns_domains(fetch(url))
         except Exception as e:
             print(f"Failed {url}: {e}")
     return result
@@ -122,17 +163,15 @@ def file_hash(content):
 # BUILD PROCESS
 # ============================================================
 
-print("Building filter sets...")
+print("Building DNS-strict filter sets...")
 
 BASE_SET = build_set(BASE_URLS)
 MAIN_SET = build_set(MAIN_URLS)
 TIF_SET = build_set(TIF_URLS)
-ALLOWLIST_SET = build_set(ALLOWLIST_URLS)
+ALLOWLIST_SET = build_set(FORCE_ALLOW_URLS)
 
-# Normalize permanent exclusions once
 PERMANENT_EXCLUDE = {normalize(d) for d in PERMANENT_EXCLUDE}
 
-# Remove excluded domains from all block sources
 BASE_SET -= PERMANENT_EXCLUDE
 MAIN_SET -= PERMANENT_EXCLUDE
 TIF_SET -= PERMANENT_EXCLUDE
@@ -140,8 +179,9 @@ TIF_SET -= PERMANENT_EXCLUDE
 print("BASE:", len(BASE_SET))
 print("MAIN:", len(MAIN_SET))
 print("TIF:", len(TIF_SET))
-print("ALLOWLIST:", len(ALLOWLIST_SET))
+print("FORCE_ALLOW:", len(ALLOWLIST_SET))
 
+# Only publish unique additions
 FINAL_SET = (MAIN_SET - BASE_SET) - TIF_SET
 BLOCKED_SET = FINAL_SET | BASE_SET
 
@@ -160,7 +200,7 @@ for domain in BLOCKED_SET:
         tree[parent].add(domain)
 
 # ============================================================
-# SHADOW-SAFE EXPANSION
+# SHADOW-SAFE ALLOW EXPANSION
 # ============================================================
 
 ALLOW_TARGET = ALLOWLIST_SET & BLOCKED_SET

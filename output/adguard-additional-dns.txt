@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filters
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.02.24.1749
+! Version: 2026.02.24.1954
 ! Expires: 6 hours
-! Last modified: 2026-02-24T17:49:06Z
+! Last modified: 2026-02-24T19:54:07Z
 ! License: MIT
 !
-! Block rules: 133601
+! Block rules: 133598
 ! Allow rules: 238
-! Total rules: 133839
+! Total rules: 133836
 !
 ||0--0.info^
 ||0--4.com^
@@ -126286,7 +126286,6 @@
 ||unstoppabl.com^
 ||unsupervised.com^
 ||untd.com^
-||unthawroinish.cyou^
 ||untidyrelayidentifiers.com^
 ||untightchronos.shop^
 ||untiingterton.com^
@@ -131891,7 +131890,6 @@
 ||xp96.vip^
 ||xp9tb.xinchengcm.com^
 ||xpalpikfiju.com^
-||xpbpecjegrfnf.space^
 ||xpcwrgy.cn^
 ||xpdoctor.com^
 ||xpdyqax.cn^
@@ -132582,7 +132580,6 @@
 ||ypmate.com^
 ||ypu.samsungelectronics.com^
 ||ypv4y.777269.com^
-||ypvkgakgyurop.website^
 ||ypzps.com^
 ||yq.mpondoencinas.com^
 ||yq.vibistssashoon.help^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filters
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.02.24.1143
+! Version: 2026.02.24.1224
 ! Expires: 6 hours
-! Last modified: 2026-02-24T11:43:32Z
+! Last modified: 2026-02-24T12:24:11Z
 ! License: MIT
 !
-! Block rules: 92249
+! Block rules: 92243
 ! Allow rules: 162
-! Total rules: 92411
+! Total rules: 92405
 !
 ||0--0.info^
 ||0--4.com^
@@ -5010,6 +5010,7 @@
 ||5tmobi.cn^
 ||5to1.com^
 ||5u.com^
+||5urh.vgkqk9xwepk3nvtlt9hmlk1.cfd^
 ||5uvt2hqk.com^
 ||5uxmusq.cn^
 ||5vd12a.ru^
@@ -29622,7 +29623,6 @@
 ||calcomsec.com^
 ||calculatedsubordinate.com^
 ||calculator-api-fr.allawnos.com^
-||calculator-api-in.allawnos.com^
 ||calculator-api-sg.allawnos.com^
 ||calculator-api-us.allawnos.com^
 ||calefbelial.com^
@@ -37150,7 +37150,6 @@
 ||dllkit.com^
 ||dlogs.bwton.com^
 ||dls-udc.dqa.samsung.com^
-||dlsdk.appsflyer.com^
 ||dlswbr.baidu.com^
 ||dlv.itmedia.jp^
 ||dlvai1.com^
@@ -42149,7 +42148,6 @@
 ||gameinfo.cc^
 ||gameinstaller.ru^
 ||gameitlive.com^
-||gameleads.ru^
 ||gameloop.fun^
 ||gamemania.cc^
 ||gamemonetize.video^
@@ -63713,7 +63711,6 @@
 ||pica-ad-api.diwodiwo.xyz^
 ||picadmedia.com^
 ||picanalysis.vivo.com.cn^
-||piccash.net^
 ||picchutupxu.com^
 ||piccy.info^
 ||picfourlai.com^
@@ -65894,7 +65891,6 @@
 ||prd-dvc-pod3-telemetry-alb-podlb-2098002532.us-east-1.elb.amazonaws.com^
 ||prd-qlik-telemetry.servicebus.windows.net^
 ||prd-usw2-requestattribution-iad.apple.com^
-||prd.api.bleacherreport.com^
 ||prd.epsilon-rtr.dotomi.com^
 ||prd.posthog.myfans.jp^
 ||prd1.cdn.pengine.revtech.glulive.com^
@@ -83095,7 +83091,6 @@
 ||toutiao.jxnews.com.cn^
 ||toutiao.xn--fiqs8s^
 ||toutiaopage.com^
-||tovarro.com^
 ||tovhtk.top^
 ||tovppl.cn^
 ||toweringanswer.com^
@@ -87618,7 +87613,6 @@
 ||vkanalytics.net^
 ||vkbutton.com^
 ||vkcdnservice.appspot.com.storage.googleapis.com^
-||vkcdnservice.appspot.com^
 ||vkeadqoff.com^
 ||vklljvmqekvl.top^
 ||vkmus.com^
@@ -92344,6 +92338,7 @@
 @@||iplogger.ru^
 @@||jakuli.com^
 @@||jdoqocy.com^
+@@||lafamo.com^
 @@||linkconnector.com^
 @@||linkr.it^
 @@||lndata.com^
@@ -92369,14 +92364,13 @@
 @@||pntrac.com^
 @@||po.st^
 @@||postaffiliatepro.com^
+@@||powuta.com^
 @@||ppcprotect.com^
 @@||profitshare.ro^
 @@||propelbon.com^
 @@||px.a8.net^
 @@||qksrv.net^
 @@||r.akipam.com^
-@@||r.lafamo.com^
-@@||r.powuta.com^
 @@||rdrtr.com^
 @@||redirectingat.com^
 @@||referrer.disqus.com^

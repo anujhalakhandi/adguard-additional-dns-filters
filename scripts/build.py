@@ -53,7 +53,8 @@ SUBSCRIPTION_URL = "https://raw.githubusercontent.com/anujhalakhandi/adguard-add
 
 def fetch(url):
     print(f"Downloading: {url}")
-    r = requests.get(url, timeout=120)
+    headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AdGuardListBuilder/1.0"}
+    r = requests.get(url, headers=headers, timeout=120)
     r.raise_for_status()
     return r.text
 
@@ -96,7 +97,8 @@ def extract_dns_domains(text):
         if "$" in line:
             line = line.split("$")[0]
 
-        if line.startswith("0.0.0.0 ") or line.startswith("127.0.0.1 "):
+        # Improved handling for hosts files (supports both tabs and spaces)
+        if line.startswith(("0.0.0.0", "127.0.0.1")):
             parts = line.split()
             if len(parts) >= 2:
                 line = parts[1]
@@ -230,7 +232,7 @@ print("FINAL BLOCK:", len(FINAL_BLOCK_SET))
 print("FINAL ALLOW:", len(FINAL_ALLOW_SET))
 
 # ============================================================
-# GENERATE OUTPUT
+# GENERATE OUTPUT & README
 # ============================================================
 
 os.makedirs("output", exist_ok=True)
@@ -238,10 +240,25 @@ os.makedirs("output", exist_ok=True)
 block_rules = sorted(f"||{d}^" for d in FINAL_BLOCK_SET)
 allow_rules = sorted(f"@@||{d}^" for d in FINAL_ALLOW_SET)
 
-version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
-last_modified = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+# Hash ONLY the rules payload to detect actual changes
+rules_payload = "\n".join(block_rules) + "\n\n" + "\n".join(allow_rules)
+new_hash = file_hash(rules_payload)
+old_hash = None
 
-header = f"""! Title: {FILTER_NAME}
+if os.path.exists(OUTPUT_FILE):
+    with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+        existing_content = f.read()
+        # Extract everything after the header to get the old rules payload
+        if "! Total rules:" in existing_content:
+            old_rules_payload = existing_content.split("! Total rules:", 1)[1].strip()
+            old_hash = file_hash(old_rules_payload)
+
+if new_hash != old_hash:
+    # 1. Update Filter File
+    version = datetime.utcnow().strftime("%Y.%m.%d.%H%M")
+    last_modified = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    header = f"""! Title: {FILTER_NAME}
 ! Description: {FILTER_DESCRIPTION}
 ! Version: {version}
 ! Expires: 6 hours
@@ -253,28 +270,13 @@ header = f"""! Title: {FILTER_NAME}
 ! Total rules: {len(block_rules) + len(allow_rules)}
 !
 """
+    output_content = header + rules_payload
 
-output_content = header + "\n".join(block_rules) + "\n\n" + "\n".join(allow_rules)
-
-new_hash = file_hash(output_content)
-old_hash = None
-
-if os.path.exists(OUTPUT_FILE):
-    with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
-        old_hash = file_hash(f.read())
-
-if new_hash != old_hash:
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         f.write(output_content)
-    print("Filter updated.")
-else:
-    print("No changes detected.")
-
-# ============================================================
-# UPDATE README
-# ============================================================
-
-readme_content = f"""# {FILTER_NAME}
+    
+    # 2. Update README File
+    readme_content = f"""# {FILTER_NAME}
 
 {FILTER_DESCRIPTION}
 
@@ -290,8 +292,11 @@ readme_content = f"""# {FILTER_NAME}
 
 Auto-updated every 6 hours via GitHub Actions.
 """
+    with open(README_FILE, "w", encoding="utf-8") as f:
+        f.write(readme_content)
 
-with open(README_FILE, "w", encoding="utf-8") as f:
-    f.write(readme_content)
+    print("Filter and README updated.")
+else:
+    print("No changes detected. Skipping file writes.")
 
 print("Build complete.")

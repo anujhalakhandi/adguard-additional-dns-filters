@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filters
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.02.25.1956
+! Version: 2026.02.26.0513
 ! Expires: 6 hours
-! Last modified: 2026-02-25T19:56:20Z
+! Last modified: 2026-02-26T05:13:06Z
 ! License: MIT
 !
-! Block rules: 132819
+! Block rules: 132816
 ! Allow rules: 238
-! Total rules: 133057
+! Total rules: 133054
 !
 ||0--0.info^
 ||0--4.com^
@@ -42054,7 +42054,6 @@
 ||contovista.com^
 ||contractorcallsusa.com^
 ||contractorcoalitionsummit.com^
-||contrast321.com^
 ||contributions.guardianapis.com^
 ||contributor.google.com^
 ||control.asgoodasnew.de^
@@ -44177,7 +44176,6 @@
 ||daoyoudao.com^
 ||dap.digitalgov.gov^
 ||dap.hindustantimes.com^
-||dap.livemint.com^
 ||dap.samsclub.com^
 ||dapi.hmdglobal.net^
 ||dapidata.com^
@@ -102453,7 +102451,6 @@
 ||smetrics.dts.com^
 ||smetrics.ecampus.com^
 ||smetrics.eclipse.kiwi.nz^
-||smetrics.edb.gov.sg^
 ||smetrics.edgestar.com^
 ||smetrics.ediblearrangements.ca^
 ||smetrics.edifice.casio.com^

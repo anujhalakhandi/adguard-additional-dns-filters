@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filters
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.02.27.0506
+! Version: 2026.02.27.0759
 ! Expires: 6 hours
-! Last modified: 2026-02-27T05:06:13Z
+! Last modified: 2026-02-27T07:59:40Z
 ! License: MIT
 !
-! Block rules: 133312
+! Block rules: 133307
 ! Allow rules: 238
-! Total rules: 133550
+! Total rules: 133545
 !
 ||0--0.info^
 ||0--4.com^
@@ -42251,7 +42251,6 @@
 ||convertflow.co^
 ||convertful.com^
 ||convertingtraffic.com^
-||convertiser.com^
 ||convertize.com^
 ||convertize.io^
 ||convertlanguage.com^
@@ -43453,7 +43452,6 @@
 ||cupsoamsephuk.net^
 ||curemedia.com^
 ||curiosandosimpara.com^
-||curiousmetal.com^
 ||curiousneighbouring.com^
 ||curk.ru^
 ||curlmyip.net^
@@ -48080,7 +48078,6 @@
 ||ecacs-ext-ad.cat.com^
 ||ecampaignstats.com^
 ||ecbcjfegbjdadjhdaace.world^
-||ecbtryst.com^
 ||eccbb.com^
 ||eccki.cn^
 ||ecdtrk.com^
@@ -78809,7 +78806,6 @@
 ||newsandpromotions.com^
 ||newsanons.ru^
 ||newsbiscuit.com^
-||newsbotnet.com^
 ||newsbro.co.uk^
 ||newschecker.co.uk^
 ||newscod.blog^
@@ -119351,7 +119347,6 @@
 ||timebusinessnews.com^
 ||timebuzinessnews.com^
 ||timelens.co.uk^
-||timelessyes.com^
 ||timely-table.com^
 ||timelymagazine.co.uk^
 ||timemag.co.uk^

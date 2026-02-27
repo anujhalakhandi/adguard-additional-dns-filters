@@ -39,7 +39,7 @@ PERMANENT_EXCLUDE = {
 OUTPUT_FILE = "output/adguard-additional-dns.txt"
 README_FILE = "README.md"
 
-FILTER_NAME = "AdGuard Additional DNS filters"
+FILTER_NAME = "AdGuard Additional DNS filter"
 FILTER_DESCRIPTION = (
     "Additional DNS filtering rules extending AdGuard Default filters "
     "with enhanced protection while preserving compatibility."

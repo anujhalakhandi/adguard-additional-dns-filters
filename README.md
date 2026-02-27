@@ -1,12 +1,12 @@
-# AdGuard Additional DNS filters
+# AdGuard Additional DNS filter
 
 Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
 
 ## Filter Statistics
 
-- Block rules: **133366**
+- Block rules: **133378**
 - Allow rules: **238**
-- Total rules: **133604**
+- Total rules: **133616**
 
 ## Subscription URL
 

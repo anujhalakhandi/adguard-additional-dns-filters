@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.01.0511
+! Version: 2026.03.01.0747
 ! Expires: 6 hours
-! Last modified: 2026-03-01T05:11:02Z
+! Last modified: 2026-03-01T07:47:18Z
 ! License: MIT
 !
-! Block rules: 133632
+! Block rules: 133631
 ! Allow rules: 239
-! Total rules: 133871
+! Total rules: 133870
 !
 ||0--0.info^
 ||0--4.com^
@@ -58576,7 +58576,6 @@
 ||huanqiuyulecheng.yulecheng.tmdss.com^
 ||huanweitong.com^
 ||huanygl11.top^
-||huashiaspire.com^
 ||huatuo.qq.com^
 ||huawei-ads-cms.grab.com^
 ||huaweicloudapis.com^

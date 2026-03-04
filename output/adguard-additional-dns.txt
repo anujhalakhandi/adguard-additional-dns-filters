@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.04.1408
+! Version: 2026.03.04.1952
 ! Expires: 6 hours
-! Last modified: 2026-03-04T14:08:54Z
+! Last modified: 2026-03-04T19:52:08Z
 ! License: MIT
 !
-! Block rules: 132573
+! Block rules: 132571
 ! Allow rules: 239
-! Total rules: 132812
+! Total rules: 132810
 !
 ||0--0.info^
 ||0--4.com^
@@ -38487,7 +38487,6 @@
 ||cashluslay.com^
 ||cashmirian.com^
 ||cashochimi.com^
-||cashooshut.com^
 ||cashort.com^
 ||cashpage.net^
 ||cashpartner.com^
@@ -65010,7 +65009,6 @@
 ||log.suumo.jp^
 ||log.sv.pandora.tv^
 ||log.svc.screencastify.com^
-||log.sweepycleanplus.com^
 ||log.systeme.io^
 ||log.tadu.com^
 ||log.tailscale.com^

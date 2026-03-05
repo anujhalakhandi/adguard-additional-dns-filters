@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.05.1431
+! Version: 2026.03.05.2003
 ! Expires: 6 hours
-! Last modified: 2026-03-05T14:31:59Z
+! Last modified: 2026-03-05T20:03:46Z
 ! License: MIT
 !
-! Block rules: 132024
+! Block rules: 132025
 ! Allow rules: 239
-! Total rules: 132263
+! Total rules: 132264
 !
 ||0--0.info^
 ||0--4.com^
@@ -80122,6 +80122,7 @@
 ||openlp.sapphireventures.com^
 ||openmarket.com^
 ||openoffice.de^
+||openpanel.dev^
 ||openpanel.enbox.net^
 ||openrcv.baidu.com^
 ||openreplay.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.05.0504
+! Version: 2026.03.05.0756
 ! Expires: 6 hours
-! Last modified: 2026-03-05T05:04:39Z
+! Last modified: 2026-03-05T07:56:34Z
 ! License: MIT
 !
-! Block rules: 132388
+! Block rules: 132386
 ! Allow rules: 239
-! Total rules: 132627
+! Total rules: 132625
 !
 ||0--0.info^
 ||0--4.com^
@@ -35598,7 +35598,6 @@
 ||benshouji.com^
 ||bentcloakroom.cw.cm^
 ||bentego.com^
-||bentengine.com^
 ||bentleymediagroup.net^
 ||benximls.com^
 ||benzeinlune.com^
@@ -50451,6 +50450,7 @@
 ||fd.fattensnines.shop^
 ||fd.ickerscotland.com^
 ||fd.ivoclar.com^
+||fd2bc44936.973e5a5a22.com^
 ||fdams.qublixaws.com^
 ||fdatajsext.com^
 ||fdgeen.com^
@@ -66180,7 +66180,6 @@
 ||lyta.kalevamedia.fi^
 ||lytcs.wfe-erzgebirge.de^
 ||lytics.cyberriskalliance.com^
-||lytics.fileditch.com^
 ||lytics.ketaflix.st^
 ||lytics.lotum.com^
 ||lytics.minty.com^
@@ -101421,7 +101420,6 @@
 ||slaappillen-kopen.net^
 ||slabberfleeced.top^
 ||slacdn.com^
-||slackenkebars.cfd^
 ||slaitottawa.com^
 ||slanecottise.com^
 ||slangsandnames.com^

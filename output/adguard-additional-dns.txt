@@ -1,8 +1,8 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.06.0501
+! Version: 2026.03.06.0753
 ! Expires: 6 hours
-! Last modified: 2026-03-06T05:01:07Z
+! Last modified: 2026-03-06T07:53:46Z
 ! License: MIT
 !
 ! Block rules: 137477
@@ -19372,7 +19372,6 @@
 ||analytics-api.motors.co.uk^
 ||analytics-api.musicmagpie.co.uk^
 ||analytics-api.obefitness.com^
-||analytics-api.penpencil.co^
 ||analytics-api.planeo.cz^
 ||analytics-api.planeo.sk^
 ||analytics-api.poda.cz^
@@ -84459,6 +84458,7 @@
 ||ouoyui.win^
 ||oupeng.com^
 ||ourbusinessnews.com^
+||ourdream.ai^
 ||ourdreamersai.com^
 ||ourgiftcards.com^
 ||ourhobby.com^

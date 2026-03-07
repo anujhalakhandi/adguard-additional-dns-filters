@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.07.0445
+! Version: 2026.03.07.0719
 ! Expires: 6 hours
-! Last modified: 2026-03-07T04:45:26Z
+! Last modified: 2026-03-07T07:19:07Z
 ! License: MIT
 !
-! Block rules: 132540
+! Block rules: 132545
 ! Allow rules: 250
-! Total rules: 132790
+! Total rules: 132795
 !
 ||0--0.info^
 ||0--4.com^
@@ -4761,6 +4761,7 @@
 ||4th-circle.com^
 ||4thandpain.com^
 ||4thdmovie.com^
+||4theold.com^
 ||4thepeopleontheboat.com^
 ||4tiva.net^
 ||4tivo.com^
@@ -52846,6 +52847,7 @@
 ||funtop.top^
 ||funylifee.in^
 ||fuoriporta.org^
+||furballsnfts.live^
 ||furhewrestroom.com^
 ||furmanovmarketing.com^
 ||furnitures-cz.today^
@@ -118881,6 +118883,7 @@
 ||ticket-tracker-api.ats.dev.azure.bmw.cloud^
 ||ticketmaster-authentication-error.mystrikingly.com^
 ||ticketoo-search-analytics-prod-nrclroyzdq-oc.a.run.app^
+||ticketpulse.fr^
 ||ticketsnow.com^
 ||ticketsrise.com^
 ||tickle.com^
@@ -123446,6 +123449,7 @@
 ||trendalyze.com^
 ||trendbrizz.com^
 ||trendcounter.com^
+||trendhandbags.com^
 ||trending.bid^
 ||trendingcelebritys.com^
 ||trendinsight.oceanengine.com^
@@ -124959,6 +124963,7 @@
 ||ultimate-order-tracking-page-testing.myshopify.com^
 ||ultimateclixx.com^
 ||ultimatecounter.com^
+||ultimategiftcards.com.au^
 ||ultimatejackpotplace.com^
 ||ultimateloveline.com^
 ||ultimatestatusbar.com^

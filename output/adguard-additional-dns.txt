@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.06.1948
+! Version: 2026.03.07.0445
 ! Expires: 6 hours
-! Last modified: 2026-03-06T19:48:24Z
+! Last modified: 2026-03-07T04:45:26Z
 ! License: MIT
 !
-! Block rules: 132547
+! Block rules: 132540
 ! Allow rules: 250
-! Total rules: 132797
+! Total rules: 132790
 !
 ||0--0.info^
 ||0--4.com^
@@ -3899,7 +3899,6 @@
 ||2345daohang.com^
 ||234765432.com^
 ||234doo.com^
-||23594.click^
 ||235ee.com^
 ||236855.com^
 ||236tw11.com^
@@ -5167,7 +5166,6 @@
 ||755399.com^
 ||7562-ads-c.pages.dev^
 ||75637.world^
-||75995.click^
 ||75ph.com^
 ||76132.com^
 ||761jj.com^
@@ -12898,7 +12896,6 @@
 ||ads.maxstream.video^
 ||ads.mbegroup.pl^
 ||ads.mbww.uy^
-||ads.mckinsey.com^
 ||ads.mdchoice.com^
 ||ads.mea-finance.com^
 ||ads.mebeforeyoumovie.net^
@@ -15335,6 +15332,7 @@
 ||adserver.szabgab.com^
 ||adserver.tactilews.com^
 ||adserver.tandlpublications.com^
+||adserver.tappsgames.com^
 ||adserver.targroup-media.de^
 ||adserver.tawernaskipperow.pl^
 ||adserver.tele.net^
@@ -20890,6 +20888,7 @@
 ||analytics.bit.admin.ch^
 ||analytics.bitblade.de^
 ||analytics.bitcoinexplorer.org^
+||analytics.bitcoinwisdom.io^
 ||analytics.bitfarmers.com^
 ||analytics.bithackers.com^
 ||analytics.bitloft.de^
@@ -27350,6 +27349,7 @@
 ||analytics.northptsolutions.com^
 ||analytics.northwestern.edu^
 ||analytics.northwesthearingvt.com^
+||analytics.noseparis.com^
 ||analytics.noson.ch^
 ||analytics.nosystems.com^
 ||analytics.notajornal.com.br^
@@ -33107,7 +33107,6 @@
 ||api.sosiago.id^
 ||api.stats.appa.pe^
 ||api.stores.eu-west-1.prod.paets.advertising.amazon.dev.cn.intinfra.com^
-||api.stores.eu-west-1.prod.paets.advertising.amazon.dev.digi.box^
 ||api.stores.us-east-1.prod.paets.advertising.amazon.dev.cn.intinfra.com^
 ||api.subdl.com^
 ||api.systempartnerski.pl^
@@ -34616,6 +34615,7 @@
 ||aurigabee.xyz^
 ||auriq.com^
 ||aurislux.shop^
+||aurona.picsjoin.com^
 ||aurora-data-tracker-ivs.iv.shopee.com^
 ||aurora-data-tracker.scredit.ph^
 ||auroracontrol.com^
@@ -39748,7 +39748,6 @@
 ||cdn.socialannex.com^
 ||cdn.solvvy.com^
 ||cdn.ss.anno.channel4.com^
-||cdn.statically.io^
 ||cdn.streamr.com^
 ||cdn.strike.wtf^
 ||cdn.sublimevideo.net^
@@ -40007,7 +40006,6 @@
 ||centraliprom.com^
 ||centraltag.com^
 ||centralus-ads.centralus.cloudapp.azure.com^
-||centralview.site^
 ||centresales.com^
 ||centrocdn.kiosk.tm^
 ||centromarysalud.com^
@@ -43114,7 +43112,6 @@
 ||covid-tracker-theta-five.vercel.app^
 ||covid-tracker.chi-csm.ca^
 ||covid-tracker.frictionlessdata.io^
-||covid-tracker.mckinsey.com^
 ||covid19safety.myftp.org^
 ||covid19vaccinations.hopto.org^
 ||covid19vaccine.hopto.org^
@@ -46091,7 +46088,6 @@
 ||deeeparts.com^
 ||deefrentng.com^
 ||deegit.com^
-||deemuncrook.com^
 ||deencourier.biz^
 ||deenveerww.wixsite.com^
 ||deep-content.io^
@@ -48368,6 +48364,7 @@
 ||easytechsolver.com^
 ||easytonet.net^
 ||easyxdm.net^
+||eatcells.com^
 ||eatengossipyautomobile.com^
 ||eaterys101.com^
 ||eatonvilletorainier.com^
@@ -49002,7 +48999,6 @@
 ||em.iec.cat^
 ||em1.yoursantander.co.uk^
 ||emaarbet.com^
-||email-service-l.log-internals.workers.dev^
 ||email.familie-kothe.de^
 ||email.postumtravel.com^
 ||email.vriendenloterij.nl^
@@ -51935,7 +51931,6 @@
 ||flirthits.com^
 ||flirtwithhoney.org^
 ||flirtyfun0625.click^
-||flite.com^
 ||flix360.com^
 ||flix360.io^
 ||flixcar.com^
@@ -51988,7 +51983,6 @@
 ||fls-eu.amazon.com.tr^
 ||fls-eu.amazon.com^
 ||fls-eu.amazon.de.cn.intinfra.com^
-||fls-eu.amazon.de.digi.box^
 ||fls-eu.amazon.de^
 ||fls-eu.amazon.eg^
 ||fls-eu.amazon.es^
@@ -54686,6 +54680,7 @@
 ||gppsmaharajganj.org^
 ||gps-tracker.com.ua^
 ||gpt-ai.tips^
+||gptgirlfriend.online^
 ||gpxxbyf.cn^
 ||gq-ad-lgsmartad-com.aws-prd.net^
 ||gq.befitstrample.com^
@@ -57459,6 +57454,7 @@
 ||hcedu.com.cn^
 ||hcevuzobtkit.com^
 ||hcfpiss.top^
+||hcimc.com^
 ||hcimixnajojl.com^
 ||hco.com^
 ||hcs-promo.makemytrip.com^
@@ -59381,6 +59377,7 @@
 ||ih1.gamecopyworld.com^
 ||iha-analytics.vercel.app^
 ||ihackernews.com^
+||ihago.net^
 ||ihais.com^
 ||ihasabucket.com^
 ||ihasdsp.inmobi.com^
@@ -59987,7 +59984,6 @@
 ||info.heute.cc^
 ||info.howto-news.info^
 ||info.redhat.com^
-||info.wps.cn^
 ||info.xits.com^
 ||info.zonasearch.com^
 ||info.zwickau.de^
@@ -61949,7 +61945,6 @@
 ||jtogel.com^
 ||jtoutfitters.com^
 ||jtpk8.com^
-||jtran.cfd^
 ||jttjtj.com^
 ||jtw1.com^
 ||ju.nubiasdivulge.cyou^
@@ -63171,8 +63166,6 @@
 ||kuperozu.net^
 ||kupitraf.com^
 ||kuponacdn.de^
-||kupteraz28517600.click^
-||kupteraz28517692.sbs^
 ||kupwafqigd.com^
 ||kurogames-ads.com.w.cdngslb.com^
 ||kurtzaat.com^
@@ -67479,6 +67472,7 @@
 ||markmalkin.com^
 ||markosia.com^
 ||markreptiloid.pw^
+||markswaitingrouge.com^
 ||marktest.com^
 ||marktomarket.io^
 ||markus-feilen.de^
@@ -68111,6 +68105,7 @@
 ||matomo.azoo.co^
 ||matomo.azrhymes.com^
 ||matomo.azure-hosting.de^
+||matomo.azurewebsites.net^
 ||matomo.ba-server.eu^
 ||matomo.baaboo.com^
 ||matomo.babyartikel.de^
@@ -72779,6 +72774,7 @@
 ||mcinext.com^
 ||mcisportland.aparat.com^
 ||mckenzieheatingandair.com^
+||mckinsey.com^
 ||mcl.io^
 ||mclean.cloud.360safe.com^
 ||mclean.uk.cloud.360safe.com^
@@ -79789,9 +79785,7 @@
 ||nzurlmq.com^
 ||nzzmediasolutions.ch^
 ||nzzone.ch^
-||o-id.ihago.net^
 ||o-oku.jp^
-||o-static.ihago.net^
 ||o-vegas.com^
 ||o.go2yd.com^
 ||o.holzenergie.ch^
@@ -80057,7 +80051,6 @@
 ||ofchicks.com^
 ||ofdalslf.com^
 ||ofdnfisab.com^
-||oferta879165pl.click^
 ||ofertapty.net^
 ||off-the-track.zencast.website^
 ||offalsallasch.com^
@@ -82129,7 +82122,6 @@
 ||pcgamer.site^
 ||pcgamesguru.com^
 ||pcgameshackcenter.com^
-||pchelpsoft.com^
 ||pchistory.net^
 ||pchznf.xyz^
 ||pcibfowzokc.com^
@@ -82710,6 +82702,7 @@
 ||pic.rtbcdn.ru^
 ||pic1.58cdn.com.cn^
 ||pic22222.com^
+||pic50.pingguolv.com^
 ||pica-ad-api.diwodiwo.xyz^
 ||picadmedia.com^
 ||picanalysis.vivo.com.cn^
@@ -89308,6 +89301,7 @@
 ||plausible.nutshell-lab.com^
 ||plausible.nuva.dev^
 ||plausible.obliscence.com^
+||plausible.oct.de^
 ||plausible.octarion.eu^
 ||plausible.octoprint.org^
 ||plausible.oggm.org^
@@ -92581,6 +92575,7 @@
 ||qvibo.com^
 ||qvid2.b-cdn.net^
 ||qvjglx.loveinaiir.net^
+||qvmcd.com^
 ||qvmdz.com^
 ||qvod26.com^
 ||qvol.ru^
@@ -93855,7 +93850,6 @@
 ||revanced.net^
 ||revanced.org^
 ||revanced.tech^
-||revancedapk.org^
 ||revancedapp.io^
 ||revancedapp.net^
 ||revancedapp.org^
@@ -94367,7 +94361,6 @@
 ||robcomnetworksinc.net^
 ||robene.sk^
 ||robert.golem.de^
-||robi-hood-log.webflow.io^
 ||robimobi.com^
 ||robinhood-invests-log-in.webflow.io^
 ||robinrbakerdc.com^
@@ -97501,6 +97494,7 @@
 ||sentry.jablotron.cloud^
 ||sentry.jajiga.com^
 ||sentry.jaumo.dev^
+||sentry.jitter.video^
 ||sentry.jobijoba.io^
 ||sentry.jobindex.dk^
 ||sentry.jobtoday.tools^
@@ -97760,6 +97754,7 @@
 ||sentry.pimlb.cyou^
 ||sentry.pinsvc.net^
 ||sentry.plan-net.technology^
+||sentry.planeta-team.ru^
 ||sentry.planetavto.ru^
 ||sentry.planhat.com^
 ||sentry.planner5d.com^
@@ -118285,6 +118280,7 @@
 ||thambiluvil.info^
 ||thanahhoodoos.com^
 ||thank-you.io^
+||thankful-measure-199736.framer.app^
 ||thanks.is^
 ||thankstoyou.website^
 ||tharbadir.com^
@@ -125434,7 +125430,6 @@
 ||unagi-eu.amazon.com.digi.box^
 ||unagi-eu.amazon.com^
 ||unagi-fe.amazon.com^
-||unagi-na.amazon.com.digi.box^
 ||unagi-na.amazon.com^
 ||unagi.amazon.ae^
 ||unagi.amazon.ca^
@@ -125450,7 +125445,6 @@
 ||unagi.amazon.com.tr^
 ||unagi.amazon.com^
 ||unagi.amazon.de.cn.intinfra.com^
-||unagi.amazon.de.digi.box^
 ||unagi.amazon.de^
 ||unagi.amazon.eg^
 ||unagi.amazon.es^
@@ -132490,7 +132484,6 @@
 ||zxc.world^
 ||zxclan.com^
 ||zxcv1.com^
-||zxcvty.com^
 ||zxmenhmo.top^
 ||zxoedq.com^
 ||zxplq.onl^

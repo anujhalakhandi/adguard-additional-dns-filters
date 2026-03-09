@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.09.0800
+! Version: 2026.03.09.0810
 ! Expires: 6 hours
-! Last modified: 2026-03-09T08:00:26Z
+! Last modified: 2026-03-09T08:10:21Z
 ! License: MIT
 !
-! Block rules: 132967
+! Block rules: 132966
 ! Allow rules: 250
-! Total rules: 133217
+! Total rules: 133216
 !
 ||0--0.info^
 ||0--4.com^
@@ -39114,7 +39114,6 @@
 ||calapp-ai-calorie-tracker.apk.dog^
 ||calcomsec.com^
 ||calculatedsubordinate.com^
-||calculator-api-fr.allawnos.com^
 ||calculator-api-sg.allawnos.com^
 ||calculator-api-us.allawnos.com^
 ||calculatority.com^

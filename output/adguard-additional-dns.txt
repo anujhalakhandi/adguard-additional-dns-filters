@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.09.1953
+! Version: 2026.03.10.0500
 ! Expires: 6 hours
-! Last modified: 2026-03-09T19:53:49Z
+! Last modified: 2026-03-10T05:00:04Z
 ! License: MIT
 !
-! Block rules: 134723
+! Block rules: 134722
 ! Allow rules: 249
-! Total rules: 134972
+! Total rules: 134971
 !
 ||0--0.info^
 ||0--4.com^
@@ -4743,6 +4743,7 @@
 ||4am-media.com^
 ||4anime.city^
 ||4azinno777.com^
+||4b6e658780.900f44159b.com^
 ||4bauer.com^
 ||4bind1.cfd^
 ||4bing.com^
@@ -39245,7 +39246,6 @@
 ||camdh.com^
 ||camelbigboss.com^
 ||camelee.cn^
-||camelsfestival.com^
 ||camerounweb.org^
 ||camersenat.info^
 ||camgirls247.com^
@@ -134208,7 +134208,6 @@
 ||zf.veldtstomcods.com^
 ||zf.wsbckhwz71.idy360.com^
 ||zfacts.com^
-||zfedutamj.in^
 ||zfepfyopfa.com^
 ||zftpnp.icu^
 ||zfvqrpop.icu^

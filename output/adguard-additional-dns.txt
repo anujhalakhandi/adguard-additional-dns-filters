@@ -1,8 +1,8 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.11.1953
+! Version: 2026.03.12.0506
 ! Expires: 6 hours
-! Last modified: 2026-03-11T19:53:06Z
+! Last modified: 2026-03-12T05:06:29Z
 ! License: MIT
 !
 ! Block rules: 134727
@@ -3579,6 +3579,7 @@
 ||1bnbsingapore.com^
 ||1brcl.com^
 ||1buv.com^
+||1c320d9ea6.43982bf480.com^
 ||1c89c9a9061e6e.com^
 ||1centralinsurance.com^
 ||1clic1don.fr^
@@ -39620,7 +39621,6 @@
 ||catholic.co.il^
 ||catholicsforisrael.com^
 ||catknock.com^
-||catlanguage.net^
 ||catprojectcfo-p-ad.cat.com^
 ||catsandcafe.com^
 ||catsnbootsncats2020.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.13.0504
+! Version: 2026.03.13.0758
 ! Expires: 6 hours
-! Last modified: 2026-03-13T05:04:14Z
+! Last modified: 2026-03-13T07:58:56Z
 ! License: MIT
 !
-! Block rules: 134790
+! Block rules: 134788
 ! Allow rules: 249
-! Total rules: 135039
+! Total rules: 135037
 !
 ||0--0.info^
 ||0--4.com^
@@ -44500,7 +44500,6 @@
 ||cubantripadvisor.com^
 ||cubeanalytics.com^
 ||cubed.ai^
-||cubeglobal.net^
 ||cubic-track-7e3.notion.site^
 ||cubicmedia.net^
 ||cubics.com^
@@ -51688,7 +51687,6 @@
 ||ezlytix.com^
 ||ezmsp.com^
 ||ezoic.com^
-||ezoicanalytics.com^
 ||ezoiccdn.com^
 ||ezoicns.com^
 ||ezojs.com^

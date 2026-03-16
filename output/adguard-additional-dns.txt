@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.16.0559
+! Version: 2026.03.16.0946
 ! Expires: 6 hours
-! Last modified: 2026-03-16T05:59:13Z
+! Last modified: 2026-03-16T09:46:11Z
 ! License: MIT
 !
-! Block rules: 134352
+! Block rules: 134351
 ! Allow rules: 248
-! Total rules: 134600
+! Total rules: 134599
 !
 ||0--0.info^
 ||0--4.com^
@@ -26753,7 +26753,6 @@
 ||analytics.mormanski.net^
 ||analytics.morningbird.eu^
 ||analytics.morningbrew.com^
-||analytics.morphe.software^
 ||analytics.morpheus.host^
 ||analytics.morphnet.work^
 ||analytics.morsecode.world^

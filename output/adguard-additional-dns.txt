@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.17.0513
+! Version: 2026.03.17.0805
 ! Expires: 6 hours
-! Last modified: 2026-03-17T05:13:27Z
+! Last modified: 2026-03-17T08:05:51Z
 ! License: MIT
 !
-! Block rules: 134553
+! Block rules: 134504
 ! Allow rules: 248
-! Total rules: 134801
+! Total rules: 134752
 !
 ||0--0.info^
 ||0--4.com^
@@ -12970,7 +12970,6 @@
 ||ads.nosecka.net^
 ||ads.nosproducteurs.com^
 ||ads.novatv.mk^
-||ads.novel18plus.com^
 ||ads.novinar.bg^
 ||ads.novinhagostosa10.com^
 ||ads.noxvo.com^
@@ -20470,6 +20469,7 @@
 ||analytics.baggerseepiraten.de^
 ||analytics.bagno-badstudio.de^
 ||analytics.bahai.nl^
+||analytics.bahrain.bh^
 ||analytics.baiedequiberon.bzh^
 ||analytics.baijen.com^
 ||analytics.bajara.it^
@@ -26956,7 +26956,6 @@
 ||analytics.namegulf.com^
 ||analytics.nameplay.org^
 ||analytics.nammert.com^
-||analytics.nandoschmidlin.ch^
 ||analytics.nannybag.com^
 ||analytics.nano-wetter.de^
 ||analytics.nanoweb.ch^
@@ -27260,7 +27259,6 @@
 ||analytics.northwestern.edu^
 ||analytics.northwesthearingvt.com^
 ||analytics.noseparis.com^
-||analytics.noson.ch^
 ||analytics.nosystems.com^
 ||analytics.notajornal.com.br^
 ||analytics.notblowingsmoke.com^
@@ -27396,7 +27394,6 @@
 ||analytics.oh-mai.de^
 ||analytics.ohava.tools^
 ||analytics.ohmydish.nl^
-||analytics.oiken.ch^
 ||analytics.oikos.be^
 ||analytics.oip-atlantique.fr^
 ||analytics.oiseau-rare.fr^
@@ -33921,7 +33918,6 @@
 ||arms-retcode-sg.aliyuncs.com^
 ||arms-retcode.aliyuncs.com^
 ||armstrong.trustaltus.com^
-||armt.cloud^
 ||armyemaillogin.com^
 ||armyscheme.sytes.net^
 ||arn.com^
@@ -35212,6 +35208,7 @@
 ||b.hiphotos.baidu.com^
 ||b.itvnet.lv^
 ||b.karte.io^
+||b.lksbnrs.com^
 ||b.medbrowse.com.ua^
 ||b.netall.ru^
 ||b.nwave.de^
@@ -35232,6 +35229,7 @@
 ||b1.51yangsheng.com^
 ||b1.alo.bg^
 ||b1.org^
+||b1d5da4114.d22d0c8699.com^
 ||b1dj5u.vip^
 ||b1js.com^
 ||b1k33.com^
@@ -35268,6 +35266,7 @@
 ||b7de.com^
 ||b7kr.com^
 ||b7q9v8z.com^
+||b7sxdq.site^
 ||b892.cleveland.com^
 ||b8inance.com^
 ||b900.outokummunseutu.fi^
@@ -39663,7 +39662,6 @@
 ||cdn.aa.onstuimig.nl^
 ||cdn.aabdw.com^
 ||cdn.ad.kodansha.pub^
-||cdn.adnwif.smt.docomo.ne.jp^
 ||cdn.advertiser.linkvertise.com^
 ||cdn.advstatistics.com^
 ||cdn.almamedia.tech^
@@ -40339,6 +40337,7 @@
 ||checkout-analytics.paddle.com^
 ||checkout-clarity-events.pdqprod.link^
 ||checkout-df.lululemon.com^
+||checkout.perfectpay.com.br^
 ||checkoutanalytics-live-us.adyen.com^
 ||checkoutanalytics-live.adyen.com^
 ||checkoutera.com^
@@ -42278,7 +42277,6 @@
 ||collector.nutanix.com^
 ||collector.objectiv.dation.nl^
 ||collector.occ.com.mx^
-||collector.ofxh.site^
 ||collector.ohmconnect.com^
 ||collector.omio.com^
 ||collector.onsignage.com^
@@ -43346,7 +43344,6 @@
 ||counter.mezha.ua^
 ||counter.mirohost.net^
 ||counter.mojgorod.ru^
-||counter.musictag.ir^
 ||counter.nbren.net^
 ||counter.neuit.de^
 ||counter.nplu.org^
@@ -47130,7 +47127,6 @@
 ||dicema.com^
 ||dicionasted.com^
 ||dicki.net^
-||dicon.cnt.br^
 ||dicontent.ckapis.com^
 ||dicqhood.com^
 ||dictionary.innu-aimun.ca^
@@ -49822,6 +49818,7 @@
 ||epg.zeasn.tv^
 ||ephebedori.life^
 ||ephebosauklets.shop^
+||ephesiansavvyinto.com^
 ||ephraimstroked.cyou^
 ||epi.st.bitban.com^
 ||epi.vn^
@@ -51426,6 +51423,7 @@
 ||f8f0e820-74f2-11ef-ad06-8738b24300bb.relay-2-us-west-2.solink.direct^
 ||f98f95d622c3a88f77cbfc0279298d8597b5c6c2.com^
 ||f9ca4fcf-0721-437a-ad86-0e4d1b8c64e2.ods.opinsights.azure.com^
+||f9e79f670c.000491b06a.com^
 ||f9tmep.net^
 ||fa.cs9586.com^
 ||fa.micstatic.com^
@@ -52037,7 +52035,6 @@
 ||fideleturf.co.uk^
 ||fidelitix.ca^
 ||fidelity-media.com^
-||fidelitygrowths.com^
 ||fidelum.com^
 ||fiducia.eco^
 ||fiduciary-realty.com^
@@ -53823,7 +53820,6 @@
 ||gangavahusky.com^
 ||ganges.imagine-inc.com^
 ||gangwavateria.com^
-||gangwayderbies.click^
 ||ganja.com^
 ||gannettinnovation.com^
 ||ganstore.shop^
@@ -56758,7 +56754,6 @@
 ||gtm.musaranhoautomacoes.com.br^
 ||gtm.myersmotormerchandise.com^
 ||gtm.myfitcoach.app^
-||gtm.myforeverdna.com^
 ||gtm.myjovialmerch.com^
 ||gtm.mymuesli.com^
 ||gtm.myprime.com^
@@ -56773,7 +56768,6 @@
 ||gtm.navvis.com^
 ||gtm.nbbturismo.com.br^
 ||gtm.nectarcrm.com.br^
-||gtm.neolithicstore.com^
 ||gtm.neonwala.in^
 ||gtm.netlingeri.de^
 ||gtm.neurolipo.com.br^
@@ -61367,7 +61361,6 @@
 ||ipgp.net^
 ||ipgue.com^
 ||iphibaigethouw.net^
-||iphone-simdetails.info^
 ||iphone10gs.com^
 ||iphonecasinon.com^
 ||iphonephotographyschool.net^
@@ -64083,6 +64076,7 @@
 ||l7advertising.com^
 ||l90tkc.ru^
 ||l9bjkkhaycw6f8f4.soundcloud.com^
+||l9cmzw.site^
 ||la-pantalla.com.ar^
 ||lab-js-abtest.lazada.com^
 ||labadon.com^
@@ -69861,6 +69855,7 @@
 ||matomo.edoc-as.com^
 ||matomo.edri.org^
 ||matomo.edu.grupystar.com^
+||matomo.educadhoc.fr^
 ||matomo.educcloud.fr^
 ||matomo.edv-buchversand.de^
 ||matomo.eea.europa.eu^
@@ -71472,7 +71467,6 @@
 ||matomo.ness.de^
 ||matomo.net-studio.fr^
 ||matomo.net73.com^
-||matomo.netaddiction.it^
 ||matomo.netadm.ovh^
 ||matomo.netaris.fr^
 ||matomo.netconnections.de^
@@ -75786,7 +75780,6 @@
 ||metrics.ncl.ac.uk^
 ||metrics.nearpod.com^
 ||metrics.nebraskatotalcare.com^
-||metrics.necn.com^
 ||metrics.nedgame.nl^
 ||metrics.nepata.de^
 ||metrics.nepro.com^
@@ -75801,7 +75794,6 @@
 ||metrics.new-walls.com^
 ||metrics.newark.com^
 ||metrics.newbalance.co.uk^
-||metrics.newcars.com^
 ||metrics.newegg.ca^
 ||metrics.newegg.com^
 ||metrics.neweggbusiness.com^
@@ -77171,7 +77163,6 @@
 ||mntr.cafecito.app^
 ||mntzco.com^
 ||mnuu.nu^
-||mnwbtkeijn.cyou^
 ||mnyfs.com^
 ||mnymkr.net^
 ||mo-ad-lgsmartad-com.aws-prd.net^
@@ -77292,7 +77283,6 @@
 ||mobileposse.com^
 ||mobileraffles.com^
 ||mobileservice.cn^
-||mobilesmarkets.com^
 ||mobileso.bz.mgtv.com^
 ||mobilesources.net^
 ||mobilestorm.com^
@@ -77388,7 +77378,6 @@
 ||moe.gov.sy^
 ||moesexy.com^
 ||moeskin.com^
-||moeucpd-d.online^
 ||moevideo.com^
 ||moevideo.net^
 ||moewe.app^
@@ -77755,7 +77744,6 @@
 ||mootanroo.com^
 ||moov.com^
 ||moovb8trk.com^
-||moovweb.com^
 ||mopanepottern.com^
 ||mophrh.gov.mz^
 ||mopinionlabs.com^
@@ -77788,7 +77776,6 @@
 ||mortaragency.com^
 ||mortgage.springeq.com^
 ||mortified-scale.com^
-||morvalent.uk^
 ||morvil.com^
 ||moryou.com^
 ||mos.com^
@@ -77841,7 +77828,6 @@
 ||motorotam.com^
 ||motorsport-cdn.ex.co^
 ||motorsport-player.ex.co^
-||motorsportonenyc.com^
 ||motricity.com^
 ||motsefficaces.com^
 ||mottlal.com^
@@ -77965,7 +77951,6 @@
 ||mps.cnbc.com^
 ||mps.nbcuni.com^
 ||mps.vsnt.net^
-||mpsuclemvf.cyou^
 ||mpush.cloud^
 ||mpush.qq.com^
 ||mpuzpejtefw.com^
@@ -78033,7 +78018,6 @@
 ||mrss-dot-yamm-track.appspot.com^
 ||mrtg.emailpartners.net^
 ||mrtx.duckdns.org^
-||mrugzeovhv.com^
 ||mrvids.com^
 ||mrvkqg.hornyglrl.net^
 ||mrvraz.datingcorrner.com^
@@ -78135,7 +78119,6 @@
 ||msnwire.co.uk^
 ||msoft.cyou^
 ||msoft.monster^
-||msok-bayqa.icu^
 ||msp-platform.newsbreak.com^
 ||msp.innovativecomp.com^
 ||mspaceads.com^
@@ -78293,7 +78276,6 @@
 ||mu.shinobi.jp^
 ||muamuadolls.com^
 ||muapr.biz^
-||muaythai.sport^
 ||muchadlz.com^
 ||muchads.com^
 ||muchata.com.in^
@@ -78320,7 +78302,6 @@
 ||mukipol.com^
 ||mulahya.xyz^
 ||mulholland-drive.net^
-||mulleyrewayle.com^
 ||multi-az-ad.kuaishou.cn^
 ||multi-az-ulog.gifshow.com^
 ||multi-az-ulog.ksapisrv.com^
@@ -78429,7 +78410,6 @@
 ||muwmedia.com^
 ||mux.mubi.com^
 ||muxabxaltka.com^
-||muxkagods.com^
 ||muxy.io^
 ||muyuan.asia^
 ||muz-tracker.net^
@@ -78444,7 +78424,6 @@
 ||mv.treehousei.com^
 ||mv.yuitvr.com^
 ||mv6y8ukt.com^
-||mvaclaimshelp.com^
 ||mvad.com^
 ||mvamnng.cn^
 ||mvas.club^
@@ -78796,7 +78775,6 @@
 ||mylovecards.com^
 ||mylovedates.com^
 ||mylovelybluesky.com^
-||mylywebu.com^
 ||mymail-in.net^
 ||mymarketingreports.com^
 ||mymatomo.weiden.de^
@@ -79006,6 +78984,7 @@
 ||n272adserv.com^
 ||n291adserv.com^
 ||n2b.goexposoftware.com^
+||n2rvpm.site^
 ||n2s.co.kr^
 ||n4t.co^
 ||n564.puruvesi.net^
@@ -79055,7 +79034,6 @@
 ||nagornaya17.ru^
 ||nagwrotedetain.com^
 ||nah-versorger.de^
-||nahbikacn.com^
 ||nahcjp.icu^
 ||naherflirt.de^
 ||nahnoji.cz^
@@ -79145,7 +79123,6 @@
 ||nasoflasgxzi.com^
 ||nasrolrt.com^
 ||nassatermor.life^
-||nassauglobaladvisorygroup.info^
 ||nasssmedia.com^
 ||nastyburn.com^
 ||nastyland.pro^
@@ -79661,7 +79638,6 @@
 ||newsfeedzscrollz.com^
 ||newsgator.com^
 ||newsgenius.co.uk^
-||newsharecounts.com^
 ||newsharecounts.s3-us-west-2.amazonaws.com^
 ||newshinyd.com^
 ||newshuntads.com^
@@ -79863,7 +79839,6 @@
 ||nicedp.com^
 ||niceloo.com^
 ||nicelylatherrestless.com^
-||nicemetrics-sdk.com^
 ||nicenakedtits.com^
 ||nicepeopleatwork.com^
 ||nicephrase.com^
@@ -79999,7 +79974,6 @@
 ||njxinle.com^
 ||njyswz.com^
 ||njzyjy.cn^
-||nkavabaw.com^
 ||nkispa.nikkei.com^
 ||nkkwr.meeturlove.com^
 ||nkl9nlp1ddr.com^
@@ -80188,7 +80162,6 @@
 ||northwestdiddived.com^
 ||northwestpharmacylabs.com^
 ||nortonadvertising.com^
-||norvasen.com^
 ||nos.etudfrance.com^
 ||noseaceptandevoluciones.com^
 ||noskatteetaten.wpenginepowered.com^
@@ -80432,7 +80405,6 @@
 ||nrmzbk.pasioondate.net^
 ||nrnrld.consplcuousdate.com^
 ||nrnrwd.purelymatches.com^
-||nrobweodq.com^
 ||nrobxq.meetinonline.com^
 ||nrooze.sexychlcks.net^
 ||nrotuzagll.com^
@@ -80713,7 +80685,6 @@
 ||nycds.org^
 ||nyfyr.com^
 ||nyko.io^
-||nylacero.com^
 ||nylonconsulting-dot-yamm-track.appspot.com^
 ||nyltx.com^
 ||nymag.coral.coralproject.net^
@@ -80966,7 +80937,6 @@
 ||oddgate.com^
 ||odds.ru^
 ||odds500.com^
-||oddware.icu^
 ||oddwayinternational.com^
 ||odeeo.io^
 ||odeg-matomo.cookiefy.com^
@@ -81090,7 +81060,6 @@
 ||oflwabi.store^
 ||ofpnpuatjhax.com^
 ||ofpvuxtixnuh.com^
-||ofqhwvrywtu9a.com^
 ||ofr.dealharbors.com^
 ||ofredirect.com^
 ||ofrsrv.com^
@@ -81133,7 +81102,6 @@
 ||ogjrov.hornyglrl.net^
 ||ogkwzq.yourdreamss.com^
 ||oglasi.posjetnica.com^
-||oglpwaalcl.com^
 ||oglzn.gaycoaiition.net^
 ||ogmeak.lloveconnection.com^
 ||ogmeak.meetinonline.com^
@@ -81186,7 +81154,6 @@
 ||ogrzed.liiustriousdate.net^
 ||ogrzed.soullmatevile.com^
 ||ogrzeo.ddatinglite.com^
-||ogsatwanx.com^
 ||ogsib.com^
 ||ogsox.com^
 ||ogswicatpgwe.com^
@@ -81242,7 +81209,6 @@
 ||oiwlnlu.com^
 ||oix.net^
 ||oj.bidensflor.com^
-||ojczinnmuofh.com^
 ||ojfavxvujawd.com^
 ||ojhaqjjama.com^
 ||ojhniewdwtiuqd.com^
@@ -81334,7 +81300,6 @@
 ||oljkzoafhmwo.com^
 ||olk4.com^
 ||olkjabjzefu.com^
-||olkmfuga.com^
 ||olkwb.lluckytlme.com^
 ||olkwb.loveiyglrls.net^
 ||olkwb.luckyiuck.com^
@@ -81393,7 +81358,6 @@
 ||omnifytv.com^
 ||omnifytv.live^
 ||omnijay.com^
-||omnipool.vip^
 ||omnipresentstream.com^
 ||omniqa.ru^
 ||omnisnippet1.com^
@@ -81617,7 +81581,6 @@
 ||onlylazy.net^
 ||onlylocalclub.com^
 ||onlyscoop.com^
-||onmadnxcon.com^
 ||onmawmojth.com^
 ||onme.com^
 ||onmitsu.jp^
@@ -81760,7 +81723,6 @@
 ||openpanel.enbox.net^
 ||openrcv.baidu.com^
 ||openreplay.com^
-||openrevolt.info^
 ||opens.mlbemail.com^
 ||opensense.com^
 ||opensharecount.com^
@@ -81940,7 +81902,6 @@
 ||oqmwutbug.com^
 ||oqrwzelhomc.com^
 ||oqsmpiarwbpe.com^
-||oqvfteab.com^
 ||oqxafpxp.com^
 ||oqyiapj.cn^
 ||or.keystash.io^
@@ -82132,7 +82093,6 @@
 ||ostrich.vedomosti.ru^
 ||ostrichesica.com^
 ||osvitaportal.com.ua^
-||osvwufvfuo.com^
 ||osw-analytics.avcr.cz^
 ||osyvaa.com^
 ||oszar.com^
@@ -82973,7 +82933,6 @@
 ||partners-json.googleapis.com^
 ||partners.challenges.fr^
 ||partners.mobiguru.ru^
-||partners.opapaffiliates.gr^
 ||partners.pmu.fr^
 ||partners.priceline.com^
 ||partners.ru.com^
@@ -86908,7 +86867,6 @@
 ||piwik.nako.de^
 ||piwik.nakuni.com^
 ||piwik.nalis.fr^
-||piwik.nanis.gr^
 ||piwik.nappers.de^
 ||piwik.narasca.com^
 ||piwik.narramo.de^
@@ -86977,7 +86935,6 @@
 ||piwik.neureuter.de^
 ||piwik.neurosyn.de^
 ||piwik.neurotechnics.com^
-||piwik.new-team.org^
 ||piwik.newsnavigators.de^
 ||piwik.newtech-distribution.com^
 ||piwik.nexada.net^
@@ -89397,6 +89354,7 @@
 ||pkvgantengqq.com^
 ||pkydtotuhcw.com^
 ||pl-ad-lgsmartad-com.aws-prd.net^
+||pl-ccc.shop^
 ||pl-oferta-id2387942371.top^
 ||pl-oferta22986.pl^
 ||pl-proxy.uidotdev.workers.dev^
@@ -102662,7 +102620,6 @@
 ||shasta-collector-production.upwork.com^
 ||shasta-sfg.norton.com^
 ||shatki.info^
-||shatterloop.com^
 ||shauladubhe.com^
 ||shawmailboxservice4.wixsite.com^
 ||shawupdatingservic.wixstudio.io^
@@ -104310,7 +104267,6 @@
 ||smetrics.myid.com^
 ||smetrics.mykirei.com^
 ||smetrics.mylifestages.org^
-||smetrics.mypaycheckdirect.com^
 ||smetrics.mysubscriptionstore.com^
 ||smetrics.nametheworms.ca^
 ||smetrics.napacanada.com^
@@ -105087,7 +105043,7 @@
 ||soluticnicaragua.net^
 ||solution-ads-warning-40b11.firebaseapp.com^
 ||solutionforever.com^
-||solutionfun.info^
+||solutions2000.com^
 ||solutionsbysam-dot-yamm-track.appspot.com^
 ||soluzionibio.it^
 ||solving.complex-care.com^
@@ -105407,7 +105363,6 @@
 ||speedingdetectedreluctant.com^
 ||speedmydata.com^
 ||speednames.com^
-||speednetwork14.com^
 ||speedoftheweb.org^
 ||speedppc.com^
 ||speedshare.app^
@@ -108245,7 +108200,6 @@
 ||stat2.okko.tv^
 ||stat2.openinstall.com^
 ||stat2.openinstall.io^
-||stat2.openinstallsdk.com^
 ||stat2.pixpin.cn^
 ||stat2.teamwareplaza.com^
 ||stat240.account.mongodb.com^
@@ -113567,7 +113521,6 @@
 ||stats.musique-libre.org^
 ||stats.musique-meyrin.ch^
 ||stats.mutoco.ch^
-||stats.mutualis.com^
 ||stats.muuuh-pages.de^
 ||stats.mv-solutions.eu^
 ||stats.mva.ch^
@@ -113602,7 +113555,6 @@
 ||stats.myibtimes.com^
 ||stats.myicare.org^
 ||stats.myinventorycontrol.com^
-||stats.mylinuxtime.de^
 ||stats.myme.no^
 ||stats.myminifactory.com^
 ||stats.mypinpointe.com^
@@ -113611,7 +113563,6 @@
 ||stats.myriadifs.com^
 ||stats.myrootpw.com^
 ||stats.myrtalycongress.gr^
-||stats.mysamples.pl^
 ||stats.mysattv.com.au^
 ||stats.myservice.in^
 ||stats.myst.rs^
@@ -122401,7 +122352,6 @@
 ||track.montirna.com^
 ||track.moonlightblog.com^
 ||track.moplay.co.uk^
-||track.moreortaklik.com^
 ||track.morgan-bailey.com^
 ||track.motormobile.com^
 ||track.mp.microsoft.com^
@@ -124489,7 +124439,6 @@
 ||tracking.orientladies.de^
 ||tracking.orixa-media.com^
 ||tracking.osteuropaladies.de^
-||tracking.otccautomatico.com^
 ||tracking.ott.yandex.net^
 ||tracking.ott.yandex.ru^
 ||tracking.ounass.com^
@@ -129049,7 +128998,6 @@
 ||virtuousmajor.com^
 ||virtuoussoftware.com^
 ||virtusize.com^
-||virus-control.com^
 ||virusinfo-cloudscan-cn.heytapmobi.com^
 ||vis-hosting.com^
 ||visableleads.com^
@@ -132220,6 +132168,7 @@
 ||wy938.com^
 ||wycc.porn^
 ||wychowanieprzedszkolne.pl^
+||wygyyq.com^
 ||wyicyv.com^
 ||wylmzwklklwaj.top^
 ||wyndhamgardentashkent.com^
@@ -133031,6 +132980,7 @@
 ||xycdn.com^
 ||xyclothing.com^
 ||xydbpbnmo.com^
+||xyezrp.com^
 ||xyfos.com^
 ||xyhswz.com^
 ||xyizgh.cn^
@@ -134472,6 +134422,7 @@
 ||zveckashop.com^
 ||zvideopro.com^
 ||zvkytbjimbhk.com^
+||zvtwrm.com^
 ||zvuktop.xyz^
 ||zvzz.zzkzklrwroeoq.top^
 ||zw-ad-lgsmartad-com.aws-prd.net^

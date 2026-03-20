@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.19.1955
+! Version: 2026.03.20.0507
 ! Expires: 6 hours
-! Last modified: 2026-03-19T19:55:31Z
+! Last modified: 2026-03-20T05:07:20Z
 ! License: MIT
 !
-! Block rules: 135737
+! Block rules: 135735
 ! Allow rules: 249
-! Total rules: 135986
+! Total rules: 135984
 !
 ||0--0.info^
 ||0--4.com^
@@ -43800,7 +43800,6 @@
 ||coolhandpoker.com^
 ||coolifestudio.com^
 ||coolimprovement.pro^
-||coolishrocked.com^
 ||coolpg.win^
 ||coolplattf.top^
 ||coolpornaction.com^
@@ -117824,7 +117823,6 @@
 ||stellar-dating2.fun^
 ||stellar-lumen-beacon-signal-vault.pages.dev^
 ||stellarbizt.com^
-||stellarduel.com^
 ||stellarlabs.ai^
 ||stellarwhirl.org^
 ||stelliescoffee.com^

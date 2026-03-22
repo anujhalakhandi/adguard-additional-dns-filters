@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.21.1902
+! Version: 2026.03.22.0511
 ! Expires: 6 hours
-! Last modified: 2026-03-21T19:02:47Z
+! Last modified: 2026-03-22T05:11:34Z
 ! License: MIT
 !
-! Block rules: 135663
+! Block rules: 135673
 ! Allow rules: 249
-! Total rules: 135912
+! Total rules: 135922
 !
 ||0--0.info^
 ||0--4.com^
@@ -4780,6 +4780,7 @@
 ||4i7i.com^
 ||4info.com^
 ||4jpg.us^
+||4k-iptv-direct.com^
 ||4k.to^
 ||4kfuckmovies.pro^
 ||4kfv18.cn^
@@ -6020,6 +6021,7 @@
 ||abbeautyworld.com^
 ||abblm.com^
 ||abbny.com^
+||abbott-tech.net^
 ||abbottnoem2028.com^
 ||abbq.cn^
 ||abbyads.com^
@@ -35762,6 +35764,7 @@
 ||baharbux.ir^
 ||bahiscom.info^
 ||bahisengiris.net^
+||bahisrehberi1.site^
 ||bahmut.com.ua^
 ||bahuzan.com^
 ||baichuan-sdk.taobao.com^
@@ -39636,7 +39639,6 @@
 ||captainbicycle.com^
 ||captaincookscasino.com^
 ||captainsofcrush.ru^
-||captchabotds.com^
 ||captification.com^
 ||captifymedia.com^
 ||captifytechnologies.com^
@@ -39833,6 +39835,7 @@
 ||casinoonnet.com^
 ||casinopays.com^
 ||casinopro.se^
+||casinorehberi.site^
 ||casinoresenas.com^
 ||casinorewards.com^
 ||casinorocket.org^
@@ -39972,6 +39975,7 @@
 ||cc-img-cn.heytapimage.com^
 ||cc.clearchannel.co.uk^
 ||cc.dalten.cz^
+||cc.kuveraswop.life^
 ||cc.lbesec.com^
 ||cc.linksare.top^
 ||cc.map.qq.com^
@@ -44492,6 +44496,7 @@
 ||crowdsynonym.com^
 ||crowdvision.com^
 ||crowdynews.com^
+||crown-vintage.de^
 ||croxyproxy.com.in^
 ||crpostbelnk.glitch.me^
 ||crpxtrk.com^
@@ -47685,6 +47690,7 @@
 ||digital-analytics.amadeus.com^
 ||digital-analytics.burgan.com.tr^
 ||digital-analytics.lllapi.com^
+||digital-beast.tech^
 ||digital-campaign-monitoring-unit.pages.dev^
 ||digital-interview.com^
 ||digital-marmoset-svn-ads-sv.web.app^
@@ -60993,7 +60999,6 @@
 ||imirki86.com^
 ||imirkii12.com^
 ||imirkii22.com^
-||imitrex-sumatriptan.com^
 ||imitrk16.com^
 ||imjtv.cc^
 ||imkoa.top^
@@ -61526,7 +61531,6 @@
 ||inside.bitcomet.com^
 ||inside3d.com^
 ||insideoftech.com^
-||insidepsych.net^
 ||insiderpages.com^
 ||insidesalesinc.com^
 ||insidesoci.al^
@@ -64643,11 +64647,13 @@
 ||kwlnds.com^
 ||kwpsurveys.com^
 ||kwptg.kantarworldpanel.fr^
+||kx-tools.uk^
 ||kx.unroastspitted.com^
 ||kx56.com^
 ||kx666.com^
 ||kxbolimen.com^
 ||kxfhep.com^
+||kxhm-store.com^
 ||kxlogo.knet.cn^
 ||kxsnh.com^
 ||kxvuv.com^
@@ -77874,6 +77880,7 @@
 ||mizadolevu.icu^
 ||mizhui.com^
 ||mj.acmitequail.com^
+||mj.waggedprimely.digital^
 ||mjg0310.com^
 ||mjheo.biz^
 ||mjjskp8trk.com^
@@ -82110,6 +82117,7 @@
 ||ojsbriac.com^
 ||ojszufav.com^
 ||ok-jatt.com^
+||ok.aboardpleione.com^
 ||ok.termerdodgy.com^
 ||ok.upbborereveler.com^
 ||ok.woodhendansant.shop^
@@ -93246,6 +93254,7 @@
 ||propertycaregurunp.com^
 ||propertywrightresidents.com^
 ||propl.top^
+||proposalchildhoodfulfil.com^
 ||proposedfelonoxide.com^
 ||propsad.com^
 ||propub.ru^
@@ -103968,7 +103977,6 @@
 ||sidekickopen90.com^
 ||sidelinesapp.com^
 ||sidesteamroll.com^
-||sidetrades.com^
 ||sidewalk.com^
 ||sidlgroup.com^
 ||sieandkia.shop^
@@ -117927,6 +117935,7 @@
 ||stream.snssdk.com^
 ||stream2watch.ws^
 ||stream4fun.com^
+||stream4k-tv.pro^
 ||streamate.icfcdn.com^
 ||streamback.ff.avast.com^
 ||streamback.ff.avast.sec.miui.com^
@@ -130081,6 +130090,7 @@
 ||viniq.io^
 ||vintage-ads.livejournal.com^
 ||vintage-threads.com^
+||vintage-watch-hub.com^
 ||vintagecartruckpartsshop.net^
 ||vinterfouler.com^
 ||vinzlv.icu^

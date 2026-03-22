@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.22.0511
+! Version: 2026.03.22.0751
 ! Expires: 6 hours
-! Last modified: 2026-03-22T05:11:34Z
+! Last modified: 2026-03-22T07:51:39Z
 ! License: MIT
 !
-! Block rules: 135673
+! Block rules: 135683
 ! Allow rules: 249
-! Total rules: 135922
+! Total rules: 135932
 !
 ||0--0.info^
 ||0--4.com^
@@ -4780,7 +4780,6 @@
 ||4i7i.com^
 ||4info.com^
 ||4jpg.us^
-||4k-iptv-direct.com^
 ||4k.to^
 ||4kfuckmovies.pro^
 ||4kfv18.cn^
@@ -6021,7 +6020,6 @@
 ||abbeautyworld.com^
 ||abblm.com^
 ||abbny.com^
-||abbott-tech.net^
 ||abbottnoem2028.com^
 ||abbq.cn^
 ||abbyads.com^
@@ -21359,6 +21357,7 @@
 ||analytics.brother.co.uk^
 ||analytics.brother.de^
 ||analytics.brother.fi^
+||analytics.brother.nl^
 ||analytics.brototyp.de^
 ||analytics.broukej.cz^
 ||analytics.brownsugar.work^
@@ -24685,6 +24684,7 @@
 ||analytics.hofmann-dietz.de^
 ||analytics.hogapage.de^
 ||analytics.hohde.com^
+||analytics.hokify.com^
 ||analytics.holgersindbaek.com^
 ||analytics.holistic-med.ch^
 ||analytics.holzbau-planung.de^
@@ -25517,6 +25517,7 @@
 ||analytics.juliustoschka.de^
 ||analytics.july.com^
 ||analytics.jumboprivacy.com^
+||analytics.jun.legal^
 ||analytics.juncotic.com^
 ||analytics.jungesmuenchen.org^
 ||analytics.jungle-soft.com^
@@ -27027,6 +27028,7 @@
 ||analytics.mobyome.at^
 ||analytics.moclip.de^
 ||analytics.modeimpact.com^
+||analytics.modelmatic.net^
 ||analytics.modernbiz.co.za^
 ||analytics.modfy.video^
 ||analytics.modg.org^
@@ -27218,6 +27220,7 @@
 ||analytics.my-clay.com^
 ||analytics.my-tp.com^
 ||analytics.my.quentic.com^
+||analytics.my16types.net^
 ||analytics.myaba.co.uk^
 ||analytics.myadonia.ch^
 ||analytics.myallstarnutrition.com^
@@ -31273,6 +31276,7 @@
 ||analytics.uppersource.nl^
 ||analytics.uppmarket.com^
 ||analytics.uppmkt.com^
+||analytics.upress.io^
 ||analytics.ups.com^
 ||analytics.upsala.ca^
 ||analytics.upscanx.com^
@@ -33054,6 +33058,8 @@
 ||api-analytics-in.huami.com^
 ||api-analytics-qa.samsungknox.com^
 ||api-analytics-sg.huami.com^
+||api-analytics-test-cn3.zepp.com^
+||api-analytics-test.zepp.com^
 ||api-analytics-us.huami.com^
 ||api-analytics-us.zepp.com^
 ||api-analytics-us3.zepp.com^
@@ -35764,7 +35770,6 @@
 ||baharbux.ir^
 ||bahiscom.info^
 ||bahisengiris.net^
-||bahisrehberi1.site^
 ||bahmut.com.ua^
 ||bahuzan.com^
 ||baichuan-sdk.taobao.com^
@@ -36395,6 +36400,7 @@
 ||beachfrontreach.com^
 ||beachhutpr-dot-yamm-track.appspot.com^
 ||beachvolleyballleague.org^
+||beacleaner.com^
 ||beacon--c.vf.force.com^
 ||beacon-7of.pages.dev^
 ||beacon-ad.ztgame.com.cdn.dnsv1.com^
@@ -39835,7 +39841,6 @@
 ||casinoonnet.com^
 ||casinopays.com^
 ||casinopro.se^
-||casinorehberi.site^
 ||casinoresenas.com^
 ||casinorewards.com^
 ||casinorocket.org^
@@ -41314,8 +41319,10 @@
 ||cleafs.nl^
 ||cleanerproductionconference.com^
 ||cleanersoft.com^
+||cleaney.com^
 ||cleanfiles.net^
 ||cleanindiajournal.com^
+||cleaningbasic.com^
 ||cleaninsights.org^
 ||cleanmedia.net^
 ||cleanmediaadserver.com^
@@ -42359,6 +42366,7 @@
 ||collect.mcb.eu^
 ||collect.mdata.cool^
 ||collect.meltingpot.com^
+||collect.memira.se^
 ||collect.memorialhermann.org^
 ||collect.meridianlink.com^
 ||collect.merlinportal.com^
@@ -44496,7 +44504,6 @@
 ||crowdsynonym.com^
 ||crowdvision.com^
 ||crowdynews.com^
-||crown-vintage.de^
 ||croxyproxy.com.in^
 ||crpostbelnk.glitch.me^
 ||crpxtrk.com^
@@ -47690,7 +47697,6 @@
 ||digital-analytics.amadeus.com^
 ||digital-analytics.burgan.com.tr^
 ||digital-analytics.lllapi.com^
-||digital-beast.tech^
 ||digital-campaign-monitoring-unit.pages.dev^
 ||digital-interview.com^
 ||digital-marmoset-svn-ads-sv.web.app^
@@ -64175,6 +64181,7 @@
 ||kitabersatu.pro^
 ||kitaramedia.com^
 ||kitchenpearls.com^
+||kitchenpluse.com^
 ||kitchiepreppie.com^
 ||kitsunecoin.com^
 ||kitvc.net^
@@ -64291,6 +64298,8 @@
 ||knarkapeling.cyou^
 ||knc.lv^
 ||knicks.jd.com^
+||knifecarehub.com^
+||knifeup.com^
 ||knigge.de^
 ||knightswap.financial^
 ||knl.mntzrlt.net^
@@ -64647,13 +64656,11 @@
 ||kwlnds.com^
 ||kwpsurveys.com^
 ||kwptg.kantarworldpanel.fr^
-||kx-tools.uk^
 ||kx.unroastspitted.com^
 ||kx56.com^
 ||kx666.com^
 ||kxbolimen.com^
 ||kxfhep.com^
-||kxhm-store.com^
 ||kxlogo.knet.cn^
 ||kxsnh.com^
 ||kxvuv.com^
@@ -65091,6 +65098,7 @@
 ||lattebank.com^
 ||latticescipub.com^
 ||lattor.com^
+||latuaauto.com^
 ||laughlin.com^
 ||laughtill.net^
 ||launch.apple.com^
@@ -68412,7 +68420,6 @@
 ||lywww.com^
 ||lyyigou.com^
 ||lyzhutingqi.com^
-||lz.faenasturbit.com^
 ||lz.mazdarelayed.com^
 ||lzadv.spiendlddate.com^
 ||lzdj.com^
@@ -71636,6 +71643,7 @@
 ||matomo.kappa-it.de^
 ||matomo.kapt.mobi^
 ||matomo.karaokebar.net^
+||matomo.karel.be^
 ||matomo.karlsgymnasium.org^
 ||matomo.karmark.com^
 ||matomo.kasperdev.de^
@@ -90151,7 +90159,6 @@
 ||pixel.staging.tabtab-staging.com^
 ||pixel.staging.web.roku.com^
 ||pixel.stirlingpdf.com^
-||pixel.stonel1nk.ru^
 ||pixel.stream.voidboost.cc^
 ||pixel.strongautomotive.com^
 ||pixel.stylekorean.com^
@@ -92835,7 +92842,6 @@
 ||prismeanalytics.com^
 ||prisoliveras.com^
 ||prisonplanet.com^
-||prissyupland.qpon^
 ||pristinecanyon.com^
 ||pristopmedia.network^
 ||pritre.com^
@@ -99905,6 +99911,7 @@
 ||sentry.pestanou.sa.com^
 ||sentry.petcorp.ru^
 ||sentry.phonepe.com^
+||sentry.photobooth.online^
 ||sentry.picdenlab.com^
 ||sentry.pickrr.com^
 ||sentry.pimlb.cyou^
@@ -102497,6 +102504,7 @@
 ||sgtm.kfzteile24.de^
 ||sgtm.kickxotic.com^
 ||sgtm.kidspotshop.com^
+||sgtm.kijkmagazine.nl^
 ||sgtm.kindercare.com^
 ||sgtm.kinepolis.be^
 ||sgtm.kinepolis.com^
@@ -103430,6 +103438,7 @@
 ||sgtm.vorauerfriends.com^
 ||sgtm.vpv.de^
 ||sgtm.vroom.be^
+||sgtm.wakuwaku.dk^
 ||sgtm.wallsandfloors.co.uk^
 ||sgtm.walmark.cz^
 ||sgtm.walurinal.hu^
@@ -117935,7 +117944,6 @@
 ||stream.snssdk.com^
 ||stream2watch.ws^
 ||stream4fun.com^
-||stream4k-tv.pro^
 ||streamate.icfcdn.com^
 ||streamback.ff.avast.com^
 ||streamback.ff.avast.sec.miui.com^
@@ -121190,6 +121198,7 @@
 ||thekeypr-dot-yamm-track.appspot.com^
 ||thekhaleejtimes.com^
 ||thekickasstorrents.com^
+||thekitchenix.com^
 ||theknowledgearrow.com^
 ||thelakewoodscoop.co.uk^
 ||thelastlayer-dot-yamm-track.appspot.com^
@@ -130090,7 +130099,6 @@
 ||viniq.io^
 ||vintage-ads.livejournal.com^
 ||vintage-threads.com^
-||vintage-watch-hub.com^
 ||vintagecartruckpartsshop.net^
 ||vinterfouler.com^
 ||vinzlv.icu^
@@ -130948,6 +130956,7 @@
 ||walkeradvertising.com^
 ||walkercommunications.co.uk^
 ||walkermagazine.com^
+||walkermetalsmith.com^
 ||walkersands-dot-yamm-track.appspot.com^
 ||walkingdead.club^
 ||walkme.datto.com^
@@ -133108,6 +133117,7 @@
 ||www-banner.chat.ru^
 ||www-direct.hometalk.com^
 ||www-fmhy.pages.dev^
+||www-google--analytics-com-adblock.kagiproxy.com^
 ||www-googletagmanager.l.google.com^
 ||www-log-com-tr.cdn.ampproject.org^
 ||www-officecomsetup.com^

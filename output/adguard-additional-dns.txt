@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.23.0547
+! Version: 2026.03.23.0837
 ! Expires: 6 hours
-! Last modified: 2026-03-23T05:47:01Z
+! Last modified: 2026-03-23T08:37:52Z
 ! License: MIT
 !
-! Block rules: 135766
+! Block rules: 135765
 ! Allow rules: 249
-! Total rules: 136015
+! Total rules: 136014
 !
 ||0--0.info^
 ||0--4.com^
@@ -38557,7 +38557,6 @@
 ||bravobusboy.com^
 ||bravolius.com^
 ||brawl-stars-trophy-monitor.onrender.com^
-||brawlysenjamb.com^
 ||brawnmediany.com^
 ||braxbooks.com^
 ||brayj.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.23.1959
+! Version: 2026.03.24.0514
 ! Expires: 6 hours
-! Last modified: 2026-03-23T19:59:50Z
+! Last modified: 2026-03-24T05:14:56Z
 ! License: MIT
 !
-! Block rules: 135079
+! Block rules: 135086
 ! Allow rules: 250
-! Total rules: 135329
+! Total rules: 135336
 !
 ||0--0.info^
 ||0--4.com^
@@ -9755,6 +9755,7 @@
 ||adaxx.com^
 ||adb.pennymac.com^
 ||adbalancer.com^
+||adballoon.sooplive.co.kr^
 ||adbalu.com^
 ||adbarker.com^
 ||adbcmodum.com^
@@ -18710,6 +18711,7 @@
 ||analysis.leetcode.cn^
 ||analysis.prod.joyfru.jiji.com^
 ||analysis.shixunsuda.com^
+||analysis.sooplive.co.kr^
 ||analysis.soreto.com^
 ||analysis.tratao.com^
 ||analysis.yozocloud.cn^
@@ -46715,6 +46717,7 @@
 ||deanaheather.elizabethrell.xyz^
 ||deandrewynn.com^
 ||deanowens.com^
+||deapi.sooplive.co.kr^
 ||deathdebt.com^
 ||debbiejellinsky.de^
 ||debbiestabenowforsenate.org^
@@ -46876,6 +46879,7 @@
 ||delmondo.co^
 ||delmondo.com^
 ||delna76eiyecm.cloudfront.net^
+||delog.sooplive.co.kr^
 ||deloittedigital.com^
 ||deloo.de^
 ||delphoi-tr-milla-collect.trendyol-milla.com^
@@ -50929,6 +50933,7 @@
 ||event2023.weebly.com^
 ||event3.thermofisher.com^
 ||event3.thermoscientific.com^
+||eventapi.sooplive.co.kr^
 ||eventcollector.azureedge.net^
 ||eventcollector.dditservices.com^
 ||eventful.com^
@@ -51510,6 +51515,7 @@
 ||exitfuel.com^
 ||exitintelligence.com^
 ||exiwg.vip^
+||exlogcollector.sooplive.co.kr^
 ||exmasters.com^
 ||exnesstrack.net^
 ||exo.nel.measure.office.net.sw.buhl-data.com^
@@ -74779,7 +74785,6 @@
 ||meindl.cn^
 ||meinecv.xyz^
 ||meinungsmeister.de^
-||meiro.io^
 ||meitubeauty.meitudata.com^
 ||meizhaikong.com^
 ||mejoratuescuela.org^
@@ -95368,6 +95373,7 @@
 ||reputon.com^
 ||repyua.com^
 ||req.vanx.me^
+||reqde.sooplive.co.kr^
 ||request.rip^
 ||requestbin.net^
 ||requestcatcher.com^
@@ -129928,6 +129934,7 @@
 ||vod-control.com^
 ||vod-license-b.volccdn.com^
 ||vod-license-m.volccdn.com^
+||vod-mplayer.sooplive.co.kr^
 ||vod-settings.volcvod.com^
 ||vod.plus^
 ||voda-doma.com^

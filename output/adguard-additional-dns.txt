@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.24.1545
+! Version: 2026.03.24.2000
 ! Expires: 6 hours
-! Last modified: 2026-03-24T15:45:46Z
+! Last modified: 2026-03-24T20:00:11Z
 ! License: MIT
 !
-! Block rules: 135307
+! Block rules: 135306
 ! Allow rules: 250
-! Total rules: 135557
+! Total rules: 135556
 !
 ||0--0.info^
 ||0--4.com^
@@ -41658,7 +41658,6 @@
 ||clubtk.ru^
 ||cludo.com^
 ||clue.oceanengine.com^
-||cluinglwo.qpon^
 ||clumsypack.pro^
 ||clumsyshare.com^
 ||clunder.net^

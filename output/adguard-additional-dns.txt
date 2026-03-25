@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.25.0804
+! Version: 2026.03.25.1549
 ! Expires: 6 hours
-! Last modified: 2026-03-25T08:04:55Z
+! Last modified: 2026-03-25T15:49:13Z
 ! License: MIT
 !
-! Block rules: 135812
+! Block rules: 135811
 ! Allow rules: 249
-! Total rules: 136061
+! Total rules: 136060
 !
 ||0--0.info^
 ||0--4.com^
@@ -104477,7 +104477,6 @@
 ||slippery-key.com^
 ||slipstream.skyscanner.net^
 ||slivschool.vip^
-||sliwercohue.top^
 ||sljtqfcyi.com^
 ||sllbaqteaonea8uia4ddcveggfogua1ainc.com^
 ||slmads.com^

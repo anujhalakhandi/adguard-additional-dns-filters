@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.26.0118
+! Version: 2026.03.26.0656
 ! Expires: 6 hours
-! Last modified: 2026-03-26T01:18:13Z
+! Last modified: 2026-03-26T06:56:29Z
 ! License: MIT
 !
-! Block rules: 136398
+! Block rules: 136394
 ! Allow rules: 249
-! Total rules: 136647
+! Total rules: 136643
 !
 ||0--0.info^
 ||0--4.com^
@@ -50632,7 +50632,6 @@
 ||equativ-match.dotomi.com^
 ||equativ.com^
 ||equatorial-statement.pro^
-||equatorialquality.pro^
 ||equippro.xyz^
 ||equitymarketingsolutions.com^
 ||equitymaster.com^
@@ -69271,7 +69270,6 @@
 ||mallumv.com.in^
 ||malmaison-london.com^
 ||maltablockchainsummit.com^
-||maltedsanxious.com^
 ||maltiverse.lt.acemlnc.com^
 ||maltzsales.com^
 ||malvorlagen.de^
@@ -119407,7 +119405,6 @@
 ||t.dostuffmedia.com^
 ||t.ed.nl^
 ||t.ekoru.org^
-||t.elitedomains.de^
 ||t.eloqua.com^
 ||t.eroges.com^
 ||t.eu1.target2sell.mirakl.net^
@@ -127659,7 +127656,6 @@
 ||truepeoplesearch.blog^
 ||truepoker.com^
 ||trueposition.com^
-||trueselfkeys.com^
 ||truewave.io^
 ||truex.com^
 ||truexxx.3xx.my^

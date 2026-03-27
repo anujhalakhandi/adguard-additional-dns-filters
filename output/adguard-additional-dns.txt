@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.27.0656
+! Version: 2026.03.27.1239
 ! Expires: 6 hours
-! Last modified: 2026-03-27T06:56:23Z
+! Last modified: 2026-03-27T12:39:03Z
 ! License: MIT
 !
-! Block rules: 136158
+! Block rules: 136149
 ! Allow rules: 249
-! Total rules: 136407
+! Total rules: 136398
 !
 ||0--0.info^
 ||0--4.com^
@@ -6079,6 +6079,7 @@
 ||acanthishoving.com^
 ||acaoz.com^
 ||acasa-adserver.deleteweb.it^
+||acbp0020171456.page.tl^
 ||acc.magixite.com^
 ||acc.qq.com^
 ||accademianazionalevirgiliana.org^
@@ -37859,7 +37860,6 @@
 ||blastmedia.site^
 ||blastswaggons.com^
 ||blattack.top^
-||blaverroes.qpon^
 ||blawnsodium.com^
 ||blazehockey.org^
 ||blazemorph.com^
@@ -41976,7 +41976,6 @@
 ||cloverkeys.com^
 ||clp-mms.cloudpro.co.uk^
 ||clpl-analytics-prod.s3.ap-southeast-1.amazonaws.com^
-||clprr.com^
 ||clrkk8trk.com^
 ||clrt.ai^
 ||clstm-ori-ad.cat.com^
@@ -49048,7 +49047,6 @@
 ||dsa9k5.com^
 ||dsaa.co^
 ||dsail-tech.com^
-||dsamfe.com^
 ||dsau5u.com^
 ||dsausa-dot-yamm-track.appspot.com^
 ||dsba.org^
@@ -50473,7 +50471,6 @@
 ||endeavourknowhow.com^
 ||endgatestack.digital^
 ||endingthefed.com^
-||endlesshandbaglinked.com^
 ||endlesstrust.com^
 ||endlessvideo.com^
 ||endnewjimcrow.org^
@@ -50671,7 +50668,6 @@
 ||epg.zeasn.tv^
 ||ephebedori.life^
 ||ephebosauklets.shop^
-||ephesiansavvyinto.com^
 ||ephraimstroked.cyou^
 ||epi.st.bitban.com^
 ||epi.vn^
@@ -52218,7 +52214,6 @@
 ||extrovertedproduct.pro^
 ||extws.autosweet.com^
 ||extyoneplus-3.com^
-||exudingidolet.com^
 ||exvagos2.com^
 ||exvlq.searchamor.net^
 ||exxonmobilaccountline.com^
@@ -66274,7 +66269,6 @@
 ||linkurlove.com^
 ||linkv-old-collect.linkv.fun^
 ||linkvans.com^
-||linkvertise.com^
 ||linkwall.ru^
 ||linkwarden-meta.xyz^
 ||linkweb.ro^
@@ -94931,7 +94925,6 @@
 ||queryly.com^
 ||quest-analytics.com^
 ||quest.skyzr.com^
-||questionablenet.com^
 ||questionfly.com^
 ||questions.freshclick.co.uk^
 ||questnet.de^
@@ -122647,7 +122640,6 @@
 ||tomarket-rewards.vercel.app^
 ||tombras.com^
 ||tomcarelessfreelance-dot-yamm-track.appspot.com^
-||tomehippish.cyou^
 ||tometrend.com^
 ||tomgibbschevy.com^
 ||tomi.ai^
@@ -130388,7 +130380,6 @@
 ||versium.com^
 ||versob.com^
 ||versus-marketplace.com^
-||versuswall.com^
 ||vert-wallet-clarity.lovable.app^
 ||vertamedia.com^
 ||vertexai.goog^

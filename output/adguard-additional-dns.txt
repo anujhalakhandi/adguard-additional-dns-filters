@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.28.1231
+! Version: 2026.03.28.1825
 ! Expires: 6 hours
-! Last modified: 2026-03-28T12:31:14Z
+! Last modified: 2026-03-28T18:25:36Z
 ! License: MIT
 !
-! Block rules: 134745
+! Block rules: 134738
 ! Allow rules: 249
-! Total rules: 134994
+! Total rules: 134987
 !
 ||0--0.info^
 ||0--4.com^
@@ -49138,7 +49138,6 @@
 ||e810.cn^
 ||e8aeb8bbdbbd7.cdn.sohucs.com^
 ||e8jp9.com^
-||e8ys.com^
 ||e91ab5975e.623efad9ac.com^
 ||e9377f.com^
 ||ea-covid19-tracker.herokuapp.com^
@@ -65312,7 +65311,6 @@
 ||libs.a2zinc.net^
 ||libs.baidu.com^
 ||libs.platform.californiatimes.com^
-||libtl.com^
 ||licantrum.com^
 ||licasd.com^
 ||license.lumion3d.net^
@@ -83594,7 +83592,6 @@
 ||peakcreator.com^
 ||peakgames.helpshift.com^
 ||peakseven.com^
-||pearcryptic.com^
 ||pearlbiotech.com^
 ||pearlhps.com^
 ||pearllemonleads.com^
@@ -92140,7 +92137,6 @@
 ||premacanada.ca^
 ||premclubs.com^
 ||premierdiscountlink.com^
-||premiermylodei.com^
 ||premieropinion.com^
 ||premiogiusto.com^
 ||premise.com^
@@ -99721,7 +99717,6 @@
 ||serialcoder.com^
 ||serialkeysfree.org^
 ||serialowo.eu^
-||serianwalapai.com^
 ||series.netflixawards.com^
 ||series99hd.com^
 ||serionad.com^
@@ -106422,7 +106417,6 @@
 ||sta.secourspopulaire.fr^
 ||staaqwe.com^
 ||stabilitygenerous.com^
-||stable-skill.com^
 ||stableapp.net^
 ||stableconnection.co.in^
 ||stablesunflower.com^
@@ -120097,7 +120091,6 @@
 ||tenorsoftware.com^
 ||tensebone.com^
 ||tensemagazine.com^
-||tensesurround.pro^
 ||tensorsocial.com^
 ||tensquare.com^
 ||tentenapartments.online^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.27.1842
+! Version: 2026.03.28.0111
 ! Expires: 6 hours
-! Last modified: 2026-03-27T18:42:06Z
+! Last modified: 2026-03-28T01:11:29Z
 ! License: MIT
 !
-! Block rules: 134740
+! Block rules: 134739
 ! Allow rules: 249
-! Total rules: 134989
+! Total rules: 134988
 !
 ||0--0.info^
 ||0--4.com^
@@ -120104,7 +120104,6 @@
 ||terbutalinelawsuit.com^
 ||tercept.com^
 ||terfezkempas.com^
-||tergantbegnaw.com^
 ||tergitepeters.com^
 ||terimawa.com^
 ||termerspatrice.com^

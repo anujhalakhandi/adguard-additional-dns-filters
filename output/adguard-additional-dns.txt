@@ -1,8 +1,8 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.30.0121
+! Version: 2026.03.30.0715
 ! Expires: 6 hours
-! Last modified: 2026-03-30T01:21:57Z
+! Last modified: 2026-03-30T07:15:03Z
 ! License: MIT
 !
 ! Block rules: 134072
@@ -46279,7 +46279,6 @@
 ||datanerd.us^
 ||datanine.com.cn^
 ||dataops.mozgcp.net^
-||datapickles.com^
 ||datapicks.com^
 ||dataplusmath.com^
 ||datapods.app^
@@ -105233,6 +105232,7 @@
 ||spokeapp.io^
 ||spokeo.pl^
 ||spokesportsman.com^
+||spolecznosci.net^
 ||spolify-support-premium.codeanyapp.com^
 ||spondilsomalo.com^
 ||sponge.creditkarma.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.01.1253
+! Version: 2026.04.01.1844
 ! Expires: 6 hours
-! Last modified: 2026-04-01T12:53:39Z
+! Last modified: 2026-04-01T18:44:52Z
 ! License: MIT
 !
-! Block rules: 137028
+! Block rules: 137027
 ! Allow rules: 250
-! Total rules: 137278
+! Total rules: 137277
 !
 ||0--0.info^
 ||0--4.com^
@@ -37021,7 +37021,6 @@
 ||beacon.buffbuff.com^
 ||beacon.campaigndeputy.com^
 ||beacon.cdn.qq.com.cdn.dnsv1.com^
-||beacon.cdnpure.com^
 ||beacon.chiadochain.net^
 ||beacon.cimb.com.my^
 ||beacon.circles.asia^
@@ -48246,6 +48245,7 @@
 ||dimpy.narod.ru^
 ||dimsg.com^
 ||dimwittedball.pro^
+||dinbilgaranti.se^
 ||dinecare.org^
 ||ding.wix.com^
 ||dingbuy.com^
@@ -95683,7 +95683,6 @@
 ||r.brevo.insuranceinsider.com^
 ||r.brevo2.insuranceinsider.com^
 ||r.browser.intl.miui.com^
-||r.cdnpure.com^
 ||r.comunicati.ellastudio.it^
 ||r.comunicazionepk.com^
 ||r.dizibox.cc^

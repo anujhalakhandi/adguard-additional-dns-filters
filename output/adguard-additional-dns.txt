@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.03.31.1845
+! Version: 2026.04.01.0126
 ! Expires: 6 hours
-! Last modified: 2026-03-31T18:45:29Z
+! Last modified: 2026-04-01T01:26:02Z
 ! License: MIT
 !
-! Block rules: 133538
+! Block rules: 133537
 ! Allow rules: 249
-! Total rules: 133787
+! Total rules: 133786
 !
 ||0--0.info^
 ||0--4.com^
@@ -77614,7 +77614,6 @@
 ||mp-activity.csdn.net^
 ||mp-data.gofundme.com^
 ||mp-eu1.mcdonalds.com^
-||mp-gb-sdklog.kurogames.net^
 ||mp-newmedia.com^
 ||mp-us1.mcdonalds.com^
 ||mp.hrblock.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.02.1246
+! Version: 2026.04.02.1841
 ! Expires: 6 hours
-! Last modified: 2026-04-02T12:46:27Z
+! Last modified: 2026-04-02T18:41:15Z
 ! License: MIT
 !
-! Block rules: 133562
+! Block rules: 133556
 ! Allow rules: 249
-! Total rules: 133811
+! Total rules: 133805
 !
 ||0--0.info^
 ||0--4.com^
@@ -33418,7 +33418,6 @@
 ||api2.e.kuaishou.com^
 ||api2.openinstall.io^
 ||api2.qonversion.io^
-||api2.wshareit.com^
 ||api2.zocdoc.com^
 ||api3-normal-hl.fqnovel.com^
 ||api3-normal-lf.fqnovel.com^
@@ -73262,7 +73261,6 @@
 ||mcdlks.com^
 ||mcdm6.com^
 ||mcdn.kandian.qq.com^
-||mcds.dalyfeds.com^
 ||mcds.wshareit.com^
 ||mcecksa.com^
 ||mcelroymetal.com^
@@ -91574,7 +91572,6 @@
 ||profero.com^
 ||proficredit.pl^
 ||profiledbase.com^
-||profiler-collector.dalyfeds.com^
 ||profiling.digitalbusiness.cibc.com^
 ||profit-maximizer.app^
 ||profitap.com^
@@ -92118,7 +92115,6 @@
 ||pull-flv-l11.douyincdn.com^
 ||pull-pr-dot-yamm-track.appspot.com^
 ||pull.mitv.pandora.xiaomi.com^
-||pullcf.com^
 ||pullcm.com^
 ||pulloverupgrademuffled.com^
 ||pulpower.com^
@@ -94158,7 +94154,6 @@
 ||reports.hrmdirect.com^
 ||reports.radiotime.com^
 ||reportsk.web.sdo.com^
-||reporttk.com^
 ||reportus.parallels.com^
 ||reportwpush.58.com^
 ||repositiate.com^
@@ -121441,7 +121436,6 @@
 ||track.hhjprm.easypanel.host^
 ||track.hicmobile.com^
 ||track.hierreth-felser.de^
-||track.hily.com^
 ||track.historyfacts.com^
 ||track.hlc-clinic.net^
 ||track.hm-news.co.il^

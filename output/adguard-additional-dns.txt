@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.02.0116
+! Version: 2026.04.02.0659
 ! Expires: 6 hours
-! Last modified: 2026-04-02T01:16:19Z
+! Last modified: 2026-04-02T06:59:34Z
 ! License: MIT
 !
-! Block rules: 133573
+! Block rules: 133567
 ! Allow rules: 250
-! Total rules: 133823
+! Total rules: 133817
 !
 ||0--0.info^
 ||0--4.com^
@@ -6126,6 +6126,7 @@
 ||actingprofessionshiny.com^
 ||actio.systems^
 ||actiolany.com^
+||action-log.fighttrapper.in.net^
 ||action-log.foodora.fi^
 ||action-log.foodora.se^
 ||action-log.foodpanda.com.tw^
@@ -34903,7 +34904,6 @@
 ||auryc.com^
 ||ausbeverage.com.au^
 ||ausgezeichnet.org^
-||aussienews.info^
 ||aussoackou.net^
 ||austinlchurch.com^
 ||austinprimetimes.com^
@@ -35446,6 +35446,7 @@
 ||ayso177.org^
 ||ayxzy.cn^
 ||az-ad-lgsmartad-com.aws-prd.net^
+||az-neverblock.aznude.workers.dev^
 ||az-partners.net^
 ||az.appstore.vivo.com.cn^
 ||az.buzbeckon.shop^
@@ -36119,7 +36120,6 @@
 ||bbbb.arch.be^
 ||bbbb.blackboard.com^
 ||bbbbspbcka.cc^
-||bbc-reporting-api.app^
 ||bbc.co^
 ||bbc.net^
 ||bbd-tag.de^
@@ -38606,7 +38606,6 @@
 ||buildcentral.com^
 ||builderallwppro.com^
 ||buildersmatch.co^
-||buildhunt.live^
 ||buildingbusinessnews.com^
 ||buildingbusinessnews.org^
 ||buildinglink.io^
@@ -45167,6 +45166,7 @@
 ||danielbrian.com^
 ||danieleteti.it^
 ||danielginns.com^
+||danielmitrov.com^
 ||danieltolson.com^
 ||danimalrocks.com^
 ||daniushuocai.com^
@@ -47840,7 +47840,6 @@
 ||downright-human.com^
 ||downrightproctor.com^
 ||downtownslice.com^
-||downundernews.info^
 ||downupfiles.com^
 ||doxdynpvwvkcw.com^
 ||doxeaowk.icu^
@@ -50231,6 +50230,7 @@
 ||europe-west3-data-collector-342312.cloudfunctions.net^
 ||europe-west3-mir-telemetry.cloudfunctions.net^
 ||european-clean-tech-tracker.bruegel.org^
+||european-resilience.org^
 ||europeanchallengeukraine.eu^
 ||europetopslotonline.com^
 ||europeup.com^
@@ -54619,7 +54619,6 @@
 ||globalismedia.com^
 ||globaljogos.com^
 ||globalldsl.com^
-||globallnews.info^
 ||globalmsg.facemojikeyboard.com^
 ||globalpovertyproject-dot-yamm-track.appspot.com^
 ||globalprivacyaccess.com^
@@ -76517,7 +76516,6 @@
 ||mimaben.cn^
 ||mimage.xdcc.rocks^
 ||mime.baidu.com^
-||mimiunprest.com^
 ||mimosaavior.top^
 ||mimowork.com^
 ||mimundoporelmundo.com.ar^
@@ -79318,7 +79316,6 @@
 ||nextdigital.co.id^
 ||nextdigitalkey.com^
 ||nextdocs.com^
-||nextedubd.com^
 ||nextfeatures.com^
 ||nextgenerationpac.vote^
 ||nexthome.blog^
@@ -81814,7 +81811,6 @@
 ||oz.valueclick.ne.jp^
 ||ozarkstech.my.salesforce-sites.com^
 ||ozb-human-design-gtrk-ru-smo.hdsb.ru^
-||ozdaily.info^
 ||ozjqfl.pro^
 ||ozmahtadn.com^
 ||oznul.com^
@@ -90686,7 +90682,6 @@
 ||pollmonkey.com^
 ||polls.services.disqus.com^
 ||polluxcastor.top^
-||polskiesprawynarodowe.info^
 ||polskitred.top^
 ||poltava-inform.com^
 ||polyfill.io^
@@ -104320,6 +104315,7 @@
 ||sohohindipro.net^
 ||sohonet.co.uk^
 ||soicauxoso247.org^
+||soil-monitor.fetterland.in.net^
 ||soinluck.com^
 ||soinside.com^
 ||soireenews.com^
@@ -104469,6 +104465,7 @@
 ||soundscapehq.com^
 ||soup.v.qq.com^
 ||soupilique.xyz^
+||source-log.needwatka.in.net^
 ||sourcecode.pro^
 ||sourcedefense.com^
 ||sourceglobalmedia-dot-yamm-track.appspot.com^
@@ -126669,7 +126666,6 @@
 ||unfamliliardate.com^
 ||unfamlliiardate.com^
 ||unfamlliiardates.com^
-||unfamllliardate.com^
 ||unfattybeveled.shop^
 ||unfgaming.org^
 ||unfit-step.pro^
@@ -130290,7 +130286,6 @@
 ||whytecreations.com^
 ||wi.bumbocobnuts.com^
 ||wi.spleniidizzy.com^
-||wiadomosciportalpolski.pro^
 ||wiboxa.com^
 ||wicamps.com^
 ||wicaphudi.com^
@@ -130976,7 +130971,6 @@
 ||wss.media^
 ||wssgmstats.vibbo.com^
 ||wsstats.coches.net^
-||wstats.click^
 ||wstats.e-wok.tv^
 ||wstats.gameblog.fr^
 ||wstats.porndig.com^

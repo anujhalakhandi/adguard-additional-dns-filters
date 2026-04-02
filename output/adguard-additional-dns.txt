@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.02.0659
+! Version: 2026.04.02.1246
 ! Expires: 6 hours
-! Last modified: 2026-04-02T06:59:34Z
+! Last modified: 2026-04-02T12:46:27Z
 ! License: MIT
 !
-! Block rules: 133567
-! Allow rules: 250
-! Total rules: 133817
+! Block rules: 133562
+! Allow rules: 249
+! Total rules: 133811
 !
 ||0--0.info^
 ||0--4.com^
@@ -3757,7 +3757,6 @@
 ||218080.com^
 ||2187999.com^
 ||2198785035.luamaya.com^
-||21at.com^
 ||21bc9497f1ac57f8.com^
 ||21dayfastmassbuilding.com^
 ||21g.me^
@@ -3780,7 +3779,6 @@
 ||2288.org^
 ||229tv.com^
 ||22av.net^
-||22betkenya.com^
 ||22box-id.com^
 ||22ex.vip^
 ||22find.com^
@@ -4025,7 +4023,6 @@
 ||2momluvme.com^
 ||2mydns.net^
 ||2ndbasket.com^
-||2ndchance4felons.com^
 ||2nightmovie.live^
 ||2nosm7.ru^
 ||2notebook.net^
@@ -4099,7 +4096,6 @@
 ||30maps.com^
 ||30minutos.net^
 ||30ontap.com^
-||30orbine.net^
 ||30pavroad.com^
 ||30promesas.com^
 ||30secondfeedback.com^
@@ -4161,7 +4157,6 @@
 ||3389.top^
 ||33across-match.dotomi.com^
 ||33apk.com^
-||33b39a6e93.3638f4360b.com^
 ||33bbaf45e4.f9fd639740.com^
 ||33brisk.net^
 ||33li.com^
@@ -4210,7 +4205,6 @@
 ||360mon.cn^
 ||360os.com^
 ||360pi.com^
-||360procedures.net^
 ||360rage.com^
 ||360service.report360.io^
 ||360shuke.com^
@@ -4704,7 +4698,6 @@
 ||5101.net^
 ||5103c0n1c.texasmonthly.com^
 ||511.com^
-||511a0ac5af.2e3b6a6f50.com^
 ||51240.com^
 ||512j.com^
 ||513mir.com^
@@ -10465,6 +10458,7 @@
 ||adnetmedia.ee^
 ||adnetmedia.lt^
 ||adnetwork.bet^
+||adnetwork.co.za^
 ||adnetwork.com.br^
 ||adnetwork.fullservices.com.ar^
 ||adnetwork.kataweb.it^
@@ -10805,6 +10799,7 @@
 ||ads-deliverync.gameforge.com^
 ||ads-den-nfl.yinzcam.com^
 ||ads-det-nfl.yinzcam.com^
+||ads-dev.improvemedia.fi^
 ||ads-dev.kb4compliance.com^
 ||ads-dev.pinterest.com^
 ||ads-dev.sportradar.com^
@@ -16196,6 +16191,7 @@
 ||adux.com^
 ||adv-2.aryel.io^
 ||adv-adplatform.ru^
+||adv-api.cloud.mediaset.net^
 ||adv-athena.dev.outfra.xyz^
 ||adv-blend.com^
 ||adv-cdn.tnt-online.ru^
@@ -17570,7 +17566,6 @@
 ||affsabzamb.com^
 ||affsectrk.com^
 ||afftrack.pro^
-||afftrackcf.21.partners^
 ||afftrk.altex.ro^
 ||affxc.com^
 ||afgzipohma.com^
@@ -32599,6 +32594,7 @@
 ||analytiikka.tyomarkkinatori.fi^
 ||analytiikka.verkkouutiset.fi^
 ||analytiikka2.terveyskyla.fi^
+||analytik.bebeboutik-prive.fr^
 ||analytik.uncenter.dev^
 ||analytika.kbpojistovna.cz^
 ||analytika.mytago.cz^
@@ -48259,7 +48255,6 @@
 ||duckcash.eu^
 ||duckstail.xyz^
 ||duckvoidrebuke.com^
-||ductilevoider.com^
 ||ductquest.com^
 ||dudaixou.com^
 ||dudccob.in^
@@ -48607,7 +48602,6 @@
 ||e59.jzwxp.com^
 ||e5nnk.com^
 ||e67jpj6to.com^
-||e6fe6edf94.2a3d18deb0.com^
 ||e71b1091d6.a33ec2c3da.com^
 ||e810.cn^
 ||e8aeb8bbdbbd7.cdn.sohucs.com^
@@ -50230,7 +50224,6 @@
 ||europe-west3-data-collector-342312.cloudfunctions.net^
 ||europe-west3-mir-telemetry.cloudfunctions.net^
 ||european-clean-tech-tracker.bruegel.org^
-||european-resilience.org^
 ||europeanchallengeukraine.eu^
 ||europetopslotonline.com^
 ||europeup.com^
@@ -65168,6 +65161,7 @@
 ||load.tracking.utedesign.no^
 ||load.us-california-sgtm.1800gotjunk.com^
 ||loadads.com^
+||loaded-gtm-1793553444.eu-west-1.elb.amazonaws.com^
 ||loader-config.theoaklandpress.com^
 ||loader-fd-e3c8gtakhzfgh5g4.z01.azurefd.net^
 ||loader.fmkorea.com^
@@ -98396,6 +98390,7 @@
 ||sentry.tech.padam.io^
 ||sentry.techspecs.io^
 ||sentry.telmed.tech^
+||sentry.tempusinfo.com^
 ||sentry.tensquaregames.com^
 ||sentry.tenyek.hu^
 ||sentry.tgdd.vn^
@@ -98450,6 +98445,7 @@
 ||sentry.uastage.com^
 ||sentry.ubique.ch^
 ||sentry.uc.se^
+||sentry.ucheba.ru^
 ||sentry.ugsk.ru^
 ||sentry.ukr.net^
 ||sentry.uncinc.nl^
@@ -99821,6 +99817,7 @@
 ||sgrestaurantmenu.org^
 ||sgstats.com^
 ||sgtm-gmu-tagging-server-frontdoor-hwaafzembnbfcyee.z01.azurefd.net^
+||sgtm-hq-prod-qi2yta3k2a-ez.a.run.app^
 ||sgtm-laattapiste-tagging-server.azurewebsites.net^
 ||sgtm-legacy.kleinanzeigen.de^
 ||sgtm-pro.schip.io^
@@ -107667,6 +107664,7 @@
 ||statistic.trader-online.de^
 ||statistic.twingle.de^
 ||statistic.weimobdc.com^
+||statistic.wildred.ru^
 ||statistic2.reichelt.de^
 ||statistiche.emlineamoto.com^
 ||statistiche.piano-d.it^
@@ -108336,6 +108334,7 @@
 ||stats-api.aaaecommerce.com^
 ||stats-api.aberdeen.soticclient.net^
 ||stats-api.cloudgfx.com^
+||stats-api.feedconstruct.com^
 ||stats-api.flockler.app^
 ||stats-api.givegab.com^
 ||stats-api.infowars.com^
@@ -116161,8 +116160,6 @@
 ||storeya.com^
 ||storino2day.org^
 ||storj.cloud^
-||storj.io^
-||storjshare.io^
 ||storm-beacon-anchor-safety-vault.pages.dev^
 ||stormly.com^
 ||story-data.ex.co^
@@ -118093,7 +118090,6 @@
 ||taradinhos.com^
 ||taradownloader.com^
 ||tardierrouges.com^
-||tardigrade.io^
 ||tardtodtimpi.com^
 ||targad.de^
 ||target.ads.jihuoniao.com^
@@ -119724,7 +119720,6 @@
 ||thinkflipp.com^
 ||thinkgeekstore.com^
 ||thinkimpact.com^
-||thinkingdata.cn^
 ||thinkingdata.io^
 ||thinkingdata.jp^
 ||thinkingdata.kr^
@@ -133619,7 +133614,6 @@
 @@||bizrate.com^
 @@||bluekai.com^
 @@||budurl.com^
-@@||buoydeparturediscontent.com^
 @@||c*.dotomi.com^
 @@||c.amazon-adsystem.com^
 @@||c.msn.com^

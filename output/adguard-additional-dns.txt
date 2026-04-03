@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.03.1238
+! Version: 2026.04.03.1833
 ! Expires: 6 hours
-! Last modified: 2026-04-03T12:38:52Z
+! Last modified: 2026-04-03T18:33:10Z
 ! License: MIT
 !
-! Block rules: 133566
+! Block rules: 133563
 ! Allow rules: 249
-! Total rules: 133815
+! Total rules: 133812
 !
 ||0--0.info^
 ||0--4.com^
@@ -75912,7 +75912,6 @@
 ||metrics.tacit.dk^
 ||metrics.tackntogs.com^
 ||metrics.tacobell.com^
-||metrics.taimi.com^
 ||metrics.takami-labo.com^
 ||metrics.talbots.com^
 ||metrics.tamiflu.com^
@@ -114129,7 +114128,6 @@
 ||stats.scryy.com^
 ||stats.scuolafilosofica.com^
 ||stats.sddproductions.com^
-||stats.sdk.banuba.net^
 ||stats.sdps-bbs.com^
 ||stats.sdruskat.net^
 ||stats.seacloud.com^
@@ -130585,7 +130583,6 @@
 ||withoutastar.com^
 ||withreadily.com^
 ||withsarapr-dot-yamm-track.appspot.com^
-||withsounds.com^
 ||witstroom.com^
 ||wittijtuno.com^
 ||wittyrizz.com^

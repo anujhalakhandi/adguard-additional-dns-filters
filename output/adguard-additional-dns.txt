@@ -1,12 +1,12 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.03.1833
+! Version: 2026.04.04.0113
 ! Expires: 6 hours
-! Last modified: 2026-04-03T18:33:10Z
+! Last modified: 2026-04-04T01:13:07Z
 ! License: MIT
 !
-! Block rules: 133563
-! Allow rules: 249
+! Block rules: 133562
+! Allow rules: 250
 ! Total rules: 133812
 !
 ||0--0.info^
@@ -60041,7 +60041,6 @@
 ||impcz.hit.gemius.pl^
 ||impeccable-access.com^
 ||impeccableauction.com^
-||impeditenomoty.com^
 ||impel.io^
 ||imperfeed.com^
 ||imperialbattervideo.com^
@@ -133615,6 +133614,7 @@
 @@||bizrate.com^
 @@||bluekai.com^
 @@||budurl.com^
+@@||buoydeparturediscontent.com^
 @@||c*.dotomi.com^
 @@||c.amazon-adsystem.com^
 @@||c.msn.com^

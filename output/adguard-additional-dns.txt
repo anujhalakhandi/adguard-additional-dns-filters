@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.04.1231
+! Version: 2026.04.04.1826
 ! Expires: 6 hours
-! Last modified: 2026-04-04T12:31:41Z
+! Last modified: 2026-04-04T18:26:39Z
 ! License: MIT
 !
-! Block rules: 133835
+! Block rules: 133837
 ! Allow rules: 249
-! Total rules: 134084
+! Total rules: 134086
 !
 ||0--0.info^
 ||0--4.com^
@@ -5900,6 +5900,7 @@
 ||abroad-ad.kingsoft-office-service.com.dns.wps.com^
 ||abroad.api.comm.intl.miui.com^
 ||abroadad.cache.wpscdn.com^
+||abrts.pro^
 ||abruptroad.com^
 ||abs-cdn.org^
 ||abs.a-dating.site^
@@ -9700,6 +9701,7 @@
 ||adbright.io^
 ||adbrn.com^
 ||adbroker.de^
+||adbsys.icu^
 ||adbtc.top^
 ||adbuho.com^
 ||adbull.me^

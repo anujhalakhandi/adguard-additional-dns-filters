@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.05.0121
+! Version: 2026.04.05.0654
 ! Expires: 6 hours
-! Last modified: 2026-04-05T01:21:54Z
+! Last modified: 2026-04-05T06:54:30Z
 ! License: MIT
 !
-! Block rules: 134367
+! Block rules: 134366
 ! Allow rules: 249
-! Total rules: 134616
+! Total rules: 134615
 !
 ||0--0.info^
 ||0--4.com^
@@ -120439,7 +120439,6 @@
 ||tilasto.kansalliskirjasto.fi^
 ||tile.cycletrader.com^
 ||tile.rvtrader.com^
-||tileruprid.com^
 ||tiles-static.desh-api.com^
 ||tilmedia.kz^
 ||tilruzobsr.com^

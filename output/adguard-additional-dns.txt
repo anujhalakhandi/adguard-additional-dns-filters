@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.05.1233
+! Version: 2026.04.05.1828
 ! Expires: 6 hours
-! Last modified: 2026-04-05T12:33:14Z
+! Last modified: 2026-04-05T18:28:35Z
 ! License: MIT
 !
-! Block rules: 134366
+! Block rules: 134365
 ! Allow rules: 250
-! Total rules: 134616
+! Total rules: 134615
 !
 ||0--0.info^
 ||0--4.com^
@@ -49880,7 +49880,6 @@
 ||error-reporting.zivver.com^
 ||error-sorry.itch.io^
 ||error-success.piku.org.uk^
-||error-tracker.pages.dev^
 ||error-tracking.arvancloud.ir^
 ||error-tracking.cloud.wanyplace.de^
 ||error-tracking.megamarket.tech^

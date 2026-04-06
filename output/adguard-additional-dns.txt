@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.06.0122
+! Version: 2026.04.06.0716
 ! Expires: 6 hours
-! Last modified: 2026-04-06T01:22:16Z
+! Last modified: 2026-04-06T07:16:53Z
 ! License: MIT
 !
-! Block rules: 133688
+! Block rules: 133690
 ! Allow rules: 250
-! Total rules: 133938
+! Total rules: 133940
 !
 ||0--0.info^
 ||0--4.com^
@@ -94991,7 +94991,6 @@
 ||room-price-tracker-3142.taskade.app^
 ||room214.com^
 ||roomanceplace.com^
-||roomgome.com^
 ||roomsmergeshipwreck.com^
 ||rooseveltmail.com^
 ||roosteasy.com^
@@ -119814,8 +119813,10 @@
 ||thewheon.com^
 ||thewheonx.com^
 ||thewhizmarketing.com^
+||thewhizproducts.com^
 ||thewillpower.org^
 ||thewinnersclubpizza.com^
+||thewise.com^
 ||thewizardsports.me^
 ||theworldfree4u.com^
 ||thewritingmachinecompany.com^
@@ -127068,6 +127069,7 @@
 ||upload-tracking-sea.chagee.com^
 ||upload-widget.cloudinary.com^
 ||upload.kipa.co.il^
+||upload.xchina.io^
 ||uploadarticle.com.co^
 ||uploadarticle.com^
 ||uploaded.to^

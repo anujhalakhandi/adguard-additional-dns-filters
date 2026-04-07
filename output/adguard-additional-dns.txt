@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.07.0120
+! Version: 2026.04.07.0703
 ! Expires: 6 hours
-! Last modified: 2026-04-07T01:20:01Z
+! Last modified: 2026-04-07T07:03:49Z
 ! License: MIT
 !
-! Block rules: 133186
+! Block rules: 133181
 ! Allow rules: 249
-! Total rules: 133435
+! Total rules: 133430
 !
 ||0--0.info^
 ||0--4.com^
@@ -29309,7 +29309,6 @@
 ||analytics.saw-leipzig.de^
 ||analytics.sayitwithasock.com^
 ||analytics.sberbank.ru^
-||analytics.sberhealth.ru^
 ||analytics.sblanc.com^
 ||analytics.sbsdc.nl^
 ||analytics.sc-hoerstel.de^
@@ -54327,7 +54326,6 @@
 ||gjuizmedi.ru^
 ||gk.masterymucosas.com^
 ||gk.sina.cn^
-||gk7qlc.ru^
 ||gkaarwpa.com^
 ||gke-ad-distibute-ingress.weplayer.cc^
 ||gknprod.planning-analytics.ibmcloud.com^
@@ -80487,7 +80485,6 @@
 ||omkurusstore.com^
 ||ommateabeanos.com^
 ||omnarzoz.com^
-||omni-dex.io^
 ||omniappz.com^
 ||omnicomgroup.com^
 ||omnicpa.ru^
@@ -87985,7 +87982,6 @@
 ||pixel-by-labcorp.zendesk.com^
 ||pixel-call-history-default-rtdb.firebaseio.com^
 ||pixel-cdn.default.com^
-||pixel-cdp.sberhealth.ru^
 ||pixel-dot-magnify-intrvl.uc.r.appspot.com^
 ||pixel-empire-videos.s3-us-west-1.amazonaws.com^
 ||pixel-eu.lq6zkg-rtbix.top^
@@ -92937,7 +92933,6 @@
 ||race-track-portal-1328.taskade.app^
 ||race-track.webflow.io^
 ||rachelvandolsen-dot-yamm-track.appspot.com^
-||racierlithous.com^
 ||rackcorp.com^
 ||racks.pages.dev^
 ||ractor-wood.weblog-online.rooznameh-rooz.ford-motang.info^

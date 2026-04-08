@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.07.1846
+! Version: 2026.04.08.0120
 ! Expires: 6 hours
-! Last modified: 2026-04-07T18:46:15Z
+! Last modified: 2026-04-08T01:20:47Z
 ! License: MIT
 !
-! Block rules: 133604
+! Block rules: 133603
 ! Allow rules: 250
-! Total rules: 133854
+! Total rules: 133853
 !
 ||0--0.info^
 ||0--4.com^
@@ -65992,7 +65992,6 @@
 ||log0-applog-lf.fqnovel.com^
 ||log0-applog-lq.fqnovel.com^
 ||log0-misc-alinc2.amemv.com^
-||log0-misc-hl.amemv.com^
 ||log0-misc-lf.amemv.com^
 ||log0-misc-lq.amemv.com^
 ||log0-normal-hl.toutiaoapi.com^

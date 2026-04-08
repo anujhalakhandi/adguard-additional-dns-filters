@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.08.1256
+! Version: 2026.04.08.1901
 ! Expires: 6 hours
-! Last modified: 2026-04-08T12:56:01Z
+! Last modified: 2026-04-08T19:01:45Z
 ! License: MIT
 !
-! Block rules: 132918
+! Block rules: 132917
 ! Allow rules: 249
-! Total rules: 133167
+! Total rules: 133166
 !
 ||0--0.info^
 ||0--4.com^
@@ -123986,7 +123986,6 @@
 ||trinityofphotography.com^
 ||trionalpistler.com^
 ||trioninteractive.com^
-||trionyxcarrell.com^
 ||triowebsolutions.com^
 ||trip-tracker-web-raccoon.gojekapi.com^
 ||tripeaks-analytics-dot-tripeaksleaderboard.appspot.com^

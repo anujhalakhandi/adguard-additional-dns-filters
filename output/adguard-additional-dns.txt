@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.08.0705
+! Version: 2026.04.08.1256
 ! Expires: 6 hours
-! Last modified: 2026-04-08T07:05:42Z
+! Last modified: 2026-04-08T12:56:01Z
 ! License: MIT
 !
 ! Block rules: 132918
-! Allow rules: 250
-! Total rules: 133168
+! Allow rules: 249
+! Total rules: 133167
 !
 ||0--0.info^
 ||0--4.com^
@@ -132970,7 +132970,6 @@
 @@||bizrate.com^
 @@||bluekai.com^
 @@||budurl.com^
-@@||buoydeparturediscontent.com^
 @@||c*.dotomi.com^
 @@||c.amazon-adsystem.com^
 @@||c.msn.com^

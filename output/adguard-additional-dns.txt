@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.09.0709
+! Version: 2026.04.09.1257
 ! Expires: 6 hours
-! Last modified: 2026-04-09T07:09:31Z
+! Last modified: 2026-04-09T12:57:56Z
 ! License: MIT
 !
-! Block rules: 132725
-! Allow rules: 249
-! Total rules: 132974
+! Block rules: 132722
+! Allow rules: 250
+! Total rules: 132972
 !
 ||0--0.info^
 ||0--4.com^
@@ -37325,7 +37325,6 @@
 ||bkr-cf.us-south.streaming-analytics.cloud.ibm.com^
 ||bksdkconfig.play.cp81.ott.cibntv.net^
 ||bksn.se^
-||bktpcross.com^
 ||bkv.com^
 ||bkwn.cn^
 ||bl-1.com^
@@ -37625,6 +37624,7 @@
 ||blurbiq.com^
 ||blurbpoint.com^
 ||blushingbackup.com^
+||blushingbread.com^
 ||blushtales.com^
 ||blutonic.net^
 ||blux.ai^
@@ -58229,7 +58229,6 @@
 ||hookedmediagroup.com^
 ||hooklogic.com^
 ||hookrelay.dev^
-||hookspf.com^
 ||hookusa.com^
 ||hooliganapps.com^
 ||hooligapps.com^
@@ -93799,7 +93798,6 @@
 ||rfihub.com.akadns.net^
 ||rfksrv.com^
 ||rfpx1.com^
-||rfvgcross.com^
 ||rg-adv.co.il^
 ||rg-dkv-we-gtmss-pro-tagging-server.azurewebsites.net^
 ||rg.ramseffs.com^
@@ -104990,7 +104988,6 @@
 ||stat.api.2gis.ru^
 ||stat.api.4399.com^
 ||stat.api.altium.com^
-||stat.aporntv.com^
 ||stat.apostas-app-pt.com^
 ||stat.app.startinfinity.com^
 ||stat.apphoto.es^
@@ -132777,6 +132774,7 @@
 @@||bizrate.com^
 @@||bluekai.com^
 @@||budurl.com^
+@@||buoydeparturediscontent.com^
 @@||c*.dotomi.com^
 @@||c.amazon-adsystem.com^
 @@||c.msn.com^

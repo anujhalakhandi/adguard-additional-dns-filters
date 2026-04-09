@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.09.0111
+! Version: 2026.04.09.0709
 ! Expires: 6 hours
-! Last modified: 2026-04-09T01:11:08Z
+! Last modified: 2026-04-09T07:09:31Z
 ! License: MIT
 !
-! Block rules: 132724
+! Block rules: 132725
 ! Allow rules: 249
-! Total rules: 132973
+! Total rules: 132974
 !
 ||0--0.info^
 ||0--4.com^
@@ -4211,6 +4211,7 @@
 ||365trade-intelligence.com^
 ||365win.info^
 ||366fr.com^
+||3678303e7a.73e3c9d09d.com^
 ||3692022.com^
 ||369cf342b0f6de.click^
 ||369hezi.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.10.0121
+! Version: 2026.04.10.0714
 ! Expires: 6 hours
-! Last modified: 2026-04-10T01:21:36Z
+! Last modified: 2026-04-10T07:14:33Z
 ! License: MIT
 !
-! Block rules: 133223
+! Block rules: 133220
 ! Allow rules: 250
-! Total rules: 133473
+! Total rules: 133470
 !
 ||0--0.info^
 ||0--4.com^
@@ -6788,7 +6788,6 @@
 ||ad-api.miracleanapp.com^
 ||ad-api.oops-prod.switch.tv^
 ||ad-api.pakrailways.gov.pk^
-||ad-api.revoaidapp.com^
 ||ad-api.sunnysideau.com^
 ||ad-api.trendcleanapp.com^
 ||ad-api.uat.mediaprima.switch.tv^
@@ -65506,7 +65505,6 @@
 ||log.disit.org^
 ||log.disk.yandex.net^
 ||log.dividat.com^
-||log.documentreaderapp.com^
 ||log.does-not-exist.org^
 ||log.doggerland.net^
 ||log.doji.game^
@@ -75589,7 +75587,6 @@
 ||metrics.profimed.hu^
 ||metrics.profishop.nl^
 ||metrics.projectxparis.com^
-||metrics.prom.third-party-app.sberdevices.ru^
 ||metrics.prometric.com^
 ||metrics.promod.com^
 ||metrics.promod.eu^

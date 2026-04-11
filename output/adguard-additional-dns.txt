@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.11.1233
+! Version: 2026.04.11.1828
 ! Expires: 6 hours
-! Last modified: 2026-04-11T12:33:24Z
+! Last modified: 2026-04-11T18:28:39Z
 ! License: MIT
 !
-! Block rules: 134599
+! Block rules: 134597
 ! Allow rules: 250
-! Total rules: 134849
+! Total rules: 134847
 !
 ||0--0.info^
 ||0--4.com^
@@ -60474,7 +60474,6 @@
 ||incontrolhobbies.net^
 ||incorport.com^
 ||increaser.org^
-||increaserev5.static-cloudflare.workers.dev^
 ||increasingly.co^
 ||incredibar.com^
 ||incredibbble.com^
@@ -117665,7 +117664,6 @@
 ||syndication.theguardian.com^
 ||syndication.twitter.com^
 ||syndication.x.com^
-||synedawtit.com^
 ||synergize.co^
 ||synergytek.com.tw^
 ||synerise.com^

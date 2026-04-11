@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.10.1838
+! Version: 2026.04.11.0116
 ! Expires: 6 hours
-! Last modified: 2026-04-10T18:38:20Z
+! Last modified: 2026-04-11T01:16:29Z
 ! License: MIT
 !
-! Block rules: 133255
+! Block rules: 133254
 ! Allow rules: 250
-! Total rules: 133505
+! Total rules: 133504
 !
 ||0--0.info^
 ||0--4.com^
@@ -52561,7 +52561,6 @@
 ||fourmoo.com^
 ||fourmtagservices.com^
 ||foursixty.com^
-||fourthinvestigation.com^
 ||fourtimessmelly.com^
 ||fourtiz.com^
 ||fovaptashe.com^

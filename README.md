@@ -4,9 +4,9 @@ Additional DNS filtering rules extending AdGuard Default filters with enhanced p
 
 ## Filter Statistics
 
-- Block rules: **134597**
+- Block rules: **133899**
 - Allow rules: **250**
-- Total rules: **134847**
+- Total rules: **134149**
 
 ## Subscription URL
 

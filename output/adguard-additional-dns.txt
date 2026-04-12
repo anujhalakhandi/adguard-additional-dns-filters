@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.12.1236
+! Version: 2026.04.12.1832
 ! Expires: 6 hours
-! Last modified: 2026-04-12T12:36:54Z
+! Last modified: 2026-04-12T18:32:25Z
 ! License: MIT
 !
-! Block rules: 134885
+! Block rules: 134884
 ! Allow rules: 250
-! Total rules: 135135
+! Total rules: 135134
 !
 ||0--0.info^
 ||0--4.com^
@@ -5142,7 +5142,6 @@
 ||731884.vip^
 ||7345023508.fxm9485766783.com^
 ||7345023508.fxmconnect.com^
-||734map.net^
 ||73636.rest^
 ||73646.rest^
 ||7373.net^

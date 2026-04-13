@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.13.0127
+! Version: 2026.04.13.0747
 ! Expires: 6 hours
-! Last modified: 2026-04-13T01:27:42Z
+! Last modified: 2026-04-13T07:47:13Z
 ! License: MIT
 !
-! Block rules: 134996
+! Block rules: 134995
 ! Allow rules: 250
-! Total rules: 135246
+! Total rules: 135245
 !
 ||0--0.info^
 ||0--4.com^
@@ -83466,7 +83466,6 @@
 ||pearlhps.com^
 ||pearllemonleads.com^
 ||pearllemonsales.com^
-||pearpouch.com^
 ||peasisoft.com^
 ||peatresources.com^
 ||pecan.ai^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.14.0125
+! Version: 2026.04.14.0716
 ! Expires: 6 hours
-! Last modified: 2026-04-14T01:25:36Z
+! Last modified: 2026-04-14T07:16:48Z
 ! License: MIT
 !
-! Block rules: 135463
+! Block rules: 135460
 ! Allow rules: 250
-! Total rules: 135713
+! Total rules: 135710
 !
 ||0--0.info^
 ||0--4.com^
@@ -63843,7 +63843,6 @@
 ||kibana-targeted-ads-vector-search.qa.indeed.tech^
 ||kibana.foxtel-telemetry.switch.tv^
 ||kibana.fvnz-telemetry.switch.tv^
-||kiblahmafia.com^
 ||kibocommerce.com^
 ||kic-ngfts.lge.com.edgekey.net^
 ||kic-ngfts.lge.com^
@@ -77382,7 +77381,6 @@
 ||metrilo.com^
 ||metrix-collector1.gamesalad.com^
 ||metrix.ancestry.com^
-||metrix.luxnet.io^
 ||metrixlab.com^
 ||metroatlantapublicadjuster.com^
 ||metropolis.de^
@@ -95339,7 +95337,6 @@
 ||reklamz.com^
 ||reklink.ru^
 ||rekmob.com^
-||reknowriyals.com^
 ||rekomendator.pro^
 ||rekor.ai^
 ||rekorsystems.com^

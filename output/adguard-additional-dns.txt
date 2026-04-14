@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.14.1259
+! Version: 2026.04.14.1858
 ! Expires: 6 hours
-! Last modified: 2026-04-14T12:59:34Z
+! Last modified: 2026-04-14T18:58:04Z
 ! License: MIT
 !
-! Block rules: 135504
+! Block rules: 135506
 ! Allow rules: 250
-! Total rules: 135754
+! Total rules: 135756
 !
 ||0--0.info^
 ||0--4.com^
@@ -51584,6 +51584,7 @@
 ||everyzone.com^
 ||evidon.com.edgekey.net^
 ||evigrxplus.com^
+||evil.infinitybet.win^
 ||evlink8.net^
 ||evmfrontier.com^
 ||evo-mms.evo.co.uk^
@@ -61887,6 +61888,7 @@
 ||inventory-price-tracker-cnazz1pq.taskade.app^
 ||inventory-tracker-pro-3313.taskade.app^
 ||inventory-vision-tracker-1214.taskade.app^
+||inventorycache.com^
 ||inventstech.com^
 ||invest-tracking-strategy.cdn-tinkoff.ru^
 ||investadia.es^
@@ -68102,6 +68104,7 @@
 ||luna.58.com^
 ||lunamedia.io^
 ||lunar-tide-beacon-safety-harbor.pages.dev^
+||lunar.infinitybet.win^
 ||lunchmenualert.com^
 ||lundmarkadvertising.com^
 ||lunidev.com^
@@ -80589,7 +80592,6 @@
 ||nid.barrons.com^
 ||nid.biblegateway.com^
 ||nid.mansionglobal.com^
-||nid.the-sun.com^
 ||nid.thesun.ie^
 ||nid.thetimes.com^
 ||nidaatounes.org^

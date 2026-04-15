@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.15.1258
+! Version: 2026.04.15.1859
 ! Expires: 6 hours
-! Last modified: 2026-04-15T12:58:49Z
+! Last modified: 2026-04-15T18:59:40Z
 ! License: MIT
 !
-! Block rules: 135560
+! Block rules: 135559
 ! Allow rules: 250
-! Total rules: 135810
+! Total rules: 135809
 !
 ||0--0.info^
 ||0--4.com^
@@ -107085,7 +107085,6 @@
 ||starrynets.com^
 ||starryprogress.pro^
 ||stars.manystars.ru^
-||starsallowyear.com^
 ||starsfaith.com^
 ||starshistory.com^
 ||starspoker222.com^

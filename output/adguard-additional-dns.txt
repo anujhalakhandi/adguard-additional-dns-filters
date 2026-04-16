@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.16.0127
+! Version: 2026.04.16.0718
 ! Expires: 6 hours
-! Last modified: 2026-04-16T01:27:59Z
+! Last modified: 2026-04-16T07:18:03Z
 ! License: MIT
 !
-! Block rules: 135607
+! Block rules: 135608
 ! Allow rules: 250
-! Total rules: 135857
+! Total rules: 135858
 !
 ||0--0.info^
 ||0--4.com^
@@ -2305,6 +2305,7 @@
 ||11551322.com^
 ||1155dy.com^
 ||1155sds.com^
+||1156f180c8.c03e5b557d.com^
 ||1156zy.net^
 ||115fx.com^
 ||115thstreet.com^
@@ -6047,6 +6048,7 @@
 ||ac.dun.163.com^
 ||ac.dun.163yun.com^
 ||ac.rnm.ca^
+||ac.rule34.xxx^
 ||ac2.msn.com^
 ||ac9olrggo8-default-cn.rum.aliyuncs.com^
 ||acaaforums.com^
@@ -105957,7 +105959,6 @@
 ||sonataplatform.com^
 ||sonda-analytics.us.qlikcloud.com^
 ||sonekabhav.in^
-||songertringa.com^
 ||songhou.com^
 ||songirooni4.xyz^
 ||songmeaningsandfacts.com^

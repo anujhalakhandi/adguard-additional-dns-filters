@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.16.1303
+! Version: 2026.04.16.1857
 ! Expires: 6 hours
-! Last modified: 2026-04-16T13:03:44Z
+! Last modified: 2026-04-16T18:57:30Z
 ! License: MIT
 !
-! Block rules: 136349
+! Block rules: 136346
 ! Allow rules: 250
-! Total rules: 136599
+! Total rules: 136596
 !
 ||0--0.info^
 ||0--4.com^
@@ -5821,7 +5821,6 @@
 ||aan.amazon.fr^
 ||aan.amazon.in^
 ||aan.amazon.it^
-||aan8bq.ru^
 ||aandgproductions.com^
 ||aaoffice.cn^
 ||aapwdqx.in^
@@ -38147,7 +38146,6 @@
 ||blurbiq.com^
 ||blurbpoint.com^
 ||blushingbackup.com^
-||blushingbread.com^
 ||blushtales.com^
 ||blutonic.net^
 ||blux.ai^
@@ -38338,7 +38336,6 @@
 ||bontent.powvideo.net^
 ||bonusbitcoin.co^
 ||bonuscaf.com^
-||bonuscake.ru^
 ||bonuscoastlanddispute.com^
 ||bonusdeal.ink^
 ||bonusdil.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.17.1254
+! Version: 2026.04.17.1842
 ! Expires: 6 hours
-! Last modified: 2026-04-17T12:54:39Z
+! Last modified: 2026-04-17T18:42:13Z
 ! License: MIT
 !
-! Block rules: 135800
+! Block rules: 135798
 ! Allow rules: 250
-! Total rules: 136050
+! Total rules: 136048
 !
 ||0--0.info^
 ||0--4.com^
@@ -43479,7 +43479,6 @@
 ||confessionsofatexassugarbaby.com^
 ||confiant.com^
 ||confiant.msn.com^
-||config-factory.com^
 ||config-security.com^
 ||config.ad.falconnet.app^
 ||config.chsmarttv.com^
@@ -43683,7 +43682,6 @@
 ||content-ld.mathieu-cadu.com^
 ||content-marketing-company.kit.com^
 ||content-partnersbadge-pa.googleapis.com^
-||content-settings.com^
 ||content-square.net^
 ||content-understand-strategy.sm.cn^
 ||content-us-1.content-cms.com^

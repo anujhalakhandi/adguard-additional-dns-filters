@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.16.1857
+! Version: 2026.04.17.0125
 ! Expires: 6 hours
-! Last modified: 2026-04-16T18:57:30Z
+! Last modified: 2026-04-17T01:25:35Z
 ! License: MIT
 !
-! Block rules: 136346
+! Block rules: 136345
 ! Allow rules: 250
-! Total rules: 136596
+! Total rules: 136595
 !
 ||0--0.info^
 ||0--4.com^
@@ -37493,7 +37493,6 @@
 ||bigclasses.com^
 ||bigclicks.com^
 ||bigcom.com^
-||bigcrunch.com^
 ||bigdata-lbs-pri-c3.alb.xiaomi.com^
 ||bigdata.samsung.com^
 ||bigdata.ssp.samsung.com^

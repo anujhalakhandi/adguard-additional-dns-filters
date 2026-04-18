@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.18.1236
+! Version: 2026.04.18.1832
 ! Expires: 6 hours
-! Last modified: 2026-04-18T12:36:48Z
+! Last modified: 2026-04-18T18:32:54Z
 ! License: MIT
 !
-! Block rules: 135720
+! Block rules: 135717
 ! Allow rules: 250
-! Total rules: 135970
+! Total rules: 135967
 !
 ||0--0.info^
 ||0--4.com^
@@ -63573,7 +63573,6 @@
 ||keydomainmedia.com^
 ||keygenguru.com^
 ||keygenninja.com^
-||keyhamates.com^
 ||keymedia.hu^
 ||keynorin.net^
 ||keynote.com^
@@ -80863,7 +80862,6 @@
 ||nowl.ink^
 ||nowvisitors.com^
 ||noxaffiliates.com^
-||noxious-proof.com^
 ||noxiousback.com^
 ||nozhscywegvjj.com^
 ||nozonenet.com^
@@ -105952,7 +105950,6 @@
 ||soundcast.fm^
 ||soundcast.me^
 ||sounder.fm^
-||soundfrankcoke.com^
 ||soundink.net^
 ||soundproofgeek.com^
 ||soundscapehq.com^

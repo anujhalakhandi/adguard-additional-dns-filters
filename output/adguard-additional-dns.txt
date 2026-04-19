@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.19.0128
+! Version: 2026.04.19.0705
 ! Expires: 6 hours
-! Last modified: 2026-04-19T01:28:44Z
+! Last modified: 2026-04-19T07:05:46Z
 ! License: MIT
 !
-! Block rules: 134907
+! Block rules: 134905
 ! Allow rules: 250
-! Total rules: 135157
+! Total rules: 135155
 !
 ||0--0.info^
 ||0--4.com^
@@ -47878,7 +47878,6 @@
 ||doppiostreams.com^
 ||doppler-error.cbsivideo.com^
 ||dopub.site^
-||doqpm.click^
 ||doratree.com^
 ||dorcelcash.com^
 ||dork.fail^
@@ -51547,7 +51546,6 @@
 ||fadb.xyz^
 ||fadenophu.pro^
 ||fadstrack.com^
-||faenasplaidie.com^
 ||faezs.com^
 ||fafafa6688.com^
 ||fafagou.com^

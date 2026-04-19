@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.19.1236
+! Version: 2026.04.19.1833
 ! Expires: 6 hours
-! Last modified: 2026-04-19T12:36:18Z
+! Last modified: 2026-04-19T18:33:24Z
 ! License: MIT
 !
-! Block rules: 135758
+! Block rules: 135754
 ! Allow rules: 250
-! Total rules: 136008
+! Total rules: 136004
 !
 ||0--0.info^
 ||0--4.com^
@@ -35883,7 +35883,6 @@
 ||balticvoices.org^
 ||baltimorenewswire.com^
 ||baltische-rundschau.eu^
-||balzadicyema.com^
 ||bam-interactive.de^
 ||bam.actionnetwork.com^
 ||bam.nr-data.net.cdn.cloudflare.net^
@@ -40591,6 +40590,7 @@
 ||charlee.ai^
 ||charlesathompson.com^
 ||charlestonpr-dot-yamm-track.appspot.com^
+||charlestoughrace.com^
 ||charlotteairportclt.com^
 ||charlottewindclaim.com^
 ||charmfulnames.com^
@@ -68570,7 +68570,6 @@
 ||malliq-api.com^
 ||mallumv.com.in^
 ||malmaison-london.com^
-||malpaisediface.com^
 ||maltablockchainsummit.com^
 ||maltiverse.lt.acemlnc.com^
 ||maltzsales.com^
@@ -103862,7 +103861,6 @@
 ||signaturesoho.com^
 ||signbucks.com^
 ||significadoconcepto.com^
-||signingvehemenceraffle.com^
 ||signoraggio.it^
 ||signpost.com^
 ||signsigma.com^
@@ -104237,7 +104235,6 @@
 ||slatecharm.co^
 ||slatereprints.com^
 ||slavinhi.com^
-||slavirappels.com^
 ||slb-apisnd-in.heytapmobile.com^
 ||slb-p2p.vcloud.ks-live.com^
 ||slblz.com^
@@ -121220,7 +121217,6 @@
 ||theredleashproject.com^
 ||thereport24.com^
 ||theresasreviews.com^
-||theretenoned.com^
 ||thereviewhub.co^
 ||therichkids.com^
 ||theridgelinereport.com^

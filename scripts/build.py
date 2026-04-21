@@ -15,7 +15,7 @@ BASE_URLS = [
 ]
 
 MAIN_URLS = [
-    "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/ultimate.txt",
+    "https://cdn.jsdelivr.net/gh/hagezi/dns-blocklists@latest/adblock/pro.plus.txt",
 ]
 
 TIF_URLS = [

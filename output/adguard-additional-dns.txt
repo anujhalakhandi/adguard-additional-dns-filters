@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.22.0124
+! Version: 2026.04.22.0718
 ! Expires: 6 hours
-! Last modified: 2026-04-22T01:24:14Z
+! Last modified: 2026-04-22T07:18:53Z
 ! License: MIT
 !
-! Block rules: 92792
+! Block rules: 92791
 ! Allow rules: 250
-! Total rules: 93042
+! Total rules: 93041
 !
 ||0--0.info^
 ||0--4.com^
@@ -42289,7 +42289,6 @@
 ||globalrtb.com^
 ||globalseedxchange.com^
 ||globalservices.conde.digital^
-||globalsiteanalytics.com^
 ||globalsmarturl.com^
 ||globalstat.thehost.ua^
 ||globalstats.ekmsecure.com^

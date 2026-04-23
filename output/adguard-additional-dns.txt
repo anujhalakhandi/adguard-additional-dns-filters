@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.23.0129
+! Version: 2026.04.23.0720
 ! Expires: 6 hours
-! Last modified: 2026-04-23T01:29:31Z
+! Last modified: 2026-04-23T07:20:56Z
 ! License: MIT
 !
-! Block rules: 92833
+! Block rules: 92832
 ! Allow rules: 250
-! Total rules: 93083
+! Total rules: 93082
 !
 ||0--0.info^
 ||0--4.com^
@@ -70900,7 +70900,6 @@
 ||seidellogistik.de^
 ||seitzeichen.de^
 ||seiya.tantanapp.com^
-||sekerdrubbed.com^
 ||sel3-common-sentry-2.skyeng.tech^
 ||selectbonusaccess.store^
 ||selected-quotes.com^

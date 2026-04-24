@@ -1,8 +1,8 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.24.0128
+! Version: 2026.04.24.0747
 ! Expires: 6 hours
-! Last modified: 2026-04-24T01:28:28Z
+! Last modified: 2026-04-24T07:47:22Z
 ! License: MIT
 !
 ! Block rules: 92892
@@ -30239,7 +30239,6 @@
 ||childperfunctoryhunk.com^
 ||childrenofnepal.org^
 ||chilipoker.com^
-||chillingtofu.com^
 ||chilliwackcomputer.com^
 ||chilltalks.org^
 ||chiloglysto.com^
@@ -30668,6 +30667,7 @@
 ||click.dangdang.com^
 ||click.fool.com^
 ||click.gamersky.com^
+||click.kataweb.it^
 ||click.log.kukuplay.com^
 ||click.quk.com^
 ||click.revolut.com^
@@ -38041,7 +38041,6 @@
 ||eds-client-telemetry.platform.playkot.com^
 ||eds.browserstack.com^
 ||eds.ca.matchbox.maruhub.com^
-||edshessite.com^
 ||edt-device-connect-telemetry-offline-s3-bucket.apps.thermofisher.com^
 ||edu-ad-test-cdn.cdn.bcebos.com^
 ||edu-logs.workers.dev^
@@ -42225,7 +42224,6 @@
 ||gift2pair.com^
 ||giftbox.asus.com^
 ||giftcard.cx^
-||giftclothings.com^
 ||giga.pub^
 ||gigachad.top^
 ||gigachadlitics.b-cdn.net^
@@ -52478,6 +52476,7 @@
 ||logger.ireaderm.net^
 ||logger.ithexe.de^
 ||logger.ivi.ru^
+||logger.kataweb.it^
 ||logger.kma.go.kr^
 ||logger.lendingtree.com^
 ||logger.my.imaginelearning.com^
@@ -61181,6 +61180,7 @@
 ||oasgames.com^
 ||oasis.com^
 ||oasisamor.org^
+||oasjs.kataweb.it^
 ||oastoamox.com^
 ||oatchoagnoud.com^
 ||oatearperse.com^

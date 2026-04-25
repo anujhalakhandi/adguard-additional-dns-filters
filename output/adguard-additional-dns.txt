@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.25.1237
+! Version: 2026.04.25.1834
 ! Expires: 6 hours
-! Last modified: 2026-04-25T12:37:58Z
+! Last modified: 2026-04-25T18:34:56Z
 ! License: MIT
 !
-! Block rules: 92997
+! Block rules: 92996
 ! Allow rules: 250
-! Total rules: 93247
+! Total rules: 93246
 !
 ||0--0.info^
 ||0--4.com^
@@ -36493,6 +36493,7 @@
 ||dienanhtrongtamtay.com^
 ||difbusonjdr.in^
 ||diffuser-cdn.app-us1.com^
+||dig.bdurl.net^
 ||dig.lianjia.com^
 ||dig.qbao.com^
 ||dig.zjurl.cn^
@@ -38254,7 +38255,6 @@
 ||elnnap.com^
 ||elnpe.com^
 ||elojodepoe.com^
-||elonreptiloid.pw^
 ||elonshiba.org^
 ||elopatchwork.com^
 ||eloqua.petchem-update.com^
@@ -66201,7 +66201,6 @@
 ||pristinecanyon.com^
 ||pristopmedia.network^
 ||pritre.com^
-||privacy-analytics-proxy.cookiebot.com^
 ||privacy-analytics.kahero.co^
 ||privacy-focused.com^
 ||privacy-pc.com^

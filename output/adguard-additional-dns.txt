@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.25.0121
+! Version: 2026.04.25.0701
 ! Expires: 6 hours
-! Last modified: 2026-04-25T01:21:45Z
+! Last modified: 2026-04-25T07:01:41Z
 ! License: MIT
 !
-! Block rules: 92053
+! Block rules: 92048
 ! Allow rules: 250
-! Total rules: 92303
+! Total rules: 92298
 !
 ||0--0.info^
 ||0--4.com^
@@ -23451,7 +23451,6 @@
 ||analytik.bebeboutik-prive.fr^
 ||analytik.uncenter.dev^
 ||analytika.kbpojistovna.cz^
-||analyze-82dfgsi2.m-w.com^
 ||analyze.lemurbrowser.com^
 ||analyze.ly^
 ||analyze.unfinished.jp^
@@ -27264,7 +27263,6 @@
 ||bigfarm-client-tracking.goodgamestudios.com^
 ||bigfubook.com^
 ||biggedchocard.com^
-||biggerbling.com^
 ||biggie.theblank.net^
 ||bighappy.co^
 ||bighearted-cloud.com^
@@ -35781,7 +35779,6 @@
 ||degpeg.com^
 ||degreaseserpentwashhouse.com^
 ||degreeeruptionpredator.com^
-||deisinkamis.com^
 ||deja.com^
 ||dejavu.mercadolivre.com.br^
 ||dek5iqd53g59a.cloudfront.net^
@@ -40194,7 +40191,6 @@
 ||flicksmore.com^
 ||flickstree.com^
 ||flife.de^
-||fliffuscatalpa.com^
 ||flightark.com^
 ||fliirtconnectss.com^
 ||flikpop.com^
@@ -89779,7 +89775,6 @@
 ||wrightsmedia.com^
 ||wrimapkteapt.com^
 ||write-consent-tracking-prod.redbutton.de^
-||writingcalls.com^
 ||writingfort.com^
 ||wrnln.imicpa.org^
 ||wroantdriof.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.26.1835
+! Version: 2026.04.27.0146
 ! Expires: 6 hours
-! Last modified: 2026-04-26T18:35:48Z
+! Last modified: 2026-04-27T01:46:20Z
 ! License: MIT
 !
-! Block rules: 92452
+! Block rules: 92451
 ! Allow rules: 250
-! Total rules: 92702
+! Total rules: 92701
 !
 ||0--0.info^
 ||0--4.com^
@@ -36025,7 +36025,6 @@
 ||disdainsneeze.com^
 ||disdarrummers.shop^
 ||disembroildisembroilrepresssurvival.com^
-||disfiguredrow.com^
 ||disfunzioneerettileitaly.com^
 ||disgustingcoach.com^
 ||dishiand.com^

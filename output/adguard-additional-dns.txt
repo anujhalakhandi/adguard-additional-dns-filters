@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.28.0153
+! Version: 2026.04.28.0804
 ! Expires: 6 hours
-! Last modified: 2026-04-28T01:53:38Z
+! Last modified: 2026-04-28T08:04:33Z
 ! License: MIT
 !
-! Block rules: 92362
+! Block rules: 92361
 ! Allow rules: 250
-! Total rules: 92612
+! Total rules: 92611
 !
 ||0--0.info^
 ||0--4.com^
@@ -17367,7 +17367,6 @@
 ||age.ne.jp^
 ||aged-recipe-ad72.difaved194572.workers.dev^
 ||agego.com^
-||ageingja.com^
 ||agence-adverti.fr^
 ||agency.com^
 ||agency1903.com^

@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.28.1917
+! Version: 2026.04.29.0156
 ! Expires: 6 hours
-! Last modified: 2026-04-28T19:17:47Z
+! Last modified: 2026-04-29T01:56:05Z
 ! License: MIT
 !
-! Block rules: 92338
+! Block rules: 92336
 ! Allow rules: 250
-! Total rules: 92588
+! Total rules: 92586
 !
 ||0--0.info^
 ||0--4.com^
@@ -36531,7 +36531,6 @@
 ||dimetronic.es^
 ||dimins.com^
 ||dimmestvalvata.shop^
-||dimmingtumming.com^
 ||dimpy.narod.ru^
 ||dimsg.com^
 ||dinecare.org^
@@ -60869,7 +60868,6 @@
 ||oblguhosmfif.com^
 ||oblivki.biz^
 ||oblocpnaj.com^
-||oblong-passenger.pro^
 ||obmlt.ru^
 ||obnds.com^
 ||obnlk.amusingdates.com^

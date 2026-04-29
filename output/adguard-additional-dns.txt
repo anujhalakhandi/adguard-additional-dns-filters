@@ -1,13 +1,13 @@
 ! Title: AdGuard Additional DNS filter
 ! Description: Additional DNS filtering rules extending AdGuard Default filters with enhanced protection while preserving compatibility.
-! Version: 2026.04.29.0156
+! Version: 2026.04.29.0758
 ! Expires: 6 hours
-! Last modified: 2026-04-29T01:56:05Z
+! Last modified: 2026-04-29T07:58:29Z
 ! License: MIT
 !
-! Block rules: 92336
+! Block rules: 92335
 ! Allow rules: 250
-! Total rules: 92586
+! Total rules: 92585
 !
 ||0--0.info^
 ||0--4.com^
@@ -86843,7 +86843,6 @@
 ||upsight-api.com^
 ||upsnap.com^
 ||upspinarakor.com^
-||upstealrance.com^
 ||upstreamads.com^
 ||uptain.de^
 ||uptimiarum.eu^
